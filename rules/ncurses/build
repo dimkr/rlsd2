@@ -1,0 +1,142 @@
+PKG_VER="5.9"
+PKG_SRCS="http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$PKG_VER.tar.gz"
+PKG_DESC="A terminal handling library"
+PKG_DEPS="musl"
+
+build() {
+	# building with "--enable-glob" fails against musl 0.9.12
+	./configure --prefix="" \
+	            --datadir="/share" \
+	            --includedir="/include" \
+	            --mandir="/man" \
+	            --without-cxx \
+	            --without-cxx-binding \
+	            --without-ada \
+	            --without-progs \
+	            --without-tests \
+	            --enable-pc-files \
+	            --without-libtool \
+	            --without-shared \
+	            --with-normal \
+	            --without-debug \
+	            --without-profile \
+	            --enable-widec \
+	            --enable-ext-colors \
+	            --with-manpage-format="normal"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	mv "$1/usr/lib/pkgconfig" "$1/lib/"
+	rmdir "$1/usr/lib"
+	ln -s libncurses.a "$1/lib/libtinfo.a"
+
+	# create links for backwards-compatibility
+	for i in "$1/lib"/*w.* "$1/lib/pkgconfig"/*w.pc
+	do
+		name="$(basename "$i")"
+		directory="$(dirname "$i")"
+		ln -s "$name" "$directory/$(echo "$name" | sed s~w\.~.~)"
+	done
+	ln -s ncursesw6-config "$1/bin/ncurses6-config"
+
+	# trim the terminfo directory
+	rm -rf "$1/share/terminfo/1" \
+	       "$1/share/terminfo/2" \
+	       "$1/share/terminfo/3" \
+	       "$1/share/terminfo/4" \
+	       "$1/share/terminfo/5" \
+	       "$1/share/terminfo/6" \
+	       "$1/share/terminfo/7" \
+	       "$1/share/terminfo/8" \
+	       "$1/share/terminfo/9" \
+	       "$1/share/terminfo/A" \
+	       "$1/share/terminfo/E" \
+	       "$1/share/terminfo/L" \
+	       "$1/share/terminfo/M" \
+	       "$1/share/terminfo/N" \
+	       "$1/share/terminfo/P" \
+	       "$1/share/terminfo/Q" \
+	       "$1/share/terminfo/X" \
+	       "$1/share/terminfo/a" \
+	       "$1/share/terminfo/b" \
+	       "$1/share/terminfo/c" \
+	       "$1/share/terminfo/d" \
+	       "$1/share/terminfo/e" \
+	       "$1/share/terminfo/f" \
+	       "$1/share/terminfo/g" \
+	       "$1/share/terminfo/h" \
+	       "$1/share/terminfo/i" \
+	       "$1/share/terminfo/j" \
+	       "$1/share/terminfo/k" \
+	       "$1/share/terminfo/e" \
+	       "$1/share/terminfo/m" \
+	       "$1/share/terminfo/n" \
+	       "$1/share/terminfo/o" \
+	       "$1/share/terminfo/p" \
+	       "$1/share/terminfo/q" \
+	       "$1/share/terminfo/t" \
+	       "$1/share/terminfo/u" \
+	       "$1/share/terminfo/w" \
+	       "$1/share/terminfo/z"
+	for i in "$1/share/terminfo/s"/*
+	do
+		case "$i" in
+			*screen*)
+				;;
+			*)
+				rm -f "$i"
+				;;
+		esac
+	done
+
+	for i in "$1/share/terminfo/r"/*
+	do
+		case "$i" in
+			*rxvt*)
+				;;
+			*)
+				rm -f "$i"
+				;;
+		esac
+	done
+
+	for i in "$1/share/terminfo/v"/*
+	do
+		case "$i" in
+			*vt[0-9]*)
+				;;
+			*)
+				rm -f "$i"
+				;;
+		esac
+	done
+
+	for i in "$1/share/terminfo/l"/*
+	do
+		case "$i" in
+			*linux*)
+				;;
+			*)
+				rm -f "$i"
+				;;
+		esac
+	done
+
+	for i in "$1/share/terminfo/x"/*
+	do
+		case "$i" in
+			*xterm*)
+				;;
+			*)
+				rm -f "$i"
+				;;
+		esac
+	done
+
+	install -D -m 644 README "$1/doc/ncurses/README"
+	install -m 644 NEWS "$1/doc/ncurses/NEWS"
+	install -m 644 ANNOUNCE "$1/doc/ncurses/ANNOUNCE"
+	install -m 644 AUTHORS "$1/doc/ncurses/AUTHORS"
+}

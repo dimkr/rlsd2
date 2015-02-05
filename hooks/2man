@@ -1,0 +1,28 @@
+HOOK_NAME="trim and decompress man pages"
+
+run() {
+	find . -name "man" -type d |
+	while read i
+	do
+		# remove localized man pages
+		for j in "$i"/*
+		do
+			case "$j" in
+				*/man[1-9])
+					break
+					;;
+				*)
+					rm -vrf "$j"
+					;;
+			esac
+		done
+
+		# decompress all compressed man pages
+		find "$i" -name '*.gz' -type f |
+		while read j
+		do
+			echo "> Decompressing $j"
+			gunzip -v "$j"
+		done
+	done
+}

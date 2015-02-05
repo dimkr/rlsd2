@@ -1,0 +1,26 @@
+diff -rup fbgrab-orig/Makefile fbgrab/Makefile
+--- fbgrab-orig/Makefile	2015-01-30 20:22:47.067185832 +0200
++++ fbgrab/Makefile	2015-01-30 20:23:09.131186357 +0200
+@@ -9,17 +9,17 @@
+ GZIP := gzip
+ GZIPFLAGS := --best --to-stdout
+ 
+-all: fbgrab fbgrab.1.gz
++all: fbgrab
+ 
+ fbgrab: fbgrab.c
+-	$(CC) -g -Wall $(CFLAGS) $(LDFLAGS) $< -lpng -lz -o $@
++	$(CC) -Wall $(CFLAGS) $(LDFLAGS) $< -lpng -lz -o $@
+ 
+ fbgrab.1.gz: fbgrab.1.man
+ 	$(GZIP) $(GZIPFLAGS) $< > $@
+ 
+-install: fbgrab fbgrab.1.gz
+-	install -D -m 0755 fbgrab $(DESTDIR)/usr/bin/fbgrab
+-	install -D -m 0644 fbgrab.1.gz $(DESTDIR)/usr/man/man1/fbgrab.1.gz
++install: fbgrab
++	install -D -m 0755 fbgrab $(DESTDIR)/bin/fbgrab
++	install -D -m 0644 fbgrab.1.man $(DESTDIR)/man/man1/fbgrab.1
+ 
+ clean:
+ 	-$(RM) fbgrab fbgrab.1.gz *~ \#*\#

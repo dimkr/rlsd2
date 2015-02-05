@@ -1,0 +1,17 @@
+HOOK_NAME="add the package template"
+
+run() {
+	for i in "$BASE_DIR/rules/$1"/*
+	do
+		case "$i" in
+			*/build|*/*.patch|*/*.diff)
+				continue
+				;;
+
+			*)
+				echo "> Adding $s to the package"
+				cp -av "$i" .
+				;;
+		esac
+	done
+}

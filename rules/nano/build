@@ -1,0 +1,23 @@
+PKG_VER="2.2.6"
+PKG_SRCS="http://www.nano-editor.org/dist/v2.2/nano-$PKG_VER.tar.gz"
+PKG_DESC="A text editor"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --datarootdir="/share" \
+	            --mandir="/man" \
+	            --disable-nls \
+	            --disable-utf8 \
+	            --without-slang
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/nano/README"
+	install -m 644 NEWS "$1/doc/nano/NEWS"
+	install -m 644 AUTHORS "$1/doc/nano/AUTHORS"
+	install -m 644 THANKS "$1/doc/nano/THANKS"
+	install -m 644 COPYING "$1/doc/nano/COPYING"
+}

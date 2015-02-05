@@ -1,0 +1,26 @@
+diff -rup figlet-2.2.5-orig/Makefile figlet-2.2.5/Makefile
+--- figlet-2.2.5-orig/Makefile	2015-01-30 22:54:36.109033404 +0200
++++ figlet-2.2.5/Makefile	2015-01-30 22:55:22.969034518 +0200
+@@ -19,17 +19,17 @@
+ SHELL = /bin/sh
+ 
+ # The C compiler and linker to use
+-CC	= gcc
+-CFLAGS	= -g -O2 -Wall
+-LD	= gcc
+-LDFLAGS =
++CC	?= gcc
++CFLAGS	?= -g -O2 -Wall
++LD	?= gcc
++LDFLAGS ?=
+ 
+ # Feature flags:
+ #   define TLF_FONTS to use TOIlet TLF fonts
+ XCFLAGS	= -DTLF_FONTS
+ 
+ # Where to install files
+-prefix	= /usr/local
++prefix	=
+ 
+ # Where the executables should be put
+ BINDIR	= $(prefix)/bin

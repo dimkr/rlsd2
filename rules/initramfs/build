@@ -1,0 +1,223 @@
+PKG_DESC="The initial file system archive"
+PKG_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font"
+
+# files present in the initramfs
+INITRAMFS_FILES="bin/toybox
+                 bin/init
+                 bin/ksh
+                 bin/awk
+                 bin/daemon
+                 bin/syslog
+                 bin/mkdir
+                 bin/cp
+                 bin/chroot
+                 bin/grep
+                 bin/ls
+                 bin/mount
+                 bin/umount
+                 bin/sleep
+                 bin/clear
+                 bin/cat
+                 bin/poweroff
+                 bin/reboot
+                 bin/setfont
+                 bin/luufs
+                 share/consolefonts/Tamsyn8x16r.psf"
+
+# directories present in the initramfs
+INITRAMFS_DIRECTORIES="run
+                       bin
+                       var/log
+                       proc
+                       dev
+                       mnt/home
+                       mnt/rw
+                       mnt/union
+                       mnt/ro
+                       sys
+                       share/consolefonts"
+
+build() {
+	# create a temporary directory for the initramfs contents
+	initramfs_root="$(mktemp -d -u)"
+
+	# create the initramfs directories
+	for directory in $INITRAMFS_DIRECTORIES
+	do
+		mkdir -p "$initramfs_root/$directory"
+	done
+
+	# add required programs and scripts to the initramfs
+	for i in $INITRAMFS_FILES
+	do
+		if [ -f "$BASE_DIR/initramfs/$i" ]
+		then
+			path="$BASE_DIR/initramfs/$i"
+		else
+			path="$SYSROOT/$i"
+		fi
+		cp "$path" "$initramfs_root/$i"
+	done
+
+	# create /dev/console
+	mknod -m 622 "$initramfs_root/dev/console" c 5 1
+
+	echo -n '#!/bin/ksh
+
+# set the executable search path
+export PATH="/bin"
+
+# clear the screen from boot loader or early kernel messages
+clear
+
+# set the console font
+setfont /share/consolefonts/Tamsyn8x16r.psf
+
+# display an ASCII logo
+echo "       _         _
+  ____| |___  __| |
+ |  __| / __|/ _  |
+ | |  | \__ \ (_| |
+ |_|  |_|___/\__,_|
+"
+
+# mount virtual file systems
+echo -n "Mounting virtual file systems ..."
+
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t tmpfs -o mode=755,size=20% log /var/log
+
+# if there is at least 256 MB of RAM, copy the root file system image to RAM
+if [ 262144 -le $(grep MemTotal: /proc/meminfo | awk "{print \$2}") ]
+then
+	copy=1
+else
+	copy=0
+fi
+
+# read the kernel command-line
+home=""
+secure=1
+for i in $(cat /proc/cmdline)
+do
+	case "$i" in
+		home=*)
+			home="${i#*=}"
+			;;
+		sleep=*)
+			interval="${i#*=}"
+			echo -n " done.
+Waiting for $interval seconds ..."
+			sleep $interval
+			;;
+		secure=0)
+			secure=0
+			;;
+	esac
+done
+
+# start logging daemons
+echo -n " done.
+Starting logging services ..."
+
+daemon syslog
+
+# find the home partition
+echo -n " done.
+Searching for the home partition ..."
+cd /sys/class/block
+is_found=0
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+	for partition in $(ls -d sd*[0-9] mmc*[0-9] sr*[0-9] 2>/dev/null)
+	do
+		mount -o ro /dev/$partition /mnt/home 2>/dev/null
+		if [ 0 -eq $? ]
+		then
+			if [ -f /mnt/home/boot/bzImage ] &&
+			   [ -f /mnt/home/boot/initrd.xz ] &&
+			   [ -f /mnt/home/boot/rootfs.sfs ]
+			then
+				is_found=1
+				break 2
+			fi
+		fi
+	done
+	sleep 1
+done
+if [ 0 -eq $is_found ]
+then
+	echo " failure."
+	exit
+fi
+
+# copy the root file system image to RAM
+if [ 0 -eq $copy ]
+then
+	image_path="/mnt/home/boot/rootfs.sfs"
+else
+	echo -n " done.
+Copying the root file system to RAM ..."
+	cp /mnt/home/boot/rootfs.sfs /rootfs.sfs
+	umount /mnt/home
+	image_path="/rootfs.sfs"
+fi
+
+# mount the root file system image
+echo -n " done.
+Mounting the root file system ..."
+mount -t squashfs -o loop,ro "$image_path" /mnt/ro
+
+# mount a writable file system
+echo -n " done.
+Setting up a writable system ..."
+if [ -n "$home" ]
+then
+	mount "/dev/$home" /mnt/rw
+else
+	mount -t tmpfs save /mnt/rw
+fi
+
+# mount a layered file system
+echo -n " done.
+Setting up a layered file system ..."
+
+luufs -o suid,dev,allow_other,default_permissions /mnt/ro /mnt/rw /mnt/union
+
+mount /sys /mnt/union/sys
+mount /var/log /mnt/union/var/log
+
+mount -t tmpfs -o mode=700,size=5% run /mnt/union/run
+mount /mnt/union/run /mnt/union/var/run
+
+mkdir /mnt/union/run/mnt
+mount /mnt/union/run/mnt /mnt/union/mnt
+
+mount /dev /mnt/union/dev
+mkdir /mnt/union/dev/pts
+mount -t devpts -o mode=620 pts /mnt/union/dev/pts
+mkdir /mnt/union/run/shm /mnt/union/dev/shm
+mount /mnt/union/run/shm /mnt/union/dev/shm
+
+mount -t tmpfs -o mode=1777,noexec,nosuid,nodev,size=25% tmp /mnt/union/tmp
+
+echo " done."
+
+# continue the boot process inside the layered file system
+exec chroot /mnt/union newpid rc
+fi' > "$initramfs_root/bin/rc"
+	chmod 755 "$initramfs_root/bin/rc"
+
+	# generate an initramfs archive
+	dir="$(pwd)"
+	cd "$initramfs_root"
+	chown -R 0:0 .
+	find . | cpio -o -H newc | xz -9 -e --check=none > "$dir/initrd.xz"
+	rm -rf "$initramfs_root"
+	cd "$dir"
+}
+
+package() {
+	install -D -m 644 initrd.xz "$1/boot/initrd.xz"
+}

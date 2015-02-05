@@ -1,0 +1,26 @@
+PKG_VER="2.5"
+PKG_SRCS="http://archive.lbzip2.org/lbzip2-$PKG_VER.tar.gz"
+PKG_DESC="Compression tools"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	for i in "$1/bin"/*
+	do
+		name="$(basename "$i")"
+		ln -s "$name" "$1/bin/$(echo "$name" | cut -c 2-)"
+	done
+	install -D -m 644 README "$1/doc/lbzip2/README"
+	install -m 644 NEWS "$1/doc/lbzip2/NEWS"
+	install -m 644 ChangeLog "$1/doc/lbzip2/ChangeLog"
+	install -m 644 ChangeLog.old "$1/doc/lbzip2/ChangeLog.old"
+	install -m 644 AUTHORS "$1/doc/lbzip2/AUTHORS"
+	install -m 644 THANKS "$1/doc/lbzip2/THANKS"
+	install -m 644 COPYING "$1/doc/lbzip2/COPYING"
+}

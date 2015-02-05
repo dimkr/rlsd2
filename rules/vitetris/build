@@ -1,0 +1,18 @@
+PKG_VER="0.57"
+PKG_SRCS="http://www.victornils.net/tetris/vitetris-$PKG_VER.tar.gz"
+PKG_DESC="A Tetris clone"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --docdir="/doc/vitetris" \
+	            --desktopdir="" \
+	            --pixmapdir=""
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -d -m 755 "$1/var/games/vitetris"
+	install -m 644 changes.txt "$1/doc/vitetris/changes.txt"
+}

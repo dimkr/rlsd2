@@ -1,0 +1,18 @@
+PKG_VER="2.6.32.65"
+PKG_SRCS="http://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu1/linux-libre-$PKG_VER-gnu1.tar.xz"
+PKG_DESC="Kernel API headers"
+
+build() {
+	$MAKE clean
+	$MAKE mrproper
+}
+
+package() {
+	$MAKE INSTALL_HDR_PATH="$1" headers_install
+	find "$1/include" -name .install -or -name ..install.cmd | xargs rm -f
+
+	install -D -m 644 README "$1/doc/linux-libre-headers/README"
+	install -m 644 COPYING "$1/doc/linux-libre-headers/COPYING"
+	install -m 644 CREDITS "$1/doc/linux-libre-headers/CREDITS"
+	install -m 644 MAINTAINERS "$1/doc/linux-libre-headers/MAINTAINERS"
+}

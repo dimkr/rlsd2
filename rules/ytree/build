@@ -1,0 +1,16 @@
+PKG_VER="1.97"
+PKG_SRCS="http://www.han.de/~werner/ytree-$PKG_VER.tar.gz"
+PKG_DESC="A file manager"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE CC="$CC"
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/ytree/README"
+	install -m 644 CHANGES "$1/doc/ytree/CHANGES"
+	install -m 644 THANKS "$1/doc/ytree/THANKS"
+	install -m 644 COPYING "$1/doc/ytree/COPYING"
+}

@@ -1,0 +1,21 @@
+PKG_VER="4.6.2"
+PKG_SRCS="http://www.tcpdump.org/release/tcpdump-$PKG_VER.tar.gz"
+PKG_DESC="A packet capture and analysis tool"
+PKG_DEPS="musl libressl libpcap"
+
+build() {
+	./configure --prefix="" \
+	            --sbindir="/bin" \
+	            --mandir="/man" \
+	            --enable-ipv6 \
+	            --with-crypto
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README.md "$1/doc/tcpdump/README.md"
+	install -m 644 CHANGES "$1/doc/tcpdump/CHANGES"
+	install -m 644 CREDITS "$1/doc/tcpdump/CREDITS"
+	install -m 644 LICENSE "$1/doc/tcpdump/LICENSE"
+}

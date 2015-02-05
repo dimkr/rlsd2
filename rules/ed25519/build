@@ -1,0 +1,14 @@
+PKG_SRCS="https://github.com/orlp/ed25519.git"
+PKG_DESC="A digital signature system"
+PKG_DEPS="musl"
+
+build() {
+	cd src
+	$MAKE
+}
+
+package() {
+	install -D -m 644 libed25519.a "$1/lib/libed25519.a"
+	install -D -m 644 ed25519.h "$1/include/ed25519.h"
+	install -D -m 644 ../readme.md "$1/doc/ed25519/readme.md"
+}

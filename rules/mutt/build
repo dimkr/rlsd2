@@ -1,0 +1,19 @@
+PKG_VER="1.5.23"
+PKG_SRCS="http://sourceforge.net/projects/mutt/files/mutt/mutt-$PKG_VER.tar.gz"
+PKG_DESC="An e-mail client"
+PKG_DEPS="musl ncurses libressl msmtp"
+
+build() {
+	SENDMAIL="/bin/msmtp" \
+	./configure --prefix="" \
+	            --datarootdir="/" \
+	            --enable-pop \
+	            --enable-imap \
+	            --disable-nls \
+	            --with-ssl
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+}

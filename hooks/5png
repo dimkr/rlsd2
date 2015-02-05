@@ -1,0 +1,11 @@
+HOOK_NAME="optimize PNG images"
+
+run() {
+	find . -name '*.png' -type f |
+	while read i
+	do
+		echo "> Optimizing $i"
+		optipng -o7 "$i"
+		advpng -z4 "$i"
+	done
+}

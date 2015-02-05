@@ -1,0 +1,22 @@
+PKG_VER="5.22"
+PKG_SRCS="ftp://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz"
+PKG_DESC="A file type guessing tool"
+PKG_DEPS="musl zlib"
+
+build() {
+	autoconf
+
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/file/README"
+	install -m 644 ChangeLog "$1/doc/file/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/file/AUTHORS"
+	install -m 644 COPYING "$1/doc/file/COPYING"
+}

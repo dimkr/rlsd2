@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/xorg62/tty-clock.git"
+PKG_DESC="An analog clock"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$CC -o tty-clock ttyclock.c $CFLAGS $LDFLAGS -lncurses
+}
+
+package() {
+	install -D -m 755 tty-clock "$1/bin/tty-clock"
+	install -D -m 644 tty-clock.1 "$1/man/man1/tty-clock.1"
+	install -D -m 644 README "$1/doc/tty-clock/README"
+	head -n 30 ttyclock.c | tail -n 28 | cut -c 9- > "$1/doc/tty-clock/COPYING"
+	chmod 644 "$1/doc/tty-clock/COPYING"
+}

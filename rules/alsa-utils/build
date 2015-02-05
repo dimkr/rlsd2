@@ -1,0 +1,25 @@
+PKG_VER="1.0.28"
+PKG_SRCS="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$PKG_VER.tar.bz2"
+PKG_DESC="Audio tools"
+PKG_DEPS="musl ncurses alsa-lib"
+
+build() {
+	autoconf
+	./configure --prefix="" \
+	            --sbindir=/bin \
+	            --mandir="/man" \
+	            --disable-nls \
+	            --disable-xmlto \
+	            --without-udev-rules-dir \
+	            --with-curses="ncurses" \
+	            --with-asound-state-dir="/etc" \
+	            --with-alsactl-pidfile-dir="/run"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/alsa-utils/README"
+	install -m 644 ChangeLog "$1/doc/alsa-utils/ChangeLog"
+	install -m 644 COPYING "$1/doc/alsa-utils/COPYING"
+}

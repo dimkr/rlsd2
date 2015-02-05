@@ -1,0 +1,12 @@
+diff -rup vim-hg31012015-orig/src/feature.h vim-hg31012015/src/feature.h
+--- vim-hg31012015-orig/src/feature.h	2015-01-31 23:25:57.056816566 +0200
++++ vim-hg31012015/src/feature.h	2015-01-31 23:26:45.912817727 +0200
+@@ -931,7 +931,7 @@
+ /*
+  * SYS_VIMRC_FILE	Name of the system-wide .vimrc file.
+  */
+-/* #define SYS_VIMRC_FILE	"/etc/vimrc" */
++#define SYS_VIMRC_FILE	"/etc/vimrc"
+ 
+ /*
+  * SYS_GVIMRC_FILE	Name of the system-wide .gvimrc file.

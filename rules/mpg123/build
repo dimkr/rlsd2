@@ -1,0 +1,30 @@
+PKG_VER="1.21.0"
+PKG_SRCS="http://downloads.sourceforge.net/project/mpg123/mpg123/$PKG_VER/mpg123-$PKG_VER.tar.bz2"
+PKG_DESC="A MP3 player"
+PKG_DEPS="musl tinyalsa"
+
+build() {
+	CFLAGS="-D_POSIX_SOURCE -D_GNU_SOURCE $CFLAGS" \
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --enable-debug="no" \
+	            --enable-gapless="no" \
+	            --enable-ipv6="yes" \
+	            --enable-network="yes" \
+	            --with-audio="tinyalsa" \
+	            --with-default-audio="tinyalsa" \
+	            --with-optimization=0
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/mpg123/README"
+	install -m 644 ChangeLog "$1/doc/mpg123/ChangeLog"
+	install -m 644 NEWS "$1/doc/mpg123/NEWS"
+	install -m 644 NEWS.libmpg123 "$1/doc/mpg123/NEWS.libmpg123"
+	install -m 644 AUTHORS "$1/doc/mpg123/AUTHORS"
+	install -m 644 COPYING "$1/doc/mpg123/COPYING"
+}

@@ -1,0 +1,18 @@
+PKG_VER="0.6"
+PKG_SRCS="http://raffi.at/code/aop/aop-$PKG_VER.tar.gz"
+PKG_DESC="An arcade game"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$CC -o aop aop.c $CFLAGS $LDFLAGS -lncurses
+}
+
+package() {
+	install -D -m 755 aop "$1/bin/aop"
+	for i in *.txt
+	do
+		install -D -m 644 "$i" "$1/share/aop/$i"
+	done
+	install -D -m 644 README "$1/doc/aop/README"
+	install -m 644 COPYING "$1/doc/aop/COPYING"
+}

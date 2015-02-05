@@ -1,0 +1,16 @@
+PKG_SRCS="https://github.com/dimkr/packlad.git"
+PKG_DESC="A package manager"
+PKG_DEPS="musl zlib libarchive curl clzip ed25519"
+
+build() {
+	cp /etc/packlad/pub_key keys/
+	cp /etc/packlad/priv_key keys/
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      DOC_DIR="/doc" \
+	      MAN_DIR="/man" \
+	      install
+}

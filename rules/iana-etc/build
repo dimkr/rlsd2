@@ -1,0 +1,15 @@
+PKG_VER="2.30"
+PKG_SRCS="http://sethwklein.net/iana-etc-$PKG_VER.tar.bz2"
+PKG_DESC="IANA data files"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/iana-etc/README"
+	install -m 644 NEWS "$1/doc/iana-etc/NEWS"
+	install -m 644 CREDITS "$1/doc/iana-etc/CREDITS"
+	install -m 644 COPYING "$1/doc/iana-etc/COPYING"
+}

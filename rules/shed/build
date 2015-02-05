@@ -1,0 +1,18 @@
+PKG_VER="1.15"
+PKG_SRCS="http://waia.dl.sourceforge.net/project/shed/shed/shed%20$PKG_VER/shed-$PKG_VER.tar.gz"
+PKG_DESC="A hex editor"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/shed/README"
+	install -m 644 ChangeLog "$1/doc/shed/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/shed/AUTHORS"
+	install -m 644 COPYING "$1/doc/shed/COPYING"
+}

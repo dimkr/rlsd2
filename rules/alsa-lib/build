@@ -1,0 +1,23 @@
+PKG_VER="1.0.28"
+PKG_SRCS="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$PKG_VER.tar.bz2"
+PKG_DESC="Core audio library"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --disable-old-symbols \
+	            --without-debug \
+	            --with-pcm-plugins="" \
+	            --with-ctl-plugins="" \
+	            --with-max-cards=2
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 ChangeLog "$1/doc/alsa-lib/ChangeLog"
+	install -m 644 COPYING "$1/doc/alsa-lib/COPYING"
+}

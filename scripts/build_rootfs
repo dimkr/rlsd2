@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# install the packages
+mkdir -p "$1/var/packlad/downloaded" "$1/var/packlad/installed"
+if [ -f "./sysroot/etc/packlad/pub_key" ]
+then
+	install -D -m 400 "./sysroot/etc/packlad/pub_key" "$1/etc/packlad/pub_key"
+else
+	install -D -m 400 /etc/packlad/pub_key "$1/etc/packlad/pub_key"
+fi
+export REPO="file://$(pwd)/repo"
+packlad -p "$1" -u
+for package in $2
+do
+	packlad -s -i $package -n -p "$1"
+done
+
+# clean up after packlad
+rm -vf "$1/var/packlad/available" "$1/var/packlad/downloaded"/*
+
+# fix permissions
+chown -R 0:0 "$1"
+find "$1" -type d | while read directory
+do
+	chmod 755 "$directory"
+done
+chmod 700 "$1/home/boss"
+chown 1000:1000 "$1/home/someone"
+chmod 755 "$1/home/someone"

@@ -1,0 +1,33 @@
+diff -rup libnl-tiny-svn30012015-orig/files/libnl-tiny.pc libnl-tiny-svn30012015/files/libnl-tiny.pc
+--- libnl-tiny-svn30012015-orig/files/libnl-tiny.pc	2015-01-30 19:21:21.939098250 +0200
++++ libnl-tiny-svn30012015/files/libnl-tiny.pc	2015-01-30 19:23:26.859101219 +0200
+@@ -1,5 +1,5 @@
+-prefix=/usr
+-exec_prefix=/usr
++prefix=
++exec_prefix=
+ libdir=${exec_prefix}/lib
+ includedir=${prefix}/include/libnl-tiny
+ 
+diff -rup libnl-tiny-svn30012015-orig/src/Makefile libnl-tiny-svn30012015/src/Makefile
+--- libnl-tiny-svn30012015-orig/src/Makefile	2015-01-30 19:21:21.939098250 +0200
++++ libnl-tiny-svn30012015/src/Makefile	2015-01-30 19:23:16.287100967 +0200
+@@ -1,9 +1,9 @@
+-CC=gcc
++CC?=gcc
+ WFLAGS=-Wall
+-CFLAGS=-O2
++CFLAGS?=-O2
+ INCLUDES=-Iinclude
+ 
+-LIBNAME=libnl-tiny.so
++LIBNAME=libnl-tiny.a
+ 
+ all: $(LIBNAME)
+ 
+@@ -14,4 +14,4 @@ LIBNL_OBJ=nl.o handlers.o msg.o attr.o c
+ GENL_OBJ=genl.o genl_family.o genl_ctrl.o genl_mngt.o unl.o
+ 
+ $(LIBNAME): $(LIBNL_OBJ) $(GENL_OBJ)
+-	$(CC) -shared -o $@ $^
++	ar rcs $@ $^

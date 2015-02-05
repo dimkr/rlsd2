@@ -1,0 +1,14 @@
+diff -rup libxml2-2.9.2-orig/Makefile.in libxml2-2.9.2/Makefile.in
+--- libxml2-2.9.2-orig/Makefile.in	2015-01-30 15:04:22.554209556 +0200
++++ libxml2-2.9.2/Makefile.in	2015-01-30 15:05:03.210210522 +0200
+@@ -833,8 +833,8 @@ cmake_DATA = libxml2-config.cmake
+ #
+ # Install the tests program sources as examples 
+ #
+-BASE_DIR = $(datadir)/doc
+-DOC_MODULE = libxml2-$(VERSION)
++BASE_DIR = $(docdir)
++DOC_MODULE = libxml2
+ EXAMPLES_DIR = $(BASE_DIR)/$(DOC_MODULE)/examples
+ 
+ #

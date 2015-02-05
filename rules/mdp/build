@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/visit1985/mdp.git"
+PKG_DESC="A presentation tool"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" PREFIX="" install
+	install -D -m 644 README.md "$1/doc/mdp/README.md"
+	install -m 644 CREDITS "$1/doc/mdp/CREDITS"
+	install -m 644 AUTHORS "$1/doc/mdp/AUTHORS"
+	install -m 644 COPYING "$1/doc/mdp/COPYING"
+}

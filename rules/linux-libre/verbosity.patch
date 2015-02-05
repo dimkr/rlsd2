@@ -1,0 +1,12 @@
+diff -rup linux-3.14-orig/kernel/printk/printk.c linux-3.14/kernel/printk/printk.c
+--- linux-3.14-orig/kernel/printk/printk.c	2014-07-04 16:49:38.523724976 +0300
++++ linux-3.14/kernel/printk/printk.c	2014-07-04 16:54:00.109720291 +0300
+@@ -59,7 +59,7 @@
+ 
+ /* We show everything that is MORE important than this.. */
+ #define MINIMUM_CONSOLE_LOGLEVEL 1 /* Minimum loglevel we let people use */
+-#define DEFAULT_CONSOLE_LOGLEVEL 7 /* anything MORE serious than KERN_DEBUG */
++#define DEFAULT_CONSOLE_LOGLEVEL 3 /* anything MORE serious than KERN_ERR */
+ 
+ int console_printk[4] = {
+ 	DEFAULT_CONSOLE_LOGLEVEL,	/* console_loglevel */

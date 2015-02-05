@@ -1,0 +1,13 @@
+diff -rup calcurse-3.2.1-orig/scripts/Makefile.in calcurse-3.2.1/scripts/Makefile.in
+--- calcurse-3.2.1-orig/scripts/Makefile.in	2015-01-30 21:11:47.505179254 +0200
++++ calcurse-3.2.1/scripts/Makefile.in	2015-01-30 21:12:11.169005756 +0200
+@@ -253,8 +253,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ AUTOMAKE_OPTIONS = foreign
+-dist_bin_SCRIPTS = \
+-	calcurse-upgrade
++dist_bin_SCRIPTS =
+ 
+ EXTRA_DIST = \
+ 	calcurse-upgrade.sh.in

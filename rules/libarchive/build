@@ -1,0 +1,22 @@
+PKG_VER="3.1.2"
+PKG_SRCS="http://www.libarchive.org/downloads/libarchive-$PKG_VER.tar.gz"
+PKG_DESC="An archive handling library"
+PKG_DEPS="musl zlib xz lbzip2"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --without-openssl
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	ln -s bsdtar "$1/bin/tar"
+	ln -s bsdcpio "$1/bin/cpio"
+	install -D -m 644 README "$1/doc/libarchive/README"
+	install -m 644 NEWS "$1/doc/libarchive/NEWS"
+	install -m 644 COPYING "$1/doc/libarchive/COPYING"
+}

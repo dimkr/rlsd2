@@ -1,0 +1,47 @@
+      _         _
+ _ __| |___  __| |
+| '__| / __|/ _` |
+| |  | \__ \ (_| |
+|_|  |_|___/\__,_|
+
+RLSD, the Retro Linux-libre Software Distribution, is a small, "live" operating
+system with GNU/Linux-libre (http://linux-libre.fsfla.org/) and retro
+applications for the x86 and x86_64 architectures.
+
+This is the development version of RLSD 2.x. It provides a smarter, simpler and
+faster build system designed for native building, without a cross-compiler. In
+addition, it introduces new security features.
+
+RLSD consists of free software: software that respects the user's freedom. RLSD
+is free to study, modify and share. To read more about free software, see
+http://www.gnu.org/philosophy/free-sw.html.
+
+For more information, see the project homepage (http://rlsd.dimakrasner.com/).
+
+Building
+========
+
+RLSD is built from source. It can be cross-compiled through any Debian
+(http://www.debian.org/) based distribution.
+
+To build RLSD, install the following packages:
+  build-essential autoconf automake autotools-dev autoconf-archive unzip flex
+  bison git nasm squashfs-tools pkg-config file subversion bc dosfstools yasm
+  libarchive-dev libcurl4-gnutls-dev xorriso wget
+  liblwp-useragent-determined-perl advancecomp optipng curl gawk clzip libtool \
+  mercurial
+
+Then, switch to the RLSD directory and run:
+  ./scripts/build_all
+
+Credits and Legal Information
+=============================
+
+RLSD consists of many packages; each has its own license, detailed under RLSD's
+/doc.
+
+The rest of RLSD (its build system, file system skeleton, etc') is free and
+unencumbered software released under the terms of the MIT license; see COPYING
+for the license text.
+
+The ASCII art logo at the top was made using FIGlet (http://www.figlet.org/).

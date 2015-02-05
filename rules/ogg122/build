@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/dimkr/ogg122.git"
+PKG_DESC="An Ogg Vorbis player"
+PKG_DEPS="musl tinyalsa"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      PREFIX="/" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc" \
+	      install
+}

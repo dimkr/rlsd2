@@ -1,0 +1,5 @@
+HOOK_NAME="remove VCS files"
+
+run() {
+	find . -name .gitignore -delete
+}

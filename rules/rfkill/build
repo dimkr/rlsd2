@@ -1,0 +1,14 @@
+PKG_VER="0.5"
+PKG_SRCS="https://www.kernel.org/pub/software/network/rfkill/rfkill-$PKG_VER.tar.xz"
+PKG_DESC="A tool for disabling network interfaces"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" SBINDIR="/bin" MANDIR="/man" install
+	install -D -m 644 README "$1/doc/rfkill/README"
+	install -m 644 COPYING "$1/doc/rfkill/COPYING"
+}

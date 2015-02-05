@@ -1,0 +1,26 @@
+HOOK_NAME="remove unneeded files"
+
+run() {
+	for i in ./share/gtk-doc \
+	         ./share/aclocal \
+	         ./share/info \
+	         ./share/libxml2 \
+	         ./share/info \
+	         ./share/pixmaps \
+	         ./share/applications \
+	         ./lib/*.* \
+	         ./lib/alsa-lib/smixer/* \
+	         ./include \
+	         ./lib/pkgconfig \
+	         ./bin/*-config \
+	         ./man/man1/*-config.1 \
+	         ./man/man2 \
+	         ./man/man3
+	do
+		rm -rvf "$i" 2>/dev/null
+	done
+
+	rmdir ./share/* 2>/dev/null
+	rmdir ./man/* 2>/dev/null
+	rmdir ./* 2>/dev/null
+}

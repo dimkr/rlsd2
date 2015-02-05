@@ -1,0 +1,21 @@
+PKG_VER="1.0"
+PKG_SRCS="http://m.seehuhn.de/programs/moon-buggy-$PKG_VER.tar.gz"
+PKG_DESC="A moon-patrol clone"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --infodir="/share/info" \
+	            --mandir="/man"
+	            --sharedstatedir="/var/games"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/moon-buggy/README"
+	install -m 644 ChangeLog "$1/doc/moon-buggy/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/moon-buggy/AUTHORS"
+	install -m 644 THANKS "$1/doc/moon-buggy/THANKS"
+	install -m 644 COPYING "$1/doc/moon-buggy/COPYING"
+}

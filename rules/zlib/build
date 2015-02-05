@@ -1,0 +1,16 @@
+PKG_VER="1.2.8"
+PKG_SRCS="http://zlib.net/zlib-$PKG_VER.tar.gz"
+PKG_DESC="A compression library"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --static
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/zlib/README"
+	install -m 644 ChangeLog "$1/doc/zlib/ChangeLog"
+}

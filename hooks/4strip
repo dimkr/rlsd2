@@ -1,0 +1,14 @@
+HOOK_NAME="remove debugging symbols"
+
+run() {
+	[ ! -d "./bin" ] && return
+
+	find "./bin" -type f | while read i
+	do
+		type="$(file -b --mime-type "$i")"
+		[ "application/x-executable" != "$type" ] && continue
+		echo "> Stripping $i"
+		strip --strip-all -R .note -R .comment "$i"
+		sstrip -z "$i"
+	done
+}

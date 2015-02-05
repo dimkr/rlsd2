@@ -1,0 +1,20 @@
+PKG_VER="2.7.3"
+PKG_SRCS="http://ftp.gnu.org/gnu/patch/patch-$PKG_VER.tar.xz"
+PKG_DESC="A file patching tool"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/patch/README"
+	install -m 644 NEWS "$1/doc/patch/NEWS"
+	install -m 644 ChangeLog "$1/doc/patch/ChangeLog"
+	install -m 644 ChangeLog-2011 "$1/doc/patch/ChangeLog-2011"
+	install -m 644 AUTHORS "$1/doc/patch/AUTHORS"
+	install -m 644 COPYING "$1/doc/patch/COPYING"
+}

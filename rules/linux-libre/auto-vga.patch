@@ -1,0 +1,53 @@
+diff -rup linux-3.14.19-orig/arch/x86/boot/video.c linux-3.14.19/arch/x86/boot/video.c
+--- linux-3.14.19-orig/arch/x86/boot/video.c	2014-09-21 20:11:20.662964171 +0300
++++ linux-3.14.19/arch/x86/boot/video.c	2014-09-22 19:22:39.520944994 +0300
+@@ -312,6 +312,39 @@ static void restore_screen(void)
+ 	store_cursor_position();
+ }
+ 
++static u16 guess_mode(void) {
++	int i;
++	unsigned long max_pixels = 0UL;
++	u16 max_depth = 0;
++	u16 mode = ASK_VGA;
++	struct card_info *card;
++	struct mode_info *mi;
++
++	for (card = video_cards; card < video_cards_end; card++) {
++		mi = card->modes;
++		for (i = 0; i < card->nmodes; i++, mi++) {
++			int visible = mi->x && mi->y;
++			u16 mode_id = mi->mode ? mi->mode :
++					(mi->y << 8)+mi->x;
++
++			if (!visible)
++				continue; /* Hidden mode */
++
++			unsigned long pixels = mi->x * mi->y;
++			if (pixels > max_pixels) {
++				max_pixels = pixels;
++				max_depth = mi->depth;
++				mode = mode_id;
++			} else if ((pixels == max_pixels) && (mi->depth > max_depth)) {
++				max_depth = mi->depth;
++				mode = mode_id;
++			}
++		}
++	}
++
++	return mode;
++}
++
+ void set_video(void)
+ {
+ 	u16 mode = boot_params.hdr.vid_mode;
+@@ -322,6 +355,9 @@ void set_video(void)
+ 	save_screen();
+ 	probe_cards(0);
+ 
++	if (mode == ASK_VGA)
++		mode = guess_mode();
++
+ 	for (;;) {
+ 		if (mode == ASK_VGA)
+ 			mode = mode_menu();

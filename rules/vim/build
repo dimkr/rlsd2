@@ -1,0 +1,17 @@
+PKG_SRCS="https://vim.googlecode.com/hg"
+PKG_DESC="A text editor"
+PKG_DEPS="musl gpm"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-multibyte \
+	            --disable-nls
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	ln -s vim "$1/bin/vi"
+	install -D -m 644 README.txt "$1/doc/vim/README.txt"
+}

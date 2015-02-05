@@ -1,0 +1,6 @@
+#!/bin/sh
+
+./scripts/gen_deps > Makefile.deps
+make -j 1
+./scripts/create_repo
+./scripts/create_iso

@@ -1,0 +1,18 @@
+PKG_VER="3.17"
+PKG_SRCS="https://www.kernel.org/pub/software/network/iw/iw-$PKG_VER.tar.xz"
+PKG_DESC="A wireless network interface configuration tool"
+PKG_DEPS="musl libnl-tiny"
+
+build() {
+	# iw uses kernel-style sections that contain structs, so it breaks when
+	# built with -gc-sections
+	CFLAGS="-D_GNU_SOURCE $CFLAGS" \
+	LDFLAGS="$(echo $LDFLAGS | sed s~'-Wl,-gc-sections'~~)" \
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" SBINDIR="/bin" MANDIR="/man" install
+	install -D -m 644 README "$1/doc/iw/README"
+	install -m 644 COPYING "$1/doc/iw/COPYING"
+}

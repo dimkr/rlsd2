@@ -1,0 +1,24 @@
+PKG_VER="0.7.8"
+PKG_SRCS="http://prdownloads.sourceforge.net/vifm/vifm-$PKG_VER.tar.bz2"
+PKG_DESC="A two-pane file manager"
+PKG_DEPS="musl ncurses file"
+
+build() {
+	LIBS="-lmagic -lz" \
+	./configure --prefix="" \
+		    --mandir="/man" \
+	            --disable-desktop-files \
+	            --with-curses-name="ncurses"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/vifm/README"
+	install -m 644 FAQ "$1/doc/vifm/FAQ"
+	install -m 644 NEWS "$1/doc/vifm/NEWS"
+	install -m 644 ChangeLog "$1/doc/vifm/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/vifm/AUTHORS"
+	install -m 644 THANKS "$1/doc/vifm/THANKS"
+	install -m 644 COPYING "$1/doc/vifm/COPYING"
+}

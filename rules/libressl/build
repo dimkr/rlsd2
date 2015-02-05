@@ -1,0 +1,21 @@
+PKG_VER="2.1.3"
+PKG_SRCS="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$PKG_VER.tar.gz"
+PKG_DESC="An encryption and privacy library"
+PKG_DEPS="musl zlib ca-certificates"
+
+build() {
+	./configure --prefix="" \
+	            --datarootdir="/" \
+	            --disable-shared \
+	            --enable-static
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/libressl/README"
+	install -m 644 NEWS "$1/doc/libressl/NEWS"
+	install -m 644 ChangeLog "$1/doc/libressl/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/libressl/AUTHORS"
+	install -m 644 COPYING "$1/doc/libressl/COPYING"
+}

@@ -1,0 +1,22 @@
+PKG_VER="1.0.3"
+PKG_SRCS="http://hisham.hm/htop/releases/$PKG_VER/htop-$PKG_VER.tar.gz"
+PKG_DESC="A process viewer"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-openvz \
+	            --disable-vserver \
+	            --disable-ancient-vserver \
+	            --disable-unicode
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/htop/README"
+	install -m 644 NEWS "$1/doc/htop/NEWS"
+	install -m 644 AUTHORS "$1/doc/htop/AUTHORS"
+	install -m 644 COPYING "$1/doc/htop/COPYING"
+}

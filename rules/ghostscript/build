@@ -1,0 +1,26 @@
+PKG_VER="9.15"
+PKG_SRCS="http://downloads.ghostscript.com/public/ghostscript-$PKG_VER.tar.gz"
+PKG_DESC="A PostScript and PDF interpreter"
+PKG_DEPS="musl zlib libpng libjpeg-turbo"
+
+build() {
+	rm -rf zlib jpegxr
+
+	autoconf
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-fontconfig \
+	            --disable-freetype \
+	            --disable-gtk \
+	            --disable-dynamic \
+	            --with-system-libtiff \
+	            --with-fontpath="/share/fonts/75dpi:/share/fonts/100dpi:/share/fonts/misc:/share/fonts/truetype:/share/fonts/cyrillic"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	mkdir -p "$1/doc"
+	ln -s ../share/ghostscript/$PKG_VER/doc "$1/doc/ghostscript"
+	install -m 644 LICENSE "$1/doc/ghostscript/LICENSE"
+}

@@ -1,0 +1,12 @@
+PKG_SRCS="https://raw.githubusercontent.com/bagder/curl/master/lib/mk-ca-bundle.pl http://mxr.mozilla.org/mozilla/source/security/nss/COPYING?raw=1"
+PKG_DESC="CA certificates"
+
+build() {
+	perl mk-ca-bundle.pl cert.pem
+}
+
+package() {
+	install -D -m 644 cert.pem "$1/etc/ssl/cert.pem"
+	install -D -m 644 COPYING "$1/doc/ca-certificates/COPYING"
+}
+

@@ -1,0 +1,22 @@
+PKG_VER="3.3"
+PKG_SRCS="http://ftp.gnu.org/gnu/diffutils/diffutils-$PKG_VER.tar.xz"
+PKG_DESC="Patch creation and file comparison tools"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-nls
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/diffutils/README"
+	install -m 644 NEWS "$1/doc/diffutils/NEWS"
+	install -m 644 ChangeLog "$1/doc/diffutils/ChangeLog"
+	install -m 644 ChangeLog-2008 "$1/doc/diffutils/ChangeLog-2008"
+	install -m 644 AUTHORS "$1/doc/diffutils/AUTHORS"
+	install -m 644 THANKS "$1/doc/diffutils/THANKS"
+	install -m 644 COPYING "$1/doc/diffutils/COPYING"
+}

@@ -1,0 +1,11 @@
+PKG_SRCS="https://github.com/dimkr/sdaemons.git"
+PKG_DESC="Core system daemons"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+}

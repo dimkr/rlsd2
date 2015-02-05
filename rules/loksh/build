@@ -1,0 +1,16 @@
+PKG_SRCS="https://github.com/dimkr/loksh.git"
+PKG_DESC="A command-line shell"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      BIN_DIR="/bin" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc/loksh" \
+	      install
+	ln -s ksh "$1/bin/sh"
+}

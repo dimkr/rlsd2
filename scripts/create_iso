@@ -1,0 +1,77 @@
+#!/bin/sh
+
+TODAY="$(date +%d%m%Y)"
+PACKAGES="skeleton
+          toybox
+          sdaemons
+          loksh
+          packlad
+          mandoc
+          initramfs
+          linux-libre
+          isolinux
+          lok
+          rfkill
+          dhcpcd
+          iw
+          wpa_supplicant
+          gzip
+          lbzip2
+          xz
+          libarchive
+          vim"
+
+# build the root file system
+root_fs="$(mktemp -d -u)"
+./scripts/build_rootfs  "$root_fs" "$PACKAGES"
+if [ ! -f "$root_fs/boot/bzImage" ] ||
+   [ ! -f "$root_fs/boot/initrd.xz" ] ||
+   [ ! -f "$root_fs/boot/isolinux.bin" ]
+then
+	echo "Error: the root file system must contain:
+  1) A kernel (/boot/bzImage)
+  2) An initramfs archive (/boot/initrd.xz)
+  3) A boot loader (/boot/isolinux.bin)"
+	rm -rf "$root_fs"
+	exit 1
+fi
+
+# create a temporary directory for the extracted ISO image contents
+iso_root="$(mktemp -d)"
+mkdir "$iso_root/boot"
+
+# put the kernel, the boot loader and its configuration file in the image root,
+# for BIOS boot
+mv "$root_fs/boot/bzImage" "$iso_root/boot/"
+mv "$root_fs/boot/initrd.xz" "$iso_root/boot/"
+mv "$root_fs/boot/isolinux.bin" "$iso_root/"
+mv "$root_fs/boot/isohdpfx.bin" "$iso_root/"
+mv "$root_fs/boot/menu.c32" "$iso_root/"
+mv "$root_fs/boot/isolinux.cfg" "$iso_root/"
+rm -rf "$root_fs/boot"
+
+# generate the root file system image
+mksquashfs "$root_fs" \
+           "$iso_root/boot/rootfs.sfs" \
+           -comp xz \
+           -Xbcj x86 \
+           -b 512K \
+           -no-exports
+rm -rf "$root_fs"
+
+# generate an ISO image
+xorriso -as mkisofs \
+        -iso-level 3 \
+        -full-iso9660-filenames \
+        -volid "RLSD_$TODAY" \
+        -appid "RLSD $TODAY" \
+        -eltorito-boot isolinux.bin \
+        -eltorito-catalog boot.cat \
+        -no-emul-boot -boot-load-size 4 -boot-info-table \
+        -isohybrid-mbr "$iso_root/isohdpfx.bin" \
+        $uefi_flags \
+        -output "images/rlsd-$TODAY.iso" \
+        "$iso_root"
+
+# clean up
+rm -rf "$iso_root"

@@ -1,0 +1,16 @@
+PKG_VER="2.10"
+PKG_SRCS="http://www.catb.org/~esr/bs/bs-$PKG_VER.tar.gz"
+PKG_DESC="A Battleships clone"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE CC="$CC" TERMLIB="$LDFLAGS -lncurses"
+}
+
+package() {
+	install -D -m 755 bs "$1/bin/bs"
+	install -D -m 644 bs.6 "$1/man/man6/bs.6"
+	install -D -m 644 README "$1/doc/bs/README"
+	install -m 644 NEWS "$1/doc/bs/NEWS"
+	install -m 644 COPYING "$1/doc/bs/COPYING"
+}

@@ -1,0 +1,21 @@
+PKG_VER="1.06"
+PKG_SRCS="http://ftp.gnu.org/pub/gnu/bc/bc-$PKG_VER.tar.gz"
+PKG_DESC="A numeric processing language"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --infodir="/share/info" \
+	            --mandir="/man"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/bc/README"
+	install -m 644 ChangeLog "$1/doc/bc/ChangeLog"
+	install -m 644 NEWS "$1/doc/bc/NEWS"
+	install -m 644 AUTHORS "$1/doc/bc/AUTHORS"
+	install -m 644 COPYING.LIB "$1/doc/bc/COPYING.LIB"
+	install -m 644 COPYING "$1/doc/bc/COPYING"
+}

@@ -1,0 +1,18 @@
+PKG_VER="3.2.3"
+PKG_SRCS="http://roy.marples.name/downloads/dhcpcd/dhcpcd-$PKG_VER.tar.bz2 http://ftp.de.debian.org/debian/pool/main/d/dhcpcd/dhcpcd_3.2.3-11.diff.gz"
+PKG_DESC="A DHCP client"
+PKG_DEPS="musl"
+
+build() {
+	cat ../dhcpcd_3.2.3-11.diff.gz | gzip -d | patch -p 1
+
+	$MAKE CC="$CC" \
+	      CFLAGS="-Icompat $CFLAGS" \
+	      LDFLAGS="$LDFLAGS" \
+	      INFODIR="/run"
+}
+
+package() {
+	$MAKE DESTDIR="$1" BINDIR="/bin" MANDIR="/man/man" install
+	install -D -m 644 README "$1/doc/dhcpcd/README"
+}

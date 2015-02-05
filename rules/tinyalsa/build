@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/tinyalsa/tinyalsa.git"
+PKG_DESC="Core audio library"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	install -D -m 644 libtinyalsa.a "$1/lib/libtinyalsa.a"
+	install -D -m 644 README "$1/doc/tinyalsa/README"
+	head -n 26 mixer.c | tail -n 24 | cut -c 4- > "$1/doc/tinyalsa/COPYING"
+	chmod 644 "$1/doc/tinyalsa/COPYING"
+	cp -r include "$1/"
+}

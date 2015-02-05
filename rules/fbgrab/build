@@ -1,0 +1,13 @@
+PKG_VER="1.2"
+PKG_SRCS="http://fbgrab.monells.se/fbgrab-$PKG_VER.tar.gz"
+PKG_DESC="A screenshot taking tool"
+PKG_DEPS="musl libpng"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 COPYING "$1/doc/fbgrab/COPYING"
+}

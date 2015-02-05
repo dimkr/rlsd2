@@ -1,0 +1,22 @@
+PKG_VER="2.9"
+PKG_SRCS="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
+PKG_DESC="A web browser"
+PKG_DEPS="musl zlib xz libressl libpng libjpeg-turbo gpm"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-graphics \
+	            --without-libtiff
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/links/README"
+	install -m 644 KEYS "$1/doc/links/KEYS"
+	install -m 644 ChangeLog "$1/doc/links/ChangeLog"
+	install -m 644 NEWS "$1/doc/links/NEWS"
+	install -m 644 AUTHORS "$1/doc/links/AUTHORS"
+	install -m 644 COPYING "$1/doc/links/COPYING"
+}

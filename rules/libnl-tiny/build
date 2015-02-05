@@ -1,0 +1,15 @@
+PKG_SRCS="svn://svn.openwrt.org/openwrt/trunk/package/libs/libnl-tiny"
+PKG_DESC="An IPC library"
+PKG_DEPS="musl"
+
+build() {
+	cd src
+	$MAKE CC="$CC" CFLAGS="$CFLAGS"
+}
+
+package() {
+	install -D -m 644 libnl-tiny.a "$1/lib/libnl-tiny.a"
+	mkdir "$1/include"
+	cp -r include "$1/include/libnl-tiny"
+	install -D -m 644 ../files/libnl-tiny.pc "$1/lib/pkgconfig/libnl-tiny.pc"
+}

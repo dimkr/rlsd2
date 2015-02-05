@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/dimkr/luufs.git"
+PKG_DESC="A union file system"
+PKG_DEPS="musl zlib fuse"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      SBIN_DIR="/bin" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc/luufs" \
+	      install
+}

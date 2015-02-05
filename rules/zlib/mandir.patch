@@ -1,0 +1,12 @@
+diff -rup zlib-1.2.8-orig/configure zlib-1.2.8/configure
+--- zlib-1.2.8-orig/configure	2015-01-30 14:29:27.614159767 +0200
++++ zlib-1.2.8/configure	2015-01-30 14:29:36.118159969 +0200
+@@ -64,7 +64,7 @@ exec_prefix=${exec_prefix-'${prefix}'}
+ libdir=${libdir-'${exec_prefix}/lib'}
+ sharedlibdir=${sharedlibdir-'${libdir}'}
+ includedir=${includedir-'${prefix}/include'}
+-mandir=${mandir-'${prefix}/share/man'}
++mandir=${mandir-'${prefix}/man'}
+ shared_ext='.so'
+ shared=1
+ solo=0

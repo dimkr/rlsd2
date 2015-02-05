@@ -1,0 +1,17 @@
+PKG_VER="2.2.5"
+PKG_SRCS="ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-$PKG_VER.tar.gz"
+PKG_DESC="A text banner generator"
+PKG_DEPS="musl"
+
+build() {
+	LD="$CC" \
+	CFLAGS="-D__BEGIN_DECLS=\; -D__END_DECLS=\; $CFLAGS" \
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/figlet/README"
+	install -m 644 CHANGES "$1/doc/figlet/CHANGES"
+	install -m 644 LICENSE "$1/doc/figlet/LICENSE"
+}

@@ -1,0 +1,26 @@
+PKG_VER="2.9.3"
+PKG_SRCS="http://downloads.sourceforge.net/project/fuse/fuse-2.X/$PKG_VER/fuse-$PKG_VER.tar.gz"
+PKG_DESC="An interface for user-mode file systems"
+PKG_DEPS="musl"
+
+build() {
+	MOUNT_FUSE_PATH="/bin" \
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --disable-example \
+	            --disable-mtab
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/fuse/README"
+	install -m 644 README.NFS "$1/doc/fuse/README.NFS"
+	install -m 644 NEWS "$1/doc/fuse/NEWS"
+	install -m 644 ChangeLog "$1/doc/fuse/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/fuse/AUTHORS"
+	install -m 644 COPYING "$1/doc/fuse/COPYING"
+	install -m 644 COPYING.LIB "$1/doc/fuse/COPYING.LIB"
+}

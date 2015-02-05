@@ -1,0 +1,23 @@
+PKG_VER="2.2.3"
+PKG_SRCS="http://www.scrollz.info/download/ScrollZ-$PKG_VER.tar.gz"
+PKG_DESC="An IRC client"
+PKG_DEPS="musl ncurses libressl"
+
+build() {
+	./configure --prefix="" \
+	            --libexecdir="/lib/ScrollZ" \
+	            --mandir="/man" \
+	            --enable-ipv6 \
+	            --with-openssl
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/scrollz/README"
+	install -m 644 README.ircII "$1/doc/scrollz/README.ircII"
+	install -m 644 NEWS "$1/doc/scrollz/NEWS"
+	install -m 644 ChangeLog "$1/doc/scrollz/ChangeLog"
+	install -m 644 ChangeLog.ircii "$1/doc/scrollz/ChangeLog.ircii"
+	install -m 644 COPYRIGHT "$1/doc/scrollz/COPYRIGHT"
+}

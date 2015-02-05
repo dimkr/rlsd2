@@ -1,0 +1,25 @@
+PKG_VER="2015.67"
+PKG_SRCS="https://matt.ucc.asn.au/dropbear/releases/dropbear-$PKG_VER.tar.bz2"
+PKG_DESC="A SSH server and client"
+PKG_DEPS="musl zlib"
+
+PROGRAMS="dropbear dbclient dropbearkey scp"
+
+build() {
+	./configure --prefix="" \
+	            --sbindir="/bin" \
+	            --mandir="/man" \
+	            --enable-zlib \
+	            --disable-pam \
+	            --disable-lastlog
+	$MAKE PROGRAMS="$PROGRAMS" MULTI=1
+}
+
+package() {
+	$MAKE DESTDIR="$1" PROGRAMS="$PROGRAMS" MULTI=1 install
+	ln -s dropbearmulti "$1/bin/ssh"
+	install -d -m 644 "$1/etc/dropbear"
+	install -D -m 644 README "$1/doc/dropbear/README"
+	install -m 644 CHANGES "$1/doc/dropbear/CHANGES"
+	install -m 644 LICENSE "$1/doc/dropbear/LICENSE"
+}

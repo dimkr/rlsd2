@@ -1,0 +1,32 @@
+PKG_VER="2.9.2"
+PKG_SRCS="ftp://ftp.xmlsoft.org/libxml2/libxml2-$PKG_VER.tar.gz"
+PKG_DESC="A XML parsing library"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --datarootdir="/share" \
+	            --mandir="/man" \
+	            --docdir="/doc" \
+	            --disable-shared \
+	            --enable-static \
+	            --without-debug \
+	            --without-ftp \
+	            --without-http \
+	            --without-legacy \
+	            --without-html-dir \
+	            --without-python \
+	            --without-threads \
+	            --without-modules \
+	            --without-lzma
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -m 644 README "$1/doc/libxml2/README"
+	install -m 644 ChangeLog "$1/doc/libxml2/ChangeLog"
+	install -m 644 NEWS "$1/doc/libxml2/NEWS"
+	install -m 644 AUTHORS "$1/doc/libxml2/AUTHORS"
+	install -m 644 COPYING "$1/doc/libxml2/COPYING"
+}

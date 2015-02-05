@@ -1,0 +1,20 @@
+PKG_VER="1.4.0"
+PKG_SRCS="http://sourceforge.net/projects/libjpeg-turbo/files/$PKG_VER/libjpeg-turbo-$PKG_VER.tar.gz"
+PKG_DESC="A library for handling JPEG images"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --datadir="/" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --without-jpeg7 \
+	            --without-jpeg8 \
+	            --without-turbojpeg
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+}

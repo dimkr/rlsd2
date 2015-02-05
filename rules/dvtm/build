@@ -1,0 +1,16 @@
+PKG_VER="0.13"
+PKG_SRCS="http://www.brain-dump.org/projects/dvtm/dvtm-$PKG_VER.tar.gz"
+PKG_DESC="A dynamic virtual terminal manager"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE
+}
+
+package() {
+	# create /share/terminfo - otherwise, tic installs the compiled files to ~
+	install -D -d -m 755 "$1/share/terminfo"
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/dvtm/README"
+	install -m 644 LICENSE "$1/doc/dvtm/LICENSE"
+}

@@ -1,0 +1,20 @@
+PKG_VER="3.2.1"
+PKG_SRCS="http://calcurse.org/files/calcurse-$PKG_VER.tar.gz"
+PKG_DESC="A personal organizer"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --datarootdir="/" \
+	            --disable-nls \
+	            --disable-memory-debug
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/calcurse/README"
+	install -m 644 NEWS "$1/doc/calcurse/NEWS"
+	install -m 644 AUTHORS "$1/doc/calcurse/AUTHORS"
+	install -m 644 COPYING "$1/doc/calcurse/COPYING"
+}

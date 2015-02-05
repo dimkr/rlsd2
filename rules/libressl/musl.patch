@@ -1,0 +1,33 @@
+diff -rup libressl-2.0.3-orig/crypto/compat/issetugid_linux.c libressl-2.0.3/crypto/compat/issetugid_linux.c
+--- libressl-2.0.3-orig/crypto/compat/issetugid_linux.c	2014-07-23 20:36:55.420997897 +0300
++++ libressl-2.0.3/crypto/compat/issetugid_linux.c	2014-07-23 20:38:01.421996715 +0300
+@@ -4,7 +4,9 @@
+  */
+ 
+ #include <errno.h>
++#ifdef __GLIBC__
+ #include <gnu/libc-version.h>
++#endif
+ #include <string.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+@@ -33,15 +35,19 @@ int issetugid(void)
+ 	 * info: http://lwn.net/Articles/519085/
+ 	 *
+ 	 */
++#ifdef __GLIBC__
+ 	const char *glcv = gnu_get_libc_version();
+ 	if (strverscmp(glcv, "2.19") >= 0) {
++#endif
+ 		errno = 0;
+ 		if (getauxval(AT_SECURE) == 0) {
+ 			if (errno != ENOENT) {
+ 				return 0;
+ 			}
+ 		}
++#ifdef __GLIBC__
+ 	}
+ #endif
++#endif
+ 	return 1;
+ }

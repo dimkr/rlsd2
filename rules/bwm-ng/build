@@ -1,0 +1,19 @@
+PKG_VER="0.6"
+PKG_SRCS="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VER.tar.gz"
+PKG_DESC="A network monitor"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/bwm-ng/README"
+	install -m 644 NEWS "$1/doc/bwm-ng/NEWS"
+	install -m 644 AUTHORS "$1/doc/bwm-ng/AUTHORS"
+	install -m 644 THANKS "$1/doc/bwm-ng/THANKS"
+	install -m 644 COPYING "$1/doc/bwm-ng/COPYING"
+}

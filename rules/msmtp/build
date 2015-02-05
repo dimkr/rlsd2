@@ -1,0 +1,23 @@
+PKG_VER="1.4.32"
+PKG_SRCS="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VER/msmtp-$PKG_VER.tar.bz2"
+PKG_DESC="An e-mail sending tool"
+PKG_DEPS="musl libressl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-nls \
+	            --with-ssl="openssl" \
+	            --without-libidn
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/msmtp/README"
+	install -m 644 NEWS "$1/doc/msmtp/NEWS"
+	install -m 644 ChangeLog "$1/doc/msmtp/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/msmtp/AUTHORS"
+	install -m 644 THANKS "$1/doc/msmtp/THANKS"
+	install -m 644 COPYING "$1/doc/msmtp/COPYING"
+}

@@ -1,0 +1,34 @@
+PKG_VER="1.1.6"
+PKG_SRCS="http://www.musl-libc.org/releases/musl-$PKG_VER.tar.gz"
+PKG_DESC="A C library"
+PKG_DEPS="iana-etc linux-libre-headers"
+
+build() {
+	# build separately, musl-gcc with SYSROOT as the prefix
+	./configure --prefix="$SYSROOT" \
+	            --libdir="$SYSROOT/lib" \
+	            --includedir="$SYSROOT/include" \
+	            --enable-gcc-wrapper
+	$MAKE tools/musl-gcc lib/musl-gcc.specs
+	mkdir host-tools
+	mv tools/musl-gcc host-tools/
+	mv lib/musl-gcc.specs host-tools/
+
+	./configure --prefix= \
+	            --includedir="/include" \
+	            --enable-optimize="" \
+	            --disable-gcc-wrapper \
+	            --disable-shared
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+
+	install -D -m 755 host-tools/musl-gcc "$SYSROOT/bin/musl-gcc"
+	install -D -m 644 host-tools/musl-gcc.specs "$SYSROOT/lib/musl-gcc.specs"
+
+	install -D -m 644 README "$1/doc/musl/README"
+	install -m 644 WHATSNEW "$1/doc/musl/WHATSNEW"
+	install -m 644 COPYRIGHT "$1/doc/musl/COPYRIGHT"
+}

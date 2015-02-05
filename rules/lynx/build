@@ -1,0 +1,27 @@
+PKG_VER="2.8.8"
+PKG_SRCS="http://lynx.isc.org/lynx$PKG_VER/lynx$PKG_VER.tar.bz2"
+PKG_DESC="A web browser"
+PKG_DEPS="musl zlib ncurses libressl"
+
+build() {
+	CFLAGS="-DUSE_OPENSSL_INCL $CFLAGS" \
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-nls \
+	            --with-ssl \
+	            --enable-ipv6 \
+	            --with-screen="ncurses" \
+	            --enable-underlines \
+	            --disable-gzip-help \
+	            --with-zlib
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/lynx/README"
+	install -m 644 CHANGES "$1/doc/lynx/CHANGES"
+	install -m 644 AUTHORS "$1/doc/lynx/AUTHORS"
+	install -m 644 COPYHEADER "$1/doc/lynx/COPYHEADER"
+	install -m 644 COPYING "$1/doc/lynx/COPYING"
+}

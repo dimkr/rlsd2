@@ -1,0 +1,9 @@
+HOOK_NAME="remove translations"
+
+run() {
+	find . -name "locale" -type d |
+	while read i
+	do
+		rm -rvf "$i"
+	done
+}

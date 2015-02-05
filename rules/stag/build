@@ -1,0 +1,11 @@
+PKG_SRCS="https://github.com/seenaburns/stag.git"
+PKG_DESC="A bar graph generator"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+}

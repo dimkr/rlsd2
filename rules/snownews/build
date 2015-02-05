@@ -1,0 +1,21 @@
+PKG_VER="1.5.12"
+PKG_SRCS="https://kiza.eu/media/software/snownews/snownews-$PKG_VER.tar.gz"
+PKG_DESC="A news reader"
+PKG_DEPS="musl zlib ncurses libressl libxml2"
+
+build() {
+	./configure --prefix="" \
+	             --disable-nls
+	EXTRA_CFLAGS="$CFLAGS" \
+	EXTRA_LDFLAGS="$LDFLAGS" \
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/snownews/README"
+	install -m 644 Changelog "$1/doc/snownews/Changelog"
+	install -m 644 AUTHOR "$1/doc/snownews/AUTHOR"
+	install -m 644 CREDITS "$1/doc/snownews/CREDITS"
+	install -m 644 COPYING "$1/doc/snownews/COPYING"
+}

@@ -1,0 +1,28 @@
+PKG_VER="4.2.1"
+PKG_SRCS="http://ftp.gnu.org/gnu/screen/screen-$PKG_VER.tar.gz"
+PKG_DESC="A terminal multiplexer"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --mandir=/man \
+	            --disable-socket-dir \
+	            --disable-pam \
+	            --disable-use-locale \
+	            --disable-telnet \
+	            --disable-colors256 \
+	            --disable-rxvt_osc \
+	            --with-sys-screenrc="/etc/screenrc"
+	$MAKE
+}
+
+package() {
+	mkdir -p "$1/bin" "$1/usr/share/screen/utf8encodings"
+	$MAKE DESTDIR="$1" install
+	rm -f "$1/bin/screen"
+	mv "$1/bin/screen-$PKG_VER" "$1/bin/screen"
+	install -D -m 644 README "$1/doc/screen/README"
+	install -m 644 NEWS "$1/doc/screen/NEWS"
+	install -m 644 ChangeLog "$1/doc/screen/ChangeLog"
+	install -m 644 COPYING "$1/doc/screen/COPYING"
+}

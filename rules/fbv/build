@@ -1,0 +1,15 @@
+PKG_VER="1.0b"
+PKG_SRCS="http://s-tech.elsat.net.pl/fbv/fbv-$PKG_VER.tar.gz"
+PKG_DESC="An image viewer"
+PKG_DEPS="musl libpng libjpeg-turbo giflib"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/fbv/README"
+	install -m 644 ChangeLog "$1/doc/fbv/ChangeLog"
+	install -m 644 COPYING "$1/doc/fbv/COPYING"
+}

@@ -1,0 +1,17 @@
+PKG_VER="3.10"
+PKG_SRCS="http://www.catb.org/~esr/greed/greed-$PKG_VER.tar.gz"
+PKG_DESC="A strategy game"
+PKG_DEPS="musl ncurses"
+
+build() {
+	$MAKE
+}
+
+package() {
+	install -D -m 755 greed "$1/bin/greed"
+	install -D -m 644 greed.6 "$1/man/man6/greed.6"
+	install -d -D -m 755 "$1/var/games/greed"
+	install -D -m 644 README "$1/doc/greed/README"
+	install -m 644 NEWS "$1/doc/greed/NEWS"
+	install -m 644 COPYING "$1/doc/greed/COPYING"
+}

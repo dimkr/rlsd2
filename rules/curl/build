@@ -1,0 +1,25 @@
+PKG_VER="7.40.0"
+PKG_SRCS="http://curl.haxx.se/download/curl-$PKG_VER.tar.bz2"
+PKG_DESC="A file transfer library"
+PKG_DEPS="musl zlib libressl"
+
+build() {
+	./configure --prefix="" \
+		    --mandir="/man" \
+		    --enable-static \
+	            --disable-shared \
+	            --disable-debug \
+	            --with-ca-bundle="/etc/ssl/cert.pem" \
+	            --disable-rtsp \
+	            --enable-ipv6
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/curl/README"
+	install -m 644 RELEASE-NOTES "$1/doc/curl/RELEASE-NOTES"
+	install -m 644 CHANGES "$1/doc/curl/CHANGES"
+	install -m 644 COPYING "$1/doc/curl/COPYING"
+}
+

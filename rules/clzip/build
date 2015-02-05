@@ -1,0 +1,24 @@
+PKG_VER="1.6"
+PKG_SRCS="http://download.savannah.gnu.org/releases/lzip/clzip/clzip-$PKG_VER.tar.gz"
+PKG_DESC="A compression tool"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --prefix="" \
+	            --datarootdir="/share" \
+	            --mandir="/man" \
+	            CC="$CC" \
+	            CFLAGS="$CFLAGS" \
+	            LDFLAGS="$LDFLAGS"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/clzip/README"
+	install -m 644 NEWS "$1/doc/clzip/NEWS"
+	install -m 644 ChangeLog "$1/doc/clzip/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/clzip/AUTHORS"
+	install -m 644 COPYING "$1/doc/clzip/COPYING"
+}

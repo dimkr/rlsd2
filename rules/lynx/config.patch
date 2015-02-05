@@ -1,0 +1,45 @@
+diff -rup lynx2-8-8-orig/lynx.cfg lynx2-8-8/lynx.cfg
+--- lynx2-8-8-orig/lynx.cfg	2015-01-30 23:19:38.913069120 +0200
++++ lynx2-8-8/lynx.cfg	2015-01-30 23:19:46.533069302 +0200
+@@ -90,7 +90,8 @@
+ #
+ # Normally we expect you will connect to a remote site, e.g., the Lynx starting
+ # site:
+-STARTFILE:http://lynx.isc.org/
++.ex
++#STARTFILE:http://lynx.isc.org/
+ #
+ # As an alternative, you may want to use a local URL.  A good choice for this is
+ # the user's home directory:
+diff -rup lynx2-8-8-orig/userdefs.h lynx2-8-8/userdefs.h
+--- lynx2-8-8-orig/userdefs.h	2015-01-30 23:19:38.921069121 +0200
++++ lynx2-8-8/userdefs.h	2015-01-30 23:20:05.297069747 +0200
+@@ -483,7 +483,7 @@
+  * Normally we expect you will connect to a remote site, e.g., the Lynx starting
+  * site:
+  */
+-#define STARTFILE "http://lynx.isc.org/"
++#define STARTFILE "file://localhost/doc/rlsd/getting_started.html"
+ /*
+  * As an alternative, you may want to use a local URL.  A good choice for this
+  * is the user's home directory:
+@@ -921,7 +921,7 @@
+  * The default defined here can be changed in lynx.cfg, and .lynxrc, or
+  * toggled via the -accept_all_cookies command line switch.
+  */
+-#define ACCEPT_ALL_COOKIES FALSE
++#define ACCEPT_ALL_COOKIES TRUE
+ 
+ /****************************************************************
+  *   Section 2.   Things that you probably want to change or review
+@@ -1549,8 +1549,8 @@
+ #else
+ /* have to define something... */
+ #undef SYSTEM_MAIL
+-#define SYSTEM_MAIL             "sendmail"
+-#define SYSTEM_MAIL_FLAGS       "-t -oi"
++#define SYSTEM_MAIL             "msmtp"
++#define SYSTEM_MAIL_FLAGS       "-t"
+ #endif /* _WINDOWS */
+ 
+ /*

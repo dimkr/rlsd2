@@ -1,0 +1,13 @@
+PKG_SRCS="https://github.com/dimkr/lok.git"
+PKG_DESC="A text processing tool"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" PREFIX="" install
+	install -D -m 644 README "$1/doc/lok/README"
+	install -m 644 README.upstream "$1/doc/lok/README.upstream"
+}

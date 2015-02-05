@@ -1,0 +1,18 @@
+#!/bin/sh
+
+ARCH="$(uname -m)"
+TODAY="$(date +%d%m%Y)"
+
+for i in rules/*
+do
+	PKG_VER="$TODAY"
+	PKG_DEPS=""
+	. "$i/build"
+	name="$(basename "$i")"
+	package="$name-$PKG_VER.pkg"
+	tar2pkg "packages/$name.tar.lz" \
+	        /etc/packlad/priv_key \
+	        /etc/packlad/pub_key \
+	        "repo/$package"
+	echo "$name|$PKG_VER|$PKG_DESC|$package|$ARCH|$PKG_DEPS" >> repo/available
+done

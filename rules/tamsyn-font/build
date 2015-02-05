@@ -1,0 +1,16 @@
+PKG_VER="1.11"
+PKG_SRCS="http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-$PKG_VER.tar.gz"
+PKG_DESC="A monospace, programming font"
+
+build() {
+	gunzip *.gz
+}
+
+package() {
+	for i in *.psf
+	do
+		install -D -m 644 $i "$1/share/consolefonts/$i"
+	done
+	install -D -m 644 README "$1/doc/tamsyn-font/README"
+	install -m 644 LICENSE "$1/doc/tamsyn-font/LICENSE"
+}

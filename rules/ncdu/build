@@ -1,0 +1,18 @@
+PKG_VER="1.10"
+PKG_SRCS="http://dev.yorhel.nl/download/ncdu-$PKG_VER.tar.gz"
+PKG_DESC="A disk usage analyzer"
+PKG_DEPS="musl ncurses"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --with-ncurses
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/ncdu/README"
+	install -D -m 644 ChangeLog "$1/doc/ncdu/ChangeLog"
+	install -D -m 644 COPYING "$1/doc/ncdu/COPYING"
+}

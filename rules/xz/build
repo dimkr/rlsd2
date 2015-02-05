@@ -1,0 +1,24 @@
+PKG_VER="5.2.0"
+PKG_SRCS="http://tukaani.org/xz/xz-$PKG_VER.tar.xz"
+PKG_DESC="Compression tools"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --includedir="/include" \
+	            --datarootdir="/" \
+	            --enable-static \
+	            --disable-shared \
+	            --disable-xzdec \
+	            --disable-lzmadec \
+	            --disable-scripts \
+	            --disable-nls
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -m 644 ChangeLog "$1/doc/xz/ChangeLog"
+	install -m 644 COPYING.GPLv3 "$1/doc/xz/COPYING.GPLv3"
+	install -m 644 COPYING.LGPLv2.1 "$1/doc/xz/COPYING.LGPLv2.1"
+}
