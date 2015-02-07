@@ -69,8 +69,9 @@ build_dir="$(mktemp -d -p "$BASE_DIR")"
 
 if [ -n "$PKG_SRCS" ]
 then
-	[ ! -d "sources/$1-$PKG_VER" ] && mkdir "sources/$1-$PKG_VER"
-	cd "sources/$1-$PKG_VER"
+	[ ! -d "sources/$1" ] && mkdir "sources/$1"
+	cd "sources/$1"
+
 	for i in $PKG_SRCS
 	do
 		case "$i" in
