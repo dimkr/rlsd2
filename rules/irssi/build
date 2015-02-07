@@ -1,0 +1,23 @@
+PKG_VER="0.8.17"
+PKG_SRCS="http://www.irssi.org/files/irssi-$PKG_VER.tar.bz2"
+PKG_DESC="An IRC client"
+PKG_DEPS="musl ncurses libressl glib"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --without-bot \
+	            --without-proxy \
+	            --without-modules \
+	            --with-perl="no"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README.md "$1/doc/irssi/README.md"
+	install -m 644 NEWS "$1/doc/irssi/NEWS"
+	install -m 644 ChangeLog "$1/doc/irssi/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/irssi/AUTHORS"
+	install -m 644 COPYING "$1/doc/irssi/COPYING"
+}

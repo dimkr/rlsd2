@@ -1,0 +1,22 @@
+PKG_VER="2.42.1"
+PKG_SRCS="http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.42/glib-$PKG_VER.tar.xz"
+PKG_DESC="A utility library"
+PKG_DEPS="musl libffi"
+
+build() {
+	./configure --prefix="" \
+	            --enable-debug="no" \
+	            --enable-static \
+	            --disable-shared \
+	            --with-libiconv="no"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/glib/README"
+	install -m 644 NEWS "$1/doc/glib/NEWS"
+	install -m 644 ChangeLog "$1/doc/glib/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/glib/AUTHORS"
+	install -m 644 COPYING "$1/doc/glib/COPYING"
+}

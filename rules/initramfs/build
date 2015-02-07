@@ -142,6 +142,7 @@ do
 				is_found=1
 				break 2
 			fi
+			umount /mnt/home
 		fi
 	done
 	sleep 1

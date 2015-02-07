@@ -1,0 +1,20 @@
+PKG_VER="3.2.1"
+PKG_SRCS="ftp://sourceware.org/pub/libffi/libffi-$PKG_VER.tar.gz"
+PKG_DESC="A calling conventions support library"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --enable-static \
+	            --disable-shared
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/libffi/README"
+	install -m 644 ChangeLog "$1/doc/libffi/ChangeLog"
+	install -m 644 ChangeLog.libffi "$1/doc/libffi/ChangeLog.libffi"
+	install -m 644 ChangeLog.libffi-3.1 "$1/doc/libffi/ChangeLog.libffi-3.1"
+	install -m 644 LICENSE "$1/doc/libffi/LICENSE"
+}

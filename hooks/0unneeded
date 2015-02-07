@@ -8,6 +8,20 @@ run() {
 	         ./share/info \
 	         ./share/pixmaps \
 	         ./share/applications \
+	         ./share/bash-completion \
+	         ./share/gdb \
+	         ./share/glib-2.0 \
+	         ./bin/gobject-* \
+	         ./bin/gio-* \
+	         ./bin/glib-* \
+	         ./bin/gdbus-* \
+	         ./bin/gtester-* \
+	         ./bin/gapplication \
+	         ./bin/gsettings \
+	         ./bin/gresource \
+	         ./bin/gdbus \
+	         ./bin/gtester \
+	         ./lib/locale \
 	         ./lib/*.* \
 	         ./lib/alsa-lib/smixer/* \
 	         ./include \

@@ -1,0 +1,24 @@
+PKG_VER="4.8.13"
+PKG_SRCS="http://ftp.midnight-commander.org/mc-$PKG_VER.tar.xz"
+PKG_DESC="A dual-pane file manager"
+PKG_DEPS="musl ncurses gpm glib"
+
+build() {
+	./configure --prefix="" \
+	            --libexecdir="/lib/mc" \
+	            --disable-nls \
+	            --disable-vfs \
+	            --with-screen="ncurses" \
+	            --with-homedir \
+	            --without-internal-edit
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/mc/README"
+	install -m 644 NEWS "$1/doc/mc/NEWS"
+	install -m 644 ChangeLog "$1/doc/mc/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/mc/AUTHORS"
+	install -m 644 COPYING "$1/doc/mc/COPYING"
+}

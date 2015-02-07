@@ -1,0 +1,25 @@
+diff -rupN libffi-3.2.1-orig/include/Makefile.in libffi-3.2.1/include/Makefile.in
+--- libffi-3.2.1-orig/include/Makefile.in	2015-02-07 12:06:21.394202023 +0200
++++ libffi-3.2.1/include/Makefile.in	2015-02-07 12:07:07.322203114 +0200
+@@ -314,7 +314,7 @@ top_srcdir = @top_srcdir@
+ AUTOMAKE_OPTIONS = foreign
+ DISTCLEANFILES = ffitarget.h
+ EXTRA_DIST = ffi.h.in ffi_common.h
+-includesdir = $(libdir)/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includesdir = $(includedir)/@PACKAGE_NAME@
+ nodist_includes_HEADERS = ffi.h ffitarget.h
+ all: all-am
+ 
+diff -rupN libffi-3.2.1-orig/libffi.pc.in libffi-3.2.1/libffi.pc.in
+--- libffi-3.2.1-orig/libffi.pc.in	2015-02-07 12:06:21.386202023 +0200
++++ libffi-3.2.1/libffi.pc.in	2015-02-07 12:09:11.606206068 +0200
+@@ -1,8 +1,7 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+-libdir=@libdir@
+ toolexeclibdir=@toolexeclibdir@
+-includedir=${libdir}/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includedir=${prefix}/include/@PACKAGE_NAME@
+ 
+ Name: @PACKAGE_NAME@
+ Description: Library supporting Foreign Function Interfaces
