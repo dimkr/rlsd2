@@ -1,0 +1,28 @@
+PKG_VER="1.1.1"
+PKG_SRCS="http://www.mplayerhq.hu/MPlayer/releases/MPlayer-$PKG_VER.tar.xz"
+PKG_DESC="A multimedia player"
+PKG_DEPS="musl ncurses libpng libjpeg-turbo alsa-lib"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-mencoder \
+	            --disable-iconv \
+	            --disable-langinfo \
+	            --disable-vidix \
+	            --disable-pnm \
+	            --disable-md5sum \
+	            --enable-runtime-cpudetection \
+	            --cc="$CC" \
+	            --extra-cflags="$CFLAGS" \
+	            --extra-ldflags="$LDFLAGS"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/mplayer/README"
+	install -m 644 AUTHORS "$1/doc/mplayer/AUTHORS"
+	install -m 644 LICENSE "$1/doc/mplayer/LICENSE"
+	install -m 644 Copyright "$1/doc/mplayer/Copyright"
+}
