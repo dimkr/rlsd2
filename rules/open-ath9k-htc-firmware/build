@@ -1,0 +1,16 @@
+PKG_SRCS="https://github.com/qca/open-ath9k-htc-firmware.git"
+PKG_DESC="Firmware for Atheros AR7010 and AR9271"
+
+build() {
+	CC="" CFLAGS="" LDFLAGS="" make toolchain
+	CFLAGS="" LDFLAGS="" $MAKE -C target_firmware
+}
+
+package() {
+	install -D -m 755 ./target_firmware/htc_7010.fw \
+	                  "$1/lib/firmware/htc_7010.fw"
+	install -m 755 ./target_firmware/htc_9271.fw "$1/lib/firmware/htc_9271.fw"
+	install -D -m 644 README "$1/doc/open-ath9k-htc-firmware/README"
+	install -m 644 LICENSE.TXT "$1/doc/open-ath9k-htc-firmware/LICENSE.TXT"
+	install -m 644 NOTICE.TXT "$1/doc/open-ath9k-htc-firmware/NOTICE.TXT"
+}

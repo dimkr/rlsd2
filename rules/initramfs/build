@@ -1,5 +1,5 @@
 PKG_DESC="The initial file system archive"
-PKG_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font"
+PKG_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font open-ath9k-htc-firmware"
 
 # files present in the initramfs
 INITRAMFS_FILES="bin/toybox
@@ -22,11 +22,14 @@ INITRAMFS_FILES="bin/toybox
                  bin/reboot
                  bin/setfont
                  bin/luufs
-                 share/consolefonts/Tamsyn8x16r.psf"
+                 share/consolefonts/Tamsyn8x16r.psf
+                 lib/firmware/htc_7010.fw
+                 lib/firmware/htc_9271.fw"
 
 # directories present in the initramfs
 INITRAMFS_DIRECTORIES="run
                        bin
+                       lib/firmware
                        var/log
                        proc
                        dev
