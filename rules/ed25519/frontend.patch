@@ -1,0 +1,171 @@
+diff -rupN ed25519-git08022015-orig/ed25519.c ed25519-git08022015/ed25519.c
+--- ed25519-git08022015-orig/ed25519.c	1970-01-01 02:00:00.000000000 +0200
++++ ed25519-git08022015/ed25519.c	2015-02-08 23:06:10.329070385 +0200
+@@ -0,0 +1,167 @@
++#include <stdlib.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <sys/mman.h>
++#include <unistd.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <string.h>
++
++#include <ed25519.h>
++
++#define USAGE "Usage: %s -c FILE SIG PUB\n" \
++              "or: %s -s FILE PRIV PUB\n"
++
++static void *map_file(const char *path, int *fd, size_t *len)
++{
++	struct stat stbuf;
++	void *map = NULL;
++
++	if (-1 == stat(path, &stbuf))
++		return NULL;
++
++	*fd = open(path, O_RDONLY);
++	if (-1 == *fd)
++		return NULL;
++
++	*len = (size_t) stbuf.st_size;
++	map = mmap(NULL, *len, PROT_READ, MAP_PRIVATE, *fd, 0);
++	if (MAP_FAILED != map)
++		return map;
++
++	(void) close(*fd);
++
++	return NULL;
++}
++
++static void unmap_file(const int fd, void *map, const size_t len)
++{
++	(void) munmap(map, len);
++	(void) close(fd);
++}
++
++static int check(char *argv[])
++{
++	void *data;
++	char *sig;
++	void *key;
++	size_t len;
++	size_t siglen;
++	size_t keylen;
++	int fd;
++	int sigfd;
++	int keyfd;
++	int ret = EXIT_FAILURE;
++
++	data = map_file(argv[2], &fd, &len);
++	if (NULL == data)
++		goto end;
++
++	sig = map_file(argv[3], &sigfd, &siglen);
++	if (NULL == sig)
++		goto unmap_data;
++	if (64 != siglen)
++		goto unmap_data;
++
++	key = map_file(argv[4], &keyfd, &keylen);
++	if (NULL == key)
++		goto unmap_sig;
++	if (32 != keylen)
++		goto unmap_sig;
++
++	if (1 == ed25519_verify((const unsigned char *) sig,
++	                        (const unsigned char *) data,
++	                        len,
++	                        (const unsigned char *) key))
++		ret = EXIT_SUCCESS;
++
++	unmap_file(keyfd, key, keylen);
++
++unmap_sig:
++	unmap_file(sigfd, sig, siglen);
++
++unmap_data:
++	unmap_file(fd, data, len);
++
++end:
++	return ret;
++}
++
++static int sign(char *argv[])
++{
++	unsigned char sig[64];
++	void *data;
++	void *priv;
++	void *pub;
++	size_t len;
++	size_t privlen;
++	size_t publen;
++	int fd;
++	int privfd;
++	int pubfd;
++	int ret = EXIT_FAILURE;
++
++	data = map_file(argv[2], &fd, &len);
++	if (NULL == data)
++		goto end;
++
++	priv = map_file(argv[3], &privfd, &privlen);
++	if (NULL == priv)
++		goto unmap_data;
++	if (64 != privlen)
++		goto unmap_data;
++
++	pub = map_file(argv[4], &pubfd, &publen);
++	if (NULL == pub)
++		goto unmap_priv;
++	if (32 != publen)
++		goto unmap_priv;
++
++	ed25519_sign(sig, data, len, pub, priv);
++	if (sizeof(sig) == write(STDOUT_FILENO, (void *) sig, sizeof(sig)))
++		ret = EXIT_SUCCESS;
++
++	unmap_file(pubfd, pub, publen);
++
++unmap_priv:
++	unmap_file(privfd, priv, privlen);
++
++unmap_data:
++	unmap_file(fd, data, len);
++
++end:
++	return ret;
++}
++
++static const struct {
++	int argc;
++	const char *flag;
++	int (*cb)(char **);
++} modes[] = {
++	{ 5, "-c", check },
++	{ 5, "-s", sign }
++};
++
++int main(int argc, char *argv[])
++{
++	unsigned int i;
++
++	if (1 >= argc)
++		goto usage;
++
++	for (i = 0; sizeof(modes) / sizeof(modes[0]) > i; ++i) {
++		if (0 != strcmp(modes[i].flag, argv[1]))
++			continue;
++
++		if (modes[i].argc != argc)
++			break;
++
++		return modes[i].cb(argv);
++	}
++
++usage:
++	(void) fprintf(stderr, USAGE, argv[0], argv[0]);
++
++	return EXIT_FAILURE;
++}

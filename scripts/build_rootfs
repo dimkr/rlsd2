@@ -2,12 +2,7 @@
 
 # install the packages
 mkdir -p "$1/var/packlad/downloaded" "$1/var/packlad/installed"
-if [ -f "./sysroot/etc/packlad/pub_key" ]
-then
-	install -D -m 400 "./sysroot/etc/packlad/pub_key" "$1/etc/packlad/pub_key"
-else
-	install -D -m 400 /etc/packlad/pub_key "$1/etc/packlad/pub_key"
-fi
+install -D -m 400 /etc/packlad/pub_key "$1/etc/packlad/pub_key"
 export REPO="file://$(pwd)/repo"
 packlad -p "$1" -u
 for package in $2

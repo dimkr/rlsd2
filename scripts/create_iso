@@ -59,6 +59,11 @@ mksquashfs "$root_fs" \
            -no-exports
 rm -rf "$root_fs"
 
+# sign the root file system image
+pkgsign /etc/packlad/priv_key \
+        /etc/packlad/pub_key \
+        "$iso_root/boot/rootfs.sfs" > "$iso_root/boot/rootfs.sig"
+
 # generate an ISO image
 xorriso -as mkisofs \
         -iso-level 3 \

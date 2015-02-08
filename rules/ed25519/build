@@ -5,9 +5,12 @@ PKG_DEPS="musl"
 build() {
 	cd src
 	$MAKE
+
+	$CC $CFLAGS $LDFLAGS -o ed25519 ../ed25519.c -L. -led25519
 }
 
 package() {
+	install -D -m 755 ed25519 "$1/bin/ed25519"
 	install -D -m 644 libed25519.a "$1/lib/libed25519.a"
 	install -D -m 644 ed25519.h "$1/include/ed25519.h"
 	install -D -m 644 ../readme.md "$1/doc/ed25519/readme.md"
