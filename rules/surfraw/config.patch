@@ -1,0 +1,24 @@
+diff -rup surfraw-2.2.9-orig/surfraw.conf.IN surfraw-2.2.9/surfraw.conf.IN
+--- surfraw-2.2.9-orig/surfraw.conf.IN	2015-02-10 20:59:03.334368079 +0200
++++ surfraw-2.2.9/surfraw.conf.IN	2015-02-10 21:35:09.382419558 +0200
+@@ -26,9 +26,8 @@
+ # autoconf guessed prefix
+ prefix=@prefix@
+ 
+-# graphical browser? defaults to yes for meatminds. text browser users can
+-# work it out how to change it.
+-defyn   SURFRAW_graphical		yes
++# graphical browser? defaults to no.
++defyn   SURFRAW_graphical		no
+ 
+ # name/path of text browser executable
+ # e.g links, lynx, w3m
+@@ -42,7 +41,7 @@ def   SURFRAW_graphical_browser	@GRAPHIC
+ def   SURFRAW_text_browser_args	none
+ 
+ # graphical browser arguments, or "none"
+-def   SURFRAW_graphical_browser_args	none
++def   SURFRAW_graphical_browser_args	-g
+ 
+ # use -remote openURL for graphical browser
+ defyn   SURFRAW_graphical_remote	no

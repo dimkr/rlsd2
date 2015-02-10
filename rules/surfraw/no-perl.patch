@@ -1,0 +1,45 @@
+diff -rup surfraw-2.2.9-orig/elvi/Makefile.in surfraw-2.2.9/elvi/Makefile.in
+--- surfraw-2.2.9-orig/elvi/Makefile.in	2015-02-10 20:59:03.338368079 +0200
++++ surfraw-2.2.9/elvi/Makefile.in	2015-02-10 21:31:29.042414321 +0200
+@@ -153,7 +153,6 @@ dist_elvi_SCRIPTS = \
+ 		  ctan \
+ 		  currency \
+ 		  cve \
+-		  debbugs \
+ 		  debcodesearch \
+ 		  debcontents \
+ 		  deblists \
+@@ -193,7 +192,6 @@ dist_elvi_SCRIPTS = \
+ 		  jquery \
+ 		  l1sp \
+ 		  lastfm \
+-		  leodict \
+ 		  lsm \
+ 		  macports \
+ 		  mathworld \
+@@ -205,7 +203,6 @@ dist_elvi_SCRIPTS = \
+ 		  ntrs \
+ 		  openbsd \
+ 		  openports \
+-		  opensearch \
+ 		  oraclesearch \
+ 		  pasearch \
+ 		  pgdoc \
+diff -rup surfraw-2.2.9-orig/surfraw.IN surfraw-2.2.9/surfraw.IN
+--- surfraw-2.2.9-orig/surfraw.IN	2015-02-10 20:59:03.334368079 +0200
++++ surfraw-2.2.9/surfraw.IN	2015-02-10 21:31:13.290413947 +0200
+@@ -160,7 +160,13 @@ setoptyn () {
+ 
+ quote_ifs () {
+ 	 if [ -z "$1" ];   then return;  fi
+-     perl -e '$ifs=$ENV{IFS} || " "; $arg=shift;if($arg =~/[$ifs]/) { $arg="\"$arg\""; } print "$arg\n"; ' -- "$1"
++    for i in $@
++    do
++        case "$i" in
++            *$IFS*) echo "\"$i\"";;
++            *) echo "$i";;
++        esac
++    done
+ }
+ 
+ bookmark_file_search () {

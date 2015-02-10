@@ -24,5 +24,13 @@ run() {
 			echo "> Decompressing $j"
 			gunzip -v "$j"
 		done
+
+		find "$i" -name '*.gz' -type l |
+		while read j
+		do
+			target="$(readlink "$j" | sed s/\.gz$//)"
+			rm -vf "$j"
+			ln -sv "$target" "$(echo "$j" | sed s/\.gz$//)"
+		done
 	done
 }

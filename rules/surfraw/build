@@ -1,0 +1,23 @@
+PKG_VER="2.2.9"
+PKG_SRCS="http://surfraw.alioth.debian.org/dist/surfraw-$PKG_VER.tar.gz"
+PKG_DESC="A search engine frontend"
+PKG_DEPS="musl loksh lok lynx links"
+
+build() {
+	AWK="awk" \
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-opensearch \
+	            --with-text-browser="lynx" \
+	            --with-graphical-browser="links"
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/surfraw/README"
+	install -m 644 NEWS "$1/doc/surfraw/NEWS"
+	install -m 644 ChangeLog "$1/doc/surfraw/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/surfraw/AUTHORS"
+	install -m 644 COPYING "$1/doc/surfraw/COPYING"
+}
