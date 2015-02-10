@@ -1,0 +1,21 @@
+PKG_SRCS="https://github.com/dimkr/glib.git"
+PKG_DESC="A utility library"
+PKG_DEPS="musl"
+
+build() {
+	CFLAGS="-D_LARGEFILE64_SOURCE $CFLAGS" \
+	./configure --prefix="" \
+	            --infodir="/share/info" \
+	            --enable-debug="no" \
+	            --enable-static \
+	            --disable-shared
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/glib/README"
+	install -m 644 NEWS "$1/doc/glib/NEWS"
+	install -m 644 AUTHORS "$1/doc/glib/AUTHORS"
+	install -m 644 COPYING "$1/doc/glib/COPYING"
+}
