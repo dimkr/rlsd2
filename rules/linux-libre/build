@@ -1,4 +1,4 @@
-PKG_VER="3.14.32"
+PKG_VER="3.14.33"
 PKG_SRCS="http://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu/linux-libre-$PKG_VER-gnu.tar.xz"
 PKG_DESC="An operating system kernel"
 
