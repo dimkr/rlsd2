@@ -6,7 +6,7 @@ build() {
 	cd src
 	$MAKE
 
-	$CC $CFLAGS $LDFLAGS -o ed25519 ../ed25519.c -L. -led25519
+	$CC $CFLAGS $LDFLAGS -o ed25519 ../ed25519.c -I. -L. -led25519
 }
 
 package() {
