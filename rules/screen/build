@@ -5,7 +5,8 @@ PKG_DEPS="musl ncurses"
 
 build() {
 	./configure --prefix="" \
-	            --mandir=/man \
+	            --datadir="/share" \
+	            --mandir="/man" \
 	            --disable-socket-dir \
 	            --disable-pam \
 	            --disable-use-locale \
@@ -17,7 +18,6 @@ build() {
 }
 
 package() {
-	mkdir -p "$1/bin" "$1/usr/share/screen/utf8encodings"
 	$MAKE DESTDIR="$1" install
 	rm -f "$1/bin/screen"
 	mv "$1/bin/screen-$PKG_VER" "$1/bin/screen"
