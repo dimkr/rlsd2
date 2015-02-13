@@ -2,7 +2,9 @@
 
 for i in rules/*
 do
+	PKG_BUILD_DEPS=""
 	PKG_DEPS=""
 	. "$i/build"
-	echo "$(basename "$i"): $PKG_DEPS"
+	[ -z "$PKG_BUILD_DEPS" ] && PKG_BUILD_DEPS="$PKG_DEPS"
+	echo "$(basename "$i"): $PKG_BUILD_DEPS"
 done
