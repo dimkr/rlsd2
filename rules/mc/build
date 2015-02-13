@@ -5,6 +5,7 @@ PKG_DEPS="musl ncurses gpm glib"
 
 build() {
 	./configure --prefix="" \
+	            --mandir="/man" \
 	            --libexecdir="/lib/mc" \
 	            --disable-nls \
 	            --disable-vfs \

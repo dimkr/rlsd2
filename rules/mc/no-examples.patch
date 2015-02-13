@@ -1,0 +1,12 @@
+diff -rup mc-4.8.13-orig/misc/Makefile.in mc-4.8.13/misc/Makefile.in
+--- mc-4.8.13-orig/misc/Makefile.in	2015-02-13 13:49:32.623749344 +0200
++++ mc-4.8.13/misc/Makefile.in	2015-02-13 13:50:08.483748608 +0200
+@@ -468,7 +468,7 @@ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-SUBDIRS = ext.d macros.d skins syntax
++SUBDIRS = ext.d skins syntax
+ LIBFILES_OUT = mc.ext
+ noinst_DATA = xterm.ad
+ pkgdata_DATA = mc.lib $(am__append_1)
