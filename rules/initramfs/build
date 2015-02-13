@@ -1,5 +1,6 @@
 PKG_DESC="The initial file system archive"
-PKG_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
+PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
+PKG_DEPS=""
 
 # files present in the initramfs
 INITRAMFS_FILES="bin/toybox
@@ -147,7 +148,7 @@ do
 				is_found=1
 				break 2
 			fi
-			umount /mnt/home
+			umount /mnt/home 2>/dev/null
 		fi
 	done
 	sleep 1
@@ -158,32 +159,39 @@ then
 	exit
 fi
 
-# verify the root file system image signature
-echo -n " done.
-Verifying the root file system signature ..."
-ed25519 -c /mnt/home/boot/rootfs.sfs /mnt/home/boot/rootfs.sig /share/rootfs.pub
-if [ 0 -ne $? ]
-then
-	echo " failure."
-	exit
-fi
-
 # copy the root file system image to RAM
 if [ 0 -eq $copy ]
 then
 	image_path="/mnt/home/boot/rootfs.sfs"
+	sig_path="/mnt/home/boot/rootfs.sig"
 else
 	echo -n " done.
 Copying the root file system to RAM ..."
 	cp /mnt/home/boot/rootfs.sfs /rootfs.sfs
+	[ 1 -eq $secure ] && cp /mnt/home/boot/rootfs.sig /rootfs.sig
 	umount /mnt/home
 	image_path="/rootfs.sfs"
+	sig_path="/rootfs.sig"
 fi
 
 # mount the root file system image
 echo -n " done.
 Mounting the root file system ..."
 mount -t squashfs -o loop,ro "$image_path" /mnt/ro
+
+# verify the root file system image signature, using the packlad public key
+if [ 1 -eq $secure ]
+then
+	echo -n " done.
+Verifying the root file system signature ..."
+	ed25519 -c "$image_path" "$sig_path" /mnt/ro/etc/packlad/pub_key
+	if [ 0 -ne $? ]
+	then
+		echo " failure."
+		umount /mnt/ro
+		exit
+	fi
+fi
 
 # mount a writable file system
 echo -n " done.
@@ -224,9 +232,6 @@ echo " done."
 exec chroot /mnt/union newpid rc
 fi' > "$initramfs_root/bin/rc"
 	chmod 755 "$initramfs_root/bin/rc"
-
-	cp /etc/packlad/pub_key "$initramfs_root/share/rootfs.pub"
-	chmod 644 "$initramfs_root/share/rootfs.pub"
 
 	# generate an initramfs archive
 	dir="$(pwd)"
