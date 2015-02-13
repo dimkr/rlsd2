@@ -5,6 +5,7 @@ PKG_DEPS="musl"
 
 build() {
 	./configure --prefix="" \
+	            --mandir="/man" \
 	            --enable-static \
 	            --disable-shared
 	$MAKE
