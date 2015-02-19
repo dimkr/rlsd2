@@ -11,6 +11,6 @@ package() {
 	                  "$1/lib/firmware/htc_7010.fw"
 	install -m 755 ./target_firmware/htc_9271.fw "$1/lib/firmware/htc_9271.fw"
 	install -D -m 644 README "$1/doc/open-ath9k-htc-firmware/README"
-	install -m 644 LICENSE.TXT "$1/doc/open-ath9k-htc-firmware/LICENSE.TXT"
+	install -m 644 LICENCE.TXT "$1/doc/open-ath9k-htc-firmware/LICENCE.TXT"
 	install -m 644 NOTICE.TXT "$1/doc/open-ath9k-htc-firmware/NOTICE.TXT"
 }
