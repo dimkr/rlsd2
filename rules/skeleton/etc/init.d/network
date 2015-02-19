@@ -10,7 +10,7 @@ case "$1" in
 
 		# turn on ethernet
 		ifconfig eth0 up > /dev/null 2>&1
-		dhcpcd -L eth0 > /dev/null 2>&1
+		dhcpcd -L -t 3 eth0 > /dev/null 2>&1
 
 		# turn on the wireless interface
 		ifconfig wlan0 up > /dev/null 2>&1
@@ -25,7 +25,7 @@ case "$1" in
 			               -P/run/wpa_supplicant.pid > /dev/null 2>&1
 
 			# run dhcpcd
-			dhcpcd -L wlan0 > /dev/null 2>&1
+			dhcpcd -L -t 5 wlan0 > /dev/null 2>&1
 		fi
 
 		echo " done."
