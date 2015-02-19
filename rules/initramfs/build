@@ -1,5 +1,5 @@
 PKG_DESC="The initial file system archive"
-PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
+PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs elfence setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
 PKG_DEPS=""
 
 # files present in the initramfs
@@ -23,6 +23,7 @@ INITRAMFS_FILES="bin/toybox
                  bin/reboot
                  bin/setfont
                  bin/luufs
+                 bin/elfence
                  bin/ed25519
                  share/consolefonts/Tamsyn8x16r.psf
                  lib/firmware/htc_7010.fw
@@ -208,6 +209,7 @@ echo -n " done.
 Setting up a layered file system ..."
 
 luufs -o suid,dev,allow_other,default_permissions /mnt/ro /mnt/rw /mnt/union
+[ 1 -eq $secure ] && elfence /mnt/union/bin
 
 mount /sys /mnt/union/sys
 mount /var/log /mnt/union/var/log
@@ -229,8 +231,7 @@ mount -t tmpfs -o mode=1777,noexec,nosuid,nodev,size=25% tmp /mnt/union/tmp
 echo " done."
 
 # continue the boot process inside the layered file system
-exec chroot /mnt/union newpid rc
-fi' > "$initramfs_root/bin/rc"
+chroot /mnt/union newpid rc' > "$initramfs_root/bin/rc"
 	chmod 755 "$initramfs_root/bin/rc"
 
 	# generate an initramfs archive

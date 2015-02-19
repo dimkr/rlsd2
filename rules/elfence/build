@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/dimkr/elfence.git"
+PKG_DESC="A file system that verifies signed ELF binaries"
+PKG_DEPS="musl fuse"
+
+build() {
+	$MAKE PUB_KEY_PATH="/mnt/ro/etc/packlad/pub_key"
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      SBIN_DIR="/bin" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc/elfence" \
+	      install
+}
