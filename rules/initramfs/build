@@ -1,5 +1,5 @@
 PKG_DESC="The initial file system archive"
-PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs elfence setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
+PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs logfence elfence setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
 PKG_DEPS=""
 
 # files present in the initramfs
@@ -23,6 +23,7 @@ INITRAMFS_FILES="bin/toybox
                  bin/reboot
                  bin/setfont
                  bin/luufs
+                 bin/logfence
                  bin/elfence
                  bin/ed25519
                  share/consolefonts/Tamsyn8x16r.psf
@@ -127,6 +128,7 @@ done
 echo -n " done.
 Starting logging services ..."
 
+[ 1 -eq $secure ] && logfence /var/log
 daemon syslog
 
 # find the home partition
@@ -231,7 +233,7 @@ mount -t tmpfs -o mode=1777,noexec,nosuid,nodev,size=25% tmp /mnt/union/tmp
 echo " done."
 
 # continue the boot process inside the layered file system
-chroot /mnt/union newpid rc' > "$initramfs_root/bin/rc"
+exec chroot /mnt/union newpid rc' > "$initramfs_root/bin/rc"
 	chmod 755 "$initramfs_root/bin/rc"
 
 	# generate an initramfs archive
