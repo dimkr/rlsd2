@@ -1,4 +1,4 @@
-PKG_VER="2.2.12"
+PKG_VER="2.2.13"
 PKG_SRCS="http://www.ffmpeg.org/releases/ffmpeg-$PKG_VER.tar.bz2"
 PKG_DESC="A complete multimedia solution"
 PKG_DEPS="musl zlib alsa-lib sdl"
