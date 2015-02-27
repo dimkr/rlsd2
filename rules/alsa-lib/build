@@ -1,4 +1,4 @@
-PKG_VER="1.0.28"
+PKG_VER="1.0.29"
 PKG_SRCS="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$PKG_VER.tar.bz2"
 PKG_DESC="Core audio library"
 PKG_DEPS="musl"
