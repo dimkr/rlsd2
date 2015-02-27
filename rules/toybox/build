@@ -289,10 +289,11 @@ CONFIG_TOYBOX_UID_SYS=0
 CONFIG_TOYBOX_UID_USR=1000
 EOF
 
-	$MAKE OPTIMIZE=" "
+	$MAKE OPTIMIZE=" " toybox_unstripped
 }
 
 package() {
+	mv toybox_unstripped toybox
 	$MAKE PREFIX="$1/bin" install_flat
 	install -D -m 644 README "$1/doc/toybox/README"
 	install -m 644 LICENSE "$1/doc/toybox/LICENSE"

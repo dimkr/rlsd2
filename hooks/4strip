@@ -7,8 +7,11 @@ run() {
 	do
 		type="$(file -b --mime-type "$i")"
 		[ "application/x-executable" != "$type" ] && continue
+		dbg="$(basename "$i").dbg"
+		echo "> Exporting debugging symbols to $dbg"
+		[ ! -d "./dbg" ] && mkdir dbg
+		objcopy --only-keep-debug "$i" "dbg/$dbg"
 		echo "> Stripping $i"
 		strip --strip-all -R .note -R .comment "$i"
-		sstrip -z "$i"
 	done
 }

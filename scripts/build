@@ -27,7 +27,8 @@ else
 fi
 
 # decide which compiler and linker flags to use
-CFLAGS="-Os \
+CFLAGS="-g \
+        -Os \
         -fomit-frame-pointer \
         -ffunction-sections \
         -fdata-sections \

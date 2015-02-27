@@ -26,6 +26,7 @@ INITRAMFS_FILES="bin/toybox
                  bin/logfence
                  bin/elfence
                  bin/ed25519
+                 bin/coredump
                  share/consolefonts/Tamsyn8x16r.psf
                  lib/firmware/htc_7010.fw
                  lib/firmware/htc_9271.fw"
@@ -94,6 +95,7 @@ echo -n "Mounting virtual file systems ..."
 mount -t proc proc /proc
 mount -t sysfs sys /sys
 mount -t tmpfs -o mode=755,size=20% log /var/log
+mount -t tmpfs -o mode=700,size=5% run /run
 
 # if there is at least 256 MB of RAM, copy the root file system image to RAM
 if [ 262144 -le $(grep MemTotal: /proc/meminfo | awk "{print \$2}") ]
@@ -102,6 +104,10 @@ then
 else
 	copy=0
 fi
+
+# assign a coredump helper
+mkdir /run/crash
+echo "|/bin/coredump %e_%s_%P_%t" > /proc/sys/kernel/core_pattern
 
 # read the kernel command-line
 home=""
@@ -216,7 +222,7 @@ luufs -o suid,dev,allow_other,default_permissions /mnt/ro /mnt/rw /mnt/union
 mount /sys /mnt/union/sys
 mount /var/log /mnt/union/var/log
 
-mount -t tmpfs -o mode=700,size=5% run /mnt/union/run
+mount /run /mnt/union/run
 mount /mnt/union/run /mnt/union/var/run
 
 mkdir /mnt/union/run/mnt
