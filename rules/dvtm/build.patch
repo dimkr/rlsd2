@@ -1,6 +1,6 @@
 diff -rup dvtm-0.13-orig/config.mk dvtm-0.13/config.mk
---- dvtm-0.13-orig/config.mk	2014-11-15 16:01:02.000000000 +0200
-+++ dvtm-0.13/config.mk	2015-02-27 18:31:57.955162602 +0200
+--- dvtm-0.13-orig/config.mk	2015-01-30 21:21:10.938768635 +0200
++++ dvtm-0.13/config.mk	2015-01-30 21:22:24.899732388 +0200
 @@ -3,11 +3,11 @@ VERSION = 0.13
  
  # Customize below to fit your system
@@ -30,15 +30,3 @@ diff -rup dvtm-0.13-orig/config.mk dvtm-0.13/config.mk
 -STRIP = strip
 +CC ?= cc
 +STRIP ?= strip
-diff -rup dvtm-0.13-orig/Makefile dvtm-0.13/Makefile
---- dvtm-0.13-orig/Makefile	2014-11-15 16:01:02.000000000 +0200
-+++ dvtm-0.13/Makefile	2015-02-27 18:31:15.939161603 +0200
-@@ -43,8 +43,6 @@ dist: clean
- 	@rm -rf dvtm-${VERSION}
- 
- install: dvtm
--	@echo stripping executable
--	@${STRIP} dvtm
- 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
- 	@mkdir -p ${DESTDIR}${PREFIX}/bin
- 	@cp -f dvtm ${DESTDIR}${PREFIX}/bin

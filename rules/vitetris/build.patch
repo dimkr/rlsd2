@@ -1,6 +1,6 @@
 diff -rup vitetris-0.57-orig/Makefile vitetris-0.57/Makefile
---- vitetris-0.57-orig/Makefile	2015-02-27 18:46:17.767183037 +0200
-+++ vitetris-0.57/Makefile	2015-02-27 18:46:41.499183601 +0200
+--- vitetris-0.57-orig/Makefile	2014-10-07 23:18:23.153985438 +0300
++++ vitetris-0.57/Makefile	2014-10-07 23:20:41.623982958 +0300
 @@ -1,9 +1,9 @@
  include config.mk
  
@@ -13,12 +13,4 @@ diff -rup vitetris-0.57-orig/Makefile vitetris-0.57/Makefile
  
  INSTALL = install -oroot -groot
  
-@@ -17,8 +17,6 @@ $(PROGNAME):
- build: src/src-conf.mk
- 	cd src; $(MAKE) tetris
- 	mv -f src/tetris$(EXE) $(PROGNAME)
--	@echo stripping symbols to reduce program size:
--	-strip --strip-all $(PROGNAME)
- 
- gameserver: src/netw/gameserver.c
- 	cd src/netw; $(MAKE) gameserver
+Only in vitetris-0.57: vitetris
