@@ -10,6 +10,8 @@ build() {
 	            --disable-opensearch \
 	            --with-text-browser="lynx" \
 	            --with-graphical-browser="links"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

@@ -6,6 +6,8 @@ PKG_DEPS="musl"
 build() {
 	./configure --prefix="" \
 	            --static
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

@@ -3,6 +3,8 @@ PKG_DESC="Firmware for Atheros AR7010 and AR9271"
 
 build() {
 	CC="" CFLAGS="" LDFLAGS="" make toolchain
+	[ 0 -ne $? ] && return 1
+
 	CFLAGS="" LDFLAGS="" $MAKE -C target_firmware
 }
 

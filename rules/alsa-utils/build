@@ -5,6 +5,8 @@ PKG_DEPS="musl ncurses alsa-lib"
 
 build() {
 	autoconf
+	[ 0 -ne $? ] && return 1
+
 	./configure --prefix="" \
 	            --sbindir=/bin \
 	            --mandir="/man" \
@@ -14,6 +16,8 @@ build() {
 	            --with-curses="ncurses" \
 	            --with-asound-state-dir="/etc" \
 	            --with-alsactl-pidfile-dir="/run"
+	[ 0 -ne $ ] && return 1
+
 	$MAKE
 }
 

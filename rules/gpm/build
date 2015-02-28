@@ -5,11 +5,17 @@ PKG_DEPS="musl"
 
 build() {
 	./autogen.sh
+	[ 0 -ne $? ] && return 1
+
 	./configure --prefix="" \
 	            --localstatedir="/run"
+	[ 0 -ne $? ] && return 1
+
 	cd src
 	$MAKE lib/libgpm.a
+	[ 0 -ne $? ] && return 1
 	$MAKE gpm
+	[ 0 -ne $? ] && return 1
 
 	cd ../doc
 	$MAKE gpm.8

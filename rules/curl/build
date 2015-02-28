@@ -12,6 +12,8 @@ build() {
 	            --with-ca-bundle="/etc/ssl/cert.pem" \
 	            --disable-rtsp \
 	            --enable-ipv6
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

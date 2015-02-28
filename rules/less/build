@@ -5,9 +5,11 @@ PKG_DEPS="musl ncurses"
 
 build() {
 	./configure --prefix="" \
-	            --mandir="/man"
+	            --mandir="/man" \
 	            --with-regex="re_comp" \
 	            --with-editor="/bin/vi"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

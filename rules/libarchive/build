@@ -10,6 +10,8 @@ build() {
 	            --disable-shared \
 	            --without-openssl \
 	            --without-xml2
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

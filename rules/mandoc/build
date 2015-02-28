@@ -5,6 +5,8 @@ PKG_DEPS="musl less"
 
 build() {
 	./configure
+	[ 0 -ne $? ] && return 1
+
 	$MAKE CC="$CC" \
 	      CFLAGS="$CFLAGS"
 }

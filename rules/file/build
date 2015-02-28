@@ -5,11 +5,14 @@ PKG_DEPS="musl zlib"
 
 build() {
 	autoconf
+	[ 0 -ne $? ] && return 1
 
 	./configure --prefix="" \
 	            --mandir="/man" \
 	            --enable-static \
 	            --disable-shared
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

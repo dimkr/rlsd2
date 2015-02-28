@@ -5,12 +5,15 @@ PKG_DEPS="musl libressl"
 
 build() {
 	autoreconf
+	[ 0 -ne $? ] && return 1
 
 	./configure --prefix="" \
 	            --mandir="/man" \
 	            --disable-debug \
 	            --disable-nls \
 	            --with-ssl="openssl"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

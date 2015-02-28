@@ -8,6 +8,8 @@ build() {
 	            --datarootdir="/" \
 	            --disable-shared \
 	            --enable-static
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

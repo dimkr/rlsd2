@@ -9,6 +9,8 @@ build() {
 	            --enable-static \
 	            --disable-shared \
 	            --without-binconfigs
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

@@ -12,6 +12,8 @@ build() {
 	            --enable-zlib \
 	            --disable-pam \
 	            --disable-lastlog
+	[ 0 -ne $? ] && return 1
+
 	$MAKE PROGRAMS="$PROGRAMS" MULTI=1
 }
 

@@ -19,6 +19,8 @@ build() {
 	            --extra-cflags="-D_BSD_SOURCE $CFLAGS" \
 	            --extra-ldflags="$LDFLAGS" \
 	            --disable-debug
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

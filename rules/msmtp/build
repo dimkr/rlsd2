@@ -9,6 +9,8 @@ build() {
 	            --disable-nls \
 	            --with-ssl="openssl" \
 	            --without-libidn
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

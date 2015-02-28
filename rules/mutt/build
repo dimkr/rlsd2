@@ -11,6 +11,8 @@ build() {
 	            --enable-imap \
 	            --disable-nls \
 	            --with-ssl
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

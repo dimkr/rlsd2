@@ -5,13 +5,18 @@ PKG_DEPS="musl"
 
 build() {
 	autoconf
+	[ 0 -ne $? ] && return 1
 
 	./configure --prefix="" \
 	            --mandir="/man" \
 	            --disable-nls \
 	            --disable-vlock
+	[ 0 -ne $? ] && return 1
+
 	cd src/libkeymap
 	$MAKE
+	[ 0 -ne $? ] && return 1
+
 	cd ..
 	$MAKE setfont
 }

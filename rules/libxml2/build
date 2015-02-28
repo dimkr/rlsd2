@@ -19,6 +19,7 @@ build() {
 	            --without-threads \
 	            --without-modules \
 	            --without-lzma
+	[ 0 -ne $? ] && return 1
 	$MAKE
 }
 

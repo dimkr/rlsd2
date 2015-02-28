@@ -7,6 +7,8 @@ build() {
 	./configure --prefix="" \
 	            --mandir="/man" \
 	            --disable-nls
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

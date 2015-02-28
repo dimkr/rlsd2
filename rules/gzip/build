@@ -6,6 +6,8 @@ PKG_DEPS="musl diffutils"
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

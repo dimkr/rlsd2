@@ -19,6 +19,8 @@ build() {
 	            --disable-video-dummy \
 	            --enable-video-fbcon \
 	            --disable-sdl-dlopen
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

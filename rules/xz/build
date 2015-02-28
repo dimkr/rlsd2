@@ -13,6 +13,8 @@ build() {
 	            --disable-lzmadec \
 	            --disable-scripts \
 	            --disable-nls
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

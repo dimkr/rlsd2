@@ -6,6 +6,8 @@ PKG_DEPS="musl ncurses"
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

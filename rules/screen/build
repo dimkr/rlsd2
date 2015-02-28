@@ -14,6 +14,8 @@ build() {
 	            --disable-colors256 \
 	            --disable-rxvt_osc \
 	            --with-sys-screenrc="/etc/screenrc"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

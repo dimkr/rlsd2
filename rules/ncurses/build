@@ -23,6 +23,8 @@ build() {
 	            --enable-widec \
 	            --enable-ext-colors \
 	            --with-manpage-format="normal"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

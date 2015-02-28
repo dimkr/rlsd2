@@ -5,6 +5,7 @@ PKG_DEPS="musl"
 build() {
 	cd src
 	$MAKE
+	[ 0 -ne $? ] && return 1
 
 	$CC $CFLAGS $LDFLAGS -o ed25519 ../ed25519.c -I. -L. -led25519
 }

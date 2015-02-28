@@ -8,6 +8,8 @@ build() {
 	            --mandir="/man" \
 	            --enable-static \
 	            --disable-shared
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

@@ -16,6 +16,8 @@ build() {
 	            --with-audio="tinyalsa" \
 	            --with-default-audio="tinyalsa" \
 	            --with-optimization=0
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

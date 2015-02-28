@@ -1,0 +1,313 @@
+#!/bin/sh
+
+export LANG="C"
+export LC_ALL="C"
+
+TODAY="$(date +%d%m%Y)"
+BASE_DIR="$(pwd)"
+SYSROOT="$BASE_DIR/sysroot"
+MAKE="make -j $(grep ^processor /proc/cpuinfo | wc -l)"
+BUILD_DIR_SIZE="4G"
+UID="$(id -u)"
+ARCH="$(uname -m)"
+ORIG_PATH="$PATH"
+
+download_src() {
+	case "$2" in
+		# for VCS snapshots, clone without history and create a
+		# lzip-compressed tar archive
+		*.git)
+			dest="$1-git$TODAY.tar.lz"
+
+			[ -f "$dest" ] && return 0
+
+			echo "> Cloning $2"
+			git clone --depth 1 "$2" "$1-git$TODAY"
+			ret=$?
+			[ 0 -eq $ret ] && tar -c "$1-git$TODAY" | lzip --best > "$dest"
+			rm -rf "$1-git$TODAY"
+			return $ret
+			;;
+
+		*/hg)
+			dest="$1-hg$TODAY.tar.lz"
+
+			[ -f "$dest" ] && return 0
+
+			echo "> Cloning $2"
+			hg clone "$2" "$1-hg$TODAY"
+			ret=$?
+			[ 0 -eq $ret ] && tar -c "$1-hg$TODAY" | lzip --best > "$dest"
+			rm -rf "$1-hg$TODAY"
+			return $ret
+			;;
+
+		svn://*)
+			dest="$1-svn$TODAY.tar.lz"
+
+			[ -f "$dest" ] && return 0
+
+			echo "> Cloning $2"
+			svn co "$2" "$1-svn$TODAY"
+			ret=$?
+			[ 0 -eq $ret ] && tar -c "$1-svn$TODAY" | lzip --best > "$dest"
+			rm -rf "$1-svn$TODAY"
+			return $ret
+			;;
+
+		http://*|https://*|ftp://*)
+			dest="$(echo ${i##*/} | cut -f 1 -d ?)"
+
+			[ -f "$dest" ] && return 0
+
+			echo "> Downloading $2"
+			wget -O "$dest" "$2"
+			ret=$?
+			[ 0 -ne $? ] && rm -f "$dest" 2>/dev/null
+			return $ret
+			;;
+	esac
+}
+
+download_srcs() {
+	for i in $PKG_SRCS
+	do
+		download_src "$1" "$i"
+		[ 0 -ne $? ] && return 1
+	done
+
+	return 0
+}
+
+cleanup() {
+	echo "> Cleaning up"
+	cd "$BASE_DIR"
+	[ 0 -eq $UID ] && umount -l "$1"
+	rm -rf "$1"
+}
+
+# decide which compiler to use
+if [ -f "$SYSROOT/bin/musl-gcc" ]
+then
+	export REALGCC="gcc"
+	export CC="$SYSROOT/bin/musl-gcc"
+else
+	export CC="gcc"
+fi
+
+# decide which compiler and linker flags to use
+CFLAGS="-g \
+        -Os \
+        -fomit-frame-pointer \
+        -ffunction-sections \
+        -fdata-sections \
+        -fmerge-all-constants \
+        -pipe"
+LDFLAGS="-Wl,-gc-sections \
+         -Wl,--sort-common"
+case "$ARCH" in
+	i?86)
+		CFLAGS="-march=i486 -mtune=i686 $CFLAGS"
+		;;
+	*)
+		CFLAGS="-mtune=generic $CFLAGS"
+		;;
+esac
+export CFLAGS
+export LDFLAGS
+
+# override pkg-config's directories with those under SYSROOT
+export PKG_CONFIG="$BASE_DIR/pkg-config"
+export PKG_CONFIG_PATH="$SYSROOT/lib/pkgconfig"
+export PKG_CONFIG_LIBDIR="/lib/pkgconfig"
+
+# include the build script - if no version is specified, assume it's a daily
+# snapshot
+PKG_VER="$TODAY"
+PKG_SRCS=""
+. "./rules/$1/build"
+
+# create a temporary directory for the building process and mount a tmpfs file
+# system on it (to speed up building) if possible
+build_dir="$(mktemp -d -p "$BASE_DIR")"
+[ 0 -eq $UID ] && mount -t tmpfs \
+                        -o size="$BUILD_DIR_SIZE" \
+                        "build_$1" \
+                        "$build_dir"
+
+if [ -n "$PKG_SRCS" ]
+then
+	[ ! -d "sources/$1" ] && mkdir "sources/$1"
+	cd "sources/$1"
+
+	download_srcs "$1"
+	if [ 0 -ne $? ]
+	then
+		cleanup "$build_dir"
+		exit 1
+	fi
+
+	# create symlinks to the downloaded file under the build directory
+	for i in $(ls 2>/dev/null)
+	do
+		ln -s "$(pwd)/$i" "$build_dir/"
+	done
+fi
+
+# extract all archives under the build directory
+cd "$build_dir"
+for i in $(ls *.tar* 2>/dev/null)
+do
+	echo "> Extracting $i"
+	tar -xavf "$i"
+	if [ 0 -ne $? ]
+	then
+		cleanup "$build_dir"
+		exit 1
+	fi
+done
+
+# switch to the sources directory, if there is any
+for i in *
+do
+	case "$i" in
+		*-*|"$1")
+			[ ! -d "$i" ] && continue
+			cd "$i"
+			break
+			;;
+
+		*)
+			continue
+			;;
+	esac
+done
+
+# patch the sources
+for i in "$BASE_DIR/rules/$1"/*
+do
+	case "$i" in
+		*.patch|*.diff)
+			echo "> Applying $i"
+			patch -p 1 < "$i"
+			if [ 0 -ne $? ]
+			then
+				cleanup "$build_dir"
+				exit 1
+			fi
+			;;
+	esac
+done
+
+# updated autoconf files
+if [ -f ./configure ] || [ -f ./autogen.sh ]
+then
+	echo "> Updating build system files"
+	cp -vf /usr/share/misc/config.guess .
+	cp -vf /usr/share/misc/config.sub .
+fi
+
+# create a replacement for strip that doesn't do anything, to prevent package
+# build systems from removing debugging symbols
+if [ ! -f "$BASE_DIR/strip" ]
+then
+	echo '#!/bin/sh
+
+src=""
+dest=""
+for i in $(seq $#)
+do
+	case "$1" in
+		-o)
+			dest="$2"
+			shift
+			;;
+
+		-*)
+			echo "> Ignoring $1"
+			shift
+			;;
+
+		*)
+			[ "$1" != "$dest" ] && src="$1"
+			shift
+			;;
+	esac
+done
+
+[ -n "$dest" ] && cp -p "$src" "$dest"
+
+exit 0' > "$BASE_DIR/strip"
+	chmod 755 "$BASE_DIR/strip"
+fi
+
+# build the package; replace TMPDIR with the temporary directory path because
+# at least one package (FFmpeg) tries to run stuff from it, while some distros
+# mount it noexec
+echo "> Building"
+export TMPDIR="$build_dir"
+export PATH="$BASE_DIR:$ORIG_PATH"
+build
+if [ 0 -ne $? ]
+then
+	cleanup "$build_dir"
+	exit 1
+fi
+
+# install the build output to a directory
+install_root="$(mktemp -d -p "$build_dir")"
+echo "> Installing to $install_root"
+package "$install_root"
+export PATH="$ORIG_PATH"
+
+# create wrappers for *-config scripts, which prepend all paths with SYSROOT
+for i in $(ls "$install_root/bin"/*-config 2>/dev/null)
+do
+	name="$(basename "$i")"
+	echo "#!/bin/sh
+\"$SYSROOT/bin/$name\" \"\$@\" | \\
+sed -e s~'-L/lib'~\"-L$SYSROOT/lib\"~g \\
+    -e s~'-I/include'~\"-I$SYSROOT/include\"~g \\
+    -e s~'-I/lib'~\"-I$SYSROOT/lib\"~g" > "$BASE_DIR/$name"
+	chmod 755 "$BASE_DIR/$name"
+done
+
+# if the package has pkg-config files, create a generic wrapper for pkg-config
+# as well, which also forces "--static"
+if [ -d "$install_root/lib/pkgconfig" ] && [ ! -f "$BASE_DIR/pkg-config" ]
+then
+	echo "#!/bin/sh
+output=\"\$($(which pkg-config) --static \"\$@\")\"
+code=\$?
+[ 0 -ne \$code ] && exit \$code
+echo -n \"\$output\" | sed -e s~'-I/include'~\"-I$SYSROOT/include\"~g \\
+                         -e s~'-L/lib'~\"-L$SYSROOT/lib\"~g \\
+                         -e s~'-I/lib'~\"-I$SYSROOT/lib\"~g \\
+                         -e s~'^/share'~\"$SYSROOT/share\"~g
+exit 0" > "$BASE_DIR/pkg-config"
+	chmod 755 "$BASE_DIR/pkg-config"
+fi
+
+# copy the raw package to the system root
+cp -avr "$install_root"/* "$SYSROOT/"
+
+# run all post-installation hooks
+cd "$install_root"
+for i in "$BASE_DIR/hooks"/*
+do
+	. "$i"
+	echo "> Running post-install hook: $HOOK_NAME"
+	run "$1"
+done
+
+# copy the processed package to the system root, to replace modified files (e.g
+# stripped executables)
+cp -vrp "$install_root"/* "$SYSROOT/"
+
+# generate an archive containing the processed package
+echo "> Creating $2"
+cd "$BASE_DIR"
+tar -C "$install_root" -c . | lzip --best > "$2"
+
+cleanup "$build_dir"
+exit 0

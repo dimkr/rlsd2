@@ -10,6 +10,8 @@ build() {
 	            --disable-vserver \
 	            --disable-ancient-vserver \
 	            --disable-unicode
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

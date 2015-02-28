@@ -7,6 +7,8 @@ build() {
 	./configure --prefix="" \
 	            --infodir="/share/info" \
 	            --mandir="/man"
+	[ 0 -ne $ ] && return 1
+
 	$MAKE
 }
 

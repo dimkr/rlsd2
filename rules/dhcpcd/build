@@ -5,6 +5,7 @@ PKG_DEPS="musl"
 
 build() {
 	cat ../dhcpcd_3.2.3-11.diff.gz | gzip -d | patch -p 1
+	[ 0 -ne $? ] && return 1
 
 	$MAKE CC="$CC" \
 	      CFLAGS="-Icompat $CFLAGS" \

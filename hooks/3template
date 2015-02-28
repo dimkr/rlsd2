@@ -9,7 +9,7 @@ run() {
 				;;
 
 			*)
-				echo "> Adding $s to the package"
+				echo "> Adding $i to the package"
 				cp -av "$i" .
 				;;
 		esac

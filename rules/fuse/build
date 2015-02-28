@@ -11,6 +11,8 @@ build() {
 	            --disable-shared \
 	            --disable-example \
 	            --disable-mtab
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

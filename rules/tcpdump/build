@@ -9,6 +9,8 @@ build() {
 	            --mandir="/man" \
 	            --enable-ipv6 \
 	            --with-crypto
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

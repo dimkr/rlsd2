@@ -9,7 +9,11 @@ build() {
 	            --libdir="$SYSROOT/lib" \
 	            --includedir="$SYSROOT/include" \
 	            --enable-gcc-wrapper
+	[ 0 -ne $? ] && return 1
+
 	$MAKE tools/musl-gcc lib/musl-gcc.specs
+	[ 0 -ne $? ] && return 1
+
 	mkdir host-tools
 	mv tools/musl-gcc host-tools/
 	mv lib/musl-gcc.specs host-tools/
@@ -19,6 +23,8 @@ build() {
 	            --enable-optimize="" \
 	            --disable-gcc-wrapper \
 	            --disable-shared
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

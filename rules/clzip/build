@@ -11,6 +11,8 @@ build() {
 	            CC="$CC" \
 	            CFLAGS="$CFLAGS" \
 	            LDFLAGS="$LDFLAGS"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

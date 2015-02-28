@@ -8,6 +8,8 @@ build() {
 	            --mandir="/man" \
 	            --enable-graphics \
 	            --without-libtiff
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

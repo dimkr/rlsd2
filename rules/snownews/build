@@ -6,6 +6,8 @@ PKG_DEPS="musl zlib ncurses libressl libxml2"
 build() {
 	./configure --prefix="" \
 	            --disable-nls
+	[ 0 -ne $? ] && return 1
+
 	EXTRA_CFLAGS="$CFLAGS" \
 	EXTRA_LDFLAGS="$LDFLAGS" \
 	$MAKE

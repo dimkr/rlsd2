@@ -7,6 +7,8 @@ build() {
 	rm -rf zlib jpegxr
 
 	autoconf
+	[ 0 -ne $? ] && return 1
+
 	./configure --prefix="" \
 	            --mandir="/man" \
 	            --disable-fontconfig \
@@ -15,6 +17,8 @@ build() {
 	            --disable-dynamic \
 	            --with-system-libtiff \
 	            --with-fontpath="/share/fonts/75dpi:/share/fonts/100dpi:/share/fonts/misc:/share/fonts/truetype:/share/fonts/cyrillic"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

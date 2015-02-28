@@ -16,6 +16,8 @@ build() {
 	            --cc="$CC" \
 	            --extra-cflags="$CFLAGS" \
 	            --extra-ldflags="$LDFLAGS"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

@@ -8,6 +8,8 @@ build() {
 	            --docdir="/doc/vitetris" \
 	            --desktopdir="" \
 	            --pixmapdir=""
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

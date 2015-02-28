@@ -12,6 +12,8 @@ build() {
 	            --without-jpeg7 \
 	            --without-jpeg8 \
 	            --without-turbojpeg
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

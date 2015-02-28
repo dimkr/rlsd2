@@ -12,6 +12,8 @@ build() {
 	            --with-screen="ncurses" \
 	            --with-homedir \
 	            --without-internal-edit
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 

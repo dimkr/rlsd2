@@ -8,6 +8,8 @@ build() {
 	            --infodir="/share/info" \
 	            --mandir="/man"
 	            --sharedstatedir="/var/games"
+	[ 0 -ne $? ] && return 1
+
 	$MAKE
 }
 
