@@ -1,32 +1,14 @@
-diff -rup dvtm-0.13-orig/config.mk dvtm-0.13/config.mk
---- dvtm-0.13-orig/config.mk	2015-01-30 21:21:10.938768635 +0200
-+++ dvtm-0.13/config.mk	2015-01-30 21:22:24.899732388 +0200
-@@ -3,11 +3,11 @@ VERSION = 0.13
+diff -rup dvtm-0.14-orig/config.mk dvtm-0.14/config.mk
+--- dvtm-0.14-orig/config.mk	2015-02-28 16:35:20.850125031 +0200
++++ dvtm-0.14/config.mk	2015-02-28 16:37:07.306127561 +0200
+@@ -3,8 +3,8 @@ VERSION = 0.14
  
  # Customize below to fit your system
  
 -PREFIX ?= /usr/local
 -MANPREFIX = ${PREFIX}/share/man
-+PREFIX = /
-+MANPREFIX = /man
++PREFIX =
++MANPREFIX = ${PREFIX}/man
  # specify your systems terminfo directory
  # leave empty to install into your home folder
--TERMINFO := ${DESTDIR}${PREFIX}/share/terminfo
-+TERMINFO := ${DESTDIR}/share/terminfo
- 
- INCS = -I.
- LIBS = -lc -lutil -lncursesw
-@@ -21,10 +21,10 @@ LIBS = -lc -lutil -lncursesw
- # Cygwin
- #INCS = -I/usr/include/ncurses
- 
--CFLAGS += -std=c99 -Os ${INCS} -DVERSION=\"${VERSION}\" -DNDEBUG -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700
-+CFLAGS += -std=c99 ${INCS} -DVERSION=\"${VERSION}\" -DNDEBUG -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700
- LDFLAGS += ${LIBS}
- 
- DEBUG_CFLAGS = ${CFLAGS} -UNDEBUG -O0 -g -ggdb -Wall -Wextra -Wno-unused-parameter
- 
--CC = cc
--STRIP = strip
-+CC ?= cc
-+STRIP ?= strip
+ TERMINFO := ${DESTDIR}${PREFIX}/share/terminfo
