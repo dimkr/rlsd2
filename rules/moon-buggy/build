@@ -6,7 +6,7 @@ PKG_DEPS="musl ncurses"
 build() {
 	./configure --prefix="" \
 	            --infodir="/share/info" \
-	            --mandir="/man"
+	            --mandir="/man" \
 	            --sharedstatedir="/var/games"
 	[ 0 -ne $? ] && return 1
 
