@@ -2,5 +2,6 @@
 
 ./scripts/gen_deps > Makefile.deps
 make -j 1
+[ 0 -ne $? ] && exit 1
 ./scripts/create_repo
 ./scripts/create_iso
