@@ -1,9 +1,7 @@
 umask 022
-
 export PATH="/bin"
-export PS1='[\u@\w]\$ '
-export HISTFILE="$HOME/.ksh_history"
-export REPO="http://rlsd2.dimakrasner.com/repo"
-export EDITOR="vi"
 
-alias ll="ls -la"
+for i in /etc/profile.d/*
+do
+	. "$i"
+done
