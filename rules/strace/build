@@ -1,0 +1,22 @@
+PKG_VER="4.9"
+PKG_SRCS="http://sourceforge.net/projects/strace/files/strace/$PKG_VER/strace-$PKG_VER.tar.xz"
+PKG_DESC="A system call tracer"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man"
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/strace/README"
+	install -m 644 NEWS "$1/doc/strace/NEWS"
+	install -m 644 ChangeLog "$1/doc/strace/ChangeLog"
+	install -m 644 AUTHORS "$1/doc/strace/AUTHORS"
+	install -m 644 CREDITS "$1/doc/strace/CREDITS"
+	install -m 644 COPYING "$1/doc/strace/COPYING"
+}
