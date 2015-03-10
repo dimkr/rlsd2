@@ -1,4 +1,4 @@
-PKG_VER="1.16.2"
+PKG_VER="1.16.3"
 PKG_SRCS="http://ftp.gnu.org/gnu/wget/wget-$PKG_VER.tar.xz"
 PKG_DESC="A HTTP and FTP client"
 PKG_DEPS="musl libressl"
