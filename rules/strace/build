@@ -1,4 +1,4 @@
-PKG_VER="4.9"
+PKG_VER="4.10"
 PKG_SRCS="http://sourceforge.net/projects/strace/files/strace/$PKG_VER/strace-$PKG_VER.tar.xz"
 PKG_DESC="A system call tracer"
 PKG_DEPS="musl"

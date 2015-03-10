@@ -1,0 +1,33 @@
+diff -rup strace-4.10-orig/evdev.c strace-4.10/evdev.c
+--- strace-4.10-orig/evdev.c	2015-03-10 19:16:03.644273038 +0200
++++ strace-4.10/evdev.c	2015-03-10 19:28:29.020290753 +0200
+@@ -29,6 +29,7 @@
+ #include "defs.h"
+ 
+ #ifdef HAVE_LINUX_INPUT_H
++#include <asm/ioctl.h>
+ #include <linux/input.h>
+ #include "xlat/evdev_abs.h"
+ #include "xlat/evdev_autorepeat.h"
+diff -rup strace-4.10-orig/mknod.c strace-4.10/mknod.c
+--- strace-4.10-orig/mknod.c	2015-03-10 19:16:03.608273037 +0200
++++ strace-4.10/mknod.c	2015-03-10 19:30:46.972294032 +0200
+@@ -1,6 +1,7 @@
+ #include "defs.h"
+ 
+ #include <fcntl.h>
++#include <sys/stat.h>
+ 
+ #ifdef MAJOR_IN_SYSMACROS
+ # include <sys/sysmacros.h>
+diff -rup strace-4.10-orig/printmode.c strace-4.10/printmode.c
+--- strace-4.10-orig/printmode.c	2015-03-10 19:16:03.652273038 +0200
++++ strace-4.10/printmode.c	2015-03-10 19:32:11.116296032 +0200
+@@ -1,6 +1,7 @@
+ #include "defs.h"
+ 
+ #include <fcntl.h>
++#include <sys/stat.h>
+ 
+ #include "xlat/modetypes.h"
+ 
