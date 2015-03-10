@@ -1,4 +1,4 @@
-PKG_VER="2.7.3"
+PKG_VER="2.7.5"
 PKG_SRCS="http://ftp.gnu.org/gnu/patch/patch-$PKG_VER.tar.xz"
 PKG_DESC="A file patching tool"
 PKG_DEPS="musl"
