@@ -1,4 +1,4 @@
-PKG_VER="1.97"
+PKG_VER="1.98"
 PKG_SRCS="http://www.han.de/~werner/ytree-$PKG_VER.tar.gz"
 PKG_DESC="A file manager"
 PKG_DEPS="musl ncurses"
