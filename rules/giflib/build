@@ -1,4 +1,4 @@
-PKG_VER="5.1.0"
+PKG_VER="5.1.1"
 PKG_SRCS="http://downloads.sourceforge.net/project/giflib/giflib-$PKG_VER.tar.bz2"
 PKG_DESC="A library for handling of GIF images"
 PKG_DEPS="musl"
