@@ -3,6 +3,12 @@ PKG_SRCS="http://downloads.sourceforge.net/project/mpg123/mpg123/$PKG_VER/mpg123
 PKG_DESC="A MP3 player"
 PKG_DEPS="musl tinyalsa"
 
+get_latest() {
+	wget -q -O - "http://www.mpg123.de/" |
+	grep "mpg123 version" |
+	cut -f 7 -d \ 
+}
+
 build() {
 	CFLAGS="-D_POSIX_SOURCE -D_GNU_SOURCE $CFLAGS" \
 	./configure --prefix="" \

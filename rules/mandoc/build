@@ -3,6 +3,12 @@ PKG_SRCS="http://mdocml.bsd.lv/snapshots/mdocml-$PKG_VER.tar.gz"
 PKG_DESC="A man page formatting tool"
 PKG_DEPS="musl less"
 
+get_latest() {
+	wget -q -O - "http://mdocml.bsd.lv/" |
+	grep "current version" |
+	cut -f 7 -d \ 
+}
+
 build() {
 	./configure
 	[ 0 -ne $? ] && return 1

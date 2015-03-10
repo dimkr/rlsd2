@@ -3,6 +3,14 @@ PKG_SRCS="http://www.tcpdump.org/release/tcpdump-$PKG_VER.tar.gz"
 PKG_DESC="A packet capture and analysis tool"
 PKG_DEPS="musl libressl libpcap"
 
+get_latest() {
+	wget -q -O - "http://www.tcpdump.org/" |
+	grep "release/tcpdump" |
+	head -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --sbindir="/bin" \

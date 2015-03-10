@@ -3,6 +3,13 @@ PKG_SRCS="http://libsdl.org/release/SDL-$PKG_VER.tar.gz"
 PKG_DESC="A graphics and audio abstraction layer library"
 PKG_DEPS="musl alsa-lib"
 
+get_latest() {
+	wget -q -O - "https://www.libsdl.org/download-1.2.php" |
+	grep "SDL version" |
+	head -n 1 |
+	awk '{print $7}'
+}
+
 build() {
 	rm -f build-scripts/config.guess build-scripts/config.sub
 	ln -s ../config.guess build-scripts/

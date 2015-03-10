@@ -3,6 +3,12 @@ PKG_SRCS="http://www.victornils.net/tetris/vitetris-$PKG_VER.tar.gz"
 PKG_DESC="A Tetris clone"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.victornils.net/tetris/" |
+	grep "Latest version" |
+	cut -f 5 -d \ 
+}
+
 build() {
 	./configure --prefix="" \
 	            --docdir="/doc/vitetris" \

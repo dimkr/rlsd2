@@ -3,6 +3,14 @@ PKG_SRCS="http://www.scrollz.info/download/ScrollZ-$PKG_VER.tar.gz"
 PKG_DESC="An IRC client"
 PKG_DEPS="musl ncurses libressl"
 
+get_latest() {
+	wget -q -O - "http://www.scrollz.info/" |
+	grep "A new" |
+	head -n 1 |
+	cut -f 53 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --libexecdir="/lib/ScrollZ" \

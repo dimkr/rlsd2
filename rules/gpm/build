@@ -3,6 +3,15 @@ PKG_SRCS="http://www.nico.schottelius.org/software/gpm/archives/gpm-$PKG_VER.tar
 PKG_DESC="A mouse server"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.nico.schottelius.org/software/gpm/archives/" |
+	grep "\.tar" |
+	grep -v "1.99" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./autogen.sh
 	[ 0 -ne $? ] && return 1

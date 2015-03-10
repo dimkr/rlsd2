@@ -3,6 +3,13 @@ PKG_SRCS="ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-$PKG_VER.tar.gz"
 PKG_DESC="A text banner generator"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.figlet.org/" |
+	grep "The current version" |
+	cut -f 8 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	LD="$CC" \
 	CFLAGS="-D__BEGIN_DECLS=\; -D__END_DECLS=\; $CFLAGS" \

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i in $(ls rules/)
+do
+	./scripts/check_version "$i"
+done

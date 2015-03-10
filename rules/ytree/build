@@ -3,6 +3,13 @@ PKG_SRCS="http://www.han.de/~werner/ytree-$PKG_VER.tar.gz"
 PKG_DESC="A file manager"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.han.de/~werner/ytree.html" |
+	grep "New in" |
+	head -n 1 |
+	cut -f 3 -d \ 
+}
+
 build() {
 	$MAKE CC="$CC"
 }

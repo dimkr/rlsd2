@@ -3,6 +3,13 @@ PKG_SRCS="http://curl.haxx.se/download/curl-$PKG_VER.tar.bz2"
 PKG_DESC="A file transfer library"
 PKG_DEPS="musl zlib libressl"
 
+get_latest() {
+	wget -q -O - "http://curl.haxx.se/download.html" |
+	grep "Released" |
+	cut -f 3 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 		    --mandir="/man" \

@@ -2,6 +2,12 @@ PKG_VER="4.07"
 PKG_SRCS="https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-$PKG_VER.tar.xz"
 PKG_DESC="A BIOS boot loader for ISO9660 file systems"
 
+get_latest() {
+	# we stick with 4.07, to avoid the need for extra files required in later
+	# versions
+	echo "$PKG_VER"
+}
+
 build() {
 	:
 }

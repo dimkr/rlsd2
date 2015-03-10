@@ -3,6 +3,14 @@ PKG_SRCS="http://www.kbd-project.org/download/kbd-$PKG_VER.tar.xz"
 PKG_DESC="A utility for setting the console font"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.kbd-project.org/download/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	autoconf
 	[ 0 -ne $? ] && return 1

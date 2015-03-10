@@ -2,6 +2,13 @@ PKG_VER="1.11"
 PKG_SRCS="http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-$PKG_VER.tar.gz"
 PKG_DESC="A monospace, programming font"
 
+get_latest() {
+	wget -q -O - "http://www.fial.com/~scott/tamsyn-font/" |
+	grep "download/Tamsyn" |
+	cut -f 2 -d \- |
+	sed s~'\.zip.*'~~
+}
+
 build() {
 	gunzip *.gz
 }

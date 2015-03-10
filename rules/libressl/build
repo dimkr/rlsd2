@@ -3,6 +3,14 @@ PKG_SRCS="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$PKG_VER.tar.gz"
 PKG_DESC="An encryption and privacy library"
 PKG_DEPS="musl zlib ca-certificates"
 
+get_latest() {
+	wget -q -O - "http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/" \

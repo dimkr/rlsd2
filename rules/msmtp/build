@@ -3,6 +3,15 @@ PKG_SRCS="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VER/msmtp-$PKG_
 PKG_DESC="An e-mail sending tool"
 PKG_DEPS="musl libressl"
 
+get_latest() {
+	wget -q -O - "http://sourceforge.net/projects/msmtp/files/msmtp/" |
+	grep "Click to enter" |
+	grep -v -E 'rc[0-9]' |
+	head -n 1 |
+	awk '{print $4}' |
+	sed s~'"$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

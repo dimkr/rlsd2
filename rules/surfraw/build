@@ -3,6 +3,14 @@ PKG_SRCS="http://surfraw.alioth.debian.org/dist/surfraw-$PKG_VER.tar.gz"
 PKG_DESC="A search engine frontend"
 PKG_DEPS="musl loksh lok lynx links"
 
+get_latest() {
+	wget -q -O - "http://surfraw.alioth.debian.org/" |
+	grep "dist/surfraw" |
+	head -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	AWK="awk" \
 	./configure --prefix="" \

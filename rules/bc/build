@@ -3,6 +3,15 @@ PKG_SRCS="http://ftp.gnu.org/pub/gnu/bc/bc-$PKG_VER.tar.gz"
 PKG_DESC="A numeric processing language"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://ftp.gnu.org/gnu/bc/" |
+	grep -E 'bc-.+\.tar\.' |
+	tail -n 1 |
+	cut -f 3 -d \> |
+	sed s~'\.tar.*'~~g |
+	cut -f 2- -d \-
+}
+
 build() {
 	./configure --prefix="" \
 	            --infodir="/share/info" \

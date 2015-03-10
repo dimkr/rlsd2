@@ -3,6 +3,13 @@ PKG_SRCS="ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-$PKG_VE
 PKG_DESC="A library for handling PNG images"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.libpng.org/pub/png/libpng.html" |
+	grep "The current public release," |
+	cut -f 8 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

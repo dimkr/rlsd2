@@ -3,6 +3,14 @@ PKG_SRCS="http://ftp.gnu.org/gnu/diffutils/diffutils-$PKG_VER.tar.xz"
 PKG_DESC="Patch creation and file comparison tools"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://ftp.gnu.org/gnu/diffutils/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

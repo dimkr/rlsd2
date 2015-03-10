@@ -2,6 +2,14 @@ PKG_VER="2.30"
 PKG_SRCS="http://sethwklein.net/iana-etc-$PKG_VER.tar.bz2"
 PKG_DESC="IANA data files"
 
+get_latest() {
+	wget -q -O - "http://sethwklein.net/iana-etc" |
+	grep "\.tar" |
+	head -n 1 |
+	cut -f 5 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	$MAKE
 }

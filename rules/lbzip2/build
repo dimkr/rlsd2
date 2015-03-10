@@ -3,6 +3,13 @@ PKG_SRCS="http://archive.lbzip2.org/lbzip2-$PKG_VER.tar.gz"
 PKG_DESC="Compression tools"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.lbzip2.org/" |
+	grep "The latest released version" |
+	cut -f 8 -d \  |
+	sed s~'\.$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"

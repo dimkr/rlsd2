@@ -3,6 +3,14 @@ PKG_SRCS="https://www.kraxel.org/releases/fbida/fbida-$PKG_VER.tar.gz"
 PKG_DESC="A PDF viewer"
 PKG_DEPS="loksh ghostscript fbv"
 
+get_latest() {
+	wget -q -O - "https://www.kraxel.org/releases/fbida/" |
+	grep "\.tar" |
+	head -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	:
 }

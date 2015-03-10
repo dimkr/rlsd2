@@ -3,6 +3,13 @@ PKG_SRCS="http://sourceforge.net/projects/mutt/files/mutt/mutt-$PKG_VER.tar.gz"
 PKG_DESC="An e-mail client"
 PKG_DEPS="musl ncurses libressl msmtp"
 
+get_latest() {
+	wget -q -O - "http://www.mutt.org/" |
+	grep "was released" |
+	head -n 1 |
+	cut -f 8 -d \ 
+}
+
 build() {
 	SENDMAIL="/bin/msmtp" \
 	./configure --prefix="" \

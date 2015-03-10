@@ -3,6 +3,14 @@ PKG_SRCS="http://s-tech.elsat.net.pl/fbv/fbv-$PKG_VER.tar.gz"
 PKG_DESC="An image viewer"
 PKG_DEPS="musl libpng libjpeg-turbo giflib"
 
+get_latest() {
+	wget -q -O - "http://s-tech.elsat.net.pl/fbv/" |
+	grep "\.tar" |
+	sort -V |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	$MAKE
 }

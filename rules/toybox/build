@@ -3,6 +3,14 @@ PKG_SRCS="http://www.landley.net/toybox/downloads/toybox-$PKG_VER.tar.bz2"
 PKG_DESC="System tools"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://landley.net/toybox/" |
+	grep "downloads/toybox" |
+	head -n 1 |
+	cut -f 3 -d \  |
+	cut -f -1 -d \<
+}
+
 build() {
 	cat << EOF > .config
 #

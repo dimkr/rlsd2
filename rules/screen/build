@@ -3,6 +3,14 @@ PKG_SRCS="http://ftp.gnu.org/gnu/screen/screen-$PKG_VER.tar.gz"
 PKG_DESC="A terminal multiplexer"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://ftp.gnu.org/gnu/screen/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --datadir="/share" \

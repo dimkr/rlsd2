@@ -3,6 +3,14 @@ PKG_SRCS="http://www.catb.org/~esr/greed/greed-$PKG_VER.tar.gz"
 PKG_DESC="A strategy game"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.catb.org/esr/greed/" |
+	grep "Resource page for " |
+	tail -n 1 |
+	cut -f 5 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	$MAKE
 }

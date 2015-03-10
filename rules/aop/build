@@ -3,6 +3,15 @@ PKG_SRCS="http://raffi.at/code/aop/aop-$PKG_VER.tar.gz"
 PKG_DESC="An arcade game"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://raffi.at/code/aop/" |
+	grep -E 'aop-.+\.tar\.' |
+	tail -n 1 |
+	cut -f 7 -d \> |
+	sed s~'\.tar.*'~~ |
+	cut -f 2- -d \-
+}
+
 build() {
 	$CC -o aop aop.c $CFLAGS $LDFLAGS -lncurses
 }

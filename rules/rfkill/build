@@ -3,6 +3,14 @@ PKG_SRCS="https://www.kernel.org/pub/software/network/rfkill/rfkill-$PKG_VER.tar
 PKG_DESC="A tool for disabling network interfaces"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "https://www.kernel.org/pub/software/network/rfkill/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	$MAKE
 }

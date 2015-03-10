@@ -1,0 +1,22 @@
+#!/bin/sh
+
+get_latest() {
+	date +%d%m%Y
+}
+
+PKG_VER="$(get_latest)"
+. "./rules/$1/build"
+
+echo "> Checking whether $PKG_VER is the latest version of $1"
+latest="$(get_latest)"
+if [ -z "$latest" ]
+then
+	echo "> Warning: failed to obtain the latest version of $1"
+else
+	if [ "$PKG_VER" != "$latest" ]
+	then
+		echo "> Warning: the latest version of $1 is $latest"
+	else
+		echo "> $1 is up-to-date"
+	fi
+fi

@@ -3,6 +3,13 @@ PKG_SRCS="http://fbgrab.monells.se/fbgrab-$PKG_VER.tar.gz"
 PKG_DESC="A screenshot taking tool"
 PKG_DEPS="musl libpng"
 
+get_latest() {
+	wget -q -O - "http://fbgrab.monells.se/" |
+	grep "released" |
+	head -n 1 |
+	sed -e s~'.* Version '~~ -e s~' .*'~~
+}
+
 build() {
 	$MAKE
 }

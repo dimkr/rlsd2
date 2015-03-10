@@ -3,6 +3,14 @@ PKG_SRCS="http://hostap.epitest.fi/releases/wpa_supplicant-$PKG_VER.tar.gz"
 PKG_DESC="A tool for association with wireless networks"
 PKG_DEPS="musl libressl libnl-tiny"
 
+get_latest() {
+	wget -q -O - "http://w1.fi/wpa_supplicant/" |
+	grep "releases/" |
+	head -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	cd wpa_supplicant
 

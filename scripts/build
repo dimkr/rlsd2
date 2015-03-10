@@ -2,7 +2,9 @@
 
 [ -f "packages/$1.tar.lz" ] && exit 0
 
-rm -f "logs/$1.log.lz" "logs/$1.log" 2>/dev/null
+rm -f "logs/$1.log.lz" 2>/dev/null
+./scripts/check_version "$1" > "logs/$1.log"
+
 for i in 1 2 3
 do
 	echo "> Building $1 (attempt $i), $(date -R)" >> "logs/$1.log"

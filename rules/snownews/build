@@ -3,6 +3,12 @@ PKG_SRCS="https://kiza.eu/media/software/snownews/snownews-$PKG_VER.tar.gz"
 PKG_DESC="A news reader"
 PKG_DEPS="musl zlib ncurses libressl libxml2"
 
+get_latest() {
+	wget -q -O - "https://kiza.eu/software/snownews/" |
+	grep "Snownews " |
+	cut -f 3 -d \ 
+}
+
 build() {
 	./configure --prefix="" \
 	            --disable-nls

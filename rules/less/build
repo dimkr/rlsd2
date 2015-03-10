@@ -3,6 +3,13 @@ PKG_SRCS="http://www.greenwoodsoftware.com/less/less-$PKG_VER.tar.gz"
 PKG_DESC="A file viewer"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.greenwoodsoftware.com/less/" |
+	grep "The current released version is" |
+	cut -f 2 -d \- |
+	sed s~'\.$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

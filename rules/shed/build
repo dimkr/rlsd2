@@ -3,6 +3,13 @@ PKG_SRCS="http://waia.dl.sourceforge.net/project/shed/shed/shed%20$PKG_VER/shed-
 PKG_DESC="A hex editor"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://shed.sourceforge.net/" |
+	grep "The latest version is" |
+	cut -f 6 -d \  |
+	sed s~'\.$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"

@@ -3,6 +3,14 @@ PKG_SRCS="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VER.tar.gz"
 PKG_DESC="A network monitor"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.gropp.org/?id=projects&sub=bwm-ng" |
+	grep "current version:" |
+	cut -f 2 -d \> |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"

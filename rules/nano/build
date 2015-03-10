@@ -3,6 +3,14 @@ PKG_SRCS="http://www.nano-editor.org/dist/v2.2/nano-$PKG_VER.tar.gz"
 PKG_DESC="A text editor"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.nano-editor.org/download.php" |
+	grep "dist/" |
+	head -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/share" \

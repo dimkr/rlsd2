@@ -3,6 +3,10 @@ PKG_SRCS="http://www.ffmpeg.org/releases/ffmpeg-$PKG_VER.tar.bz2"
 PKG_DESC="A complete multimedia solution"
 PKG_DEPS="musl zlib alsa-lib sdl"
 
+get_latest() {
+	wget -q -O - "http://git.videolan.org/?p=ffmpeg.git;a=blob_plain;f=RELEASE;hb=refs/heads/release/2.2"
+}
+
 build() {
 	./configure --prefix="/" \
 	            --mandir="/man" \

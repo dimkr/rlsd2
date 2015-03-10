@@ -3,6 +3,13 @@ PKG_SRCS="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
 PKG_DESC="A web browser"
 PKG_DEPS="musl zlib xz libressl libpng libjpeg-turbo gpm"
 
+get_latest() {
+	wget -q -O - "http://links.twibright.com/download.php" |
+	grep "Current version" |
+	cut -f 4 -d \  |
+	sed s~\.$~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

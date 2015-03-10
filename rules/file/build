@@ -3,6 +3,14 @@ PKG_SRCS="ftp://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz"
 PKG_DESC="A file type guessing tool"
 PKG_DEPS="musl zlib"
 
+get_latest() {
+	wget -q -O - "ftp://ftp.astron.com/pub/file/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	autoconf
 	[ 0 -ne $? ] && return 1

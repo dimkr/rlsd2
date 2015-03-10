@@ -2,6 +2,14 @@ PKG_VER="2.6.32.65"
 PKG_SRCS="http://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu1/linux-libre-$PKG_VER-gnu1.tar.xz"
 PKG_DESC="Kernel API headers"
 
+get_latest() {
+	wget -q -O - "http://www.kernel.org/" |
+	grep "v2.6.32/" |
+	head -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	$MAKE clean
 	$MAKE mrproper

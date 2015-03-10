@@ -3,6 +3,16 @@ PKG_SRCS="http://www.mplayerhq.hu/MPlayer/releases/MPlayer-$PKG_VER.tar.xz"
 PKG_DESC="A multimedia player"
 PKG_DEPS="musl ncurses libpng libjpeg-turbo alsa-lib"
 
+get_latest() {
+	wget -q -O - "http://www.mplayerhq.hu/design7/dload.html" |
+	grep "\.tar" |
+	grep -v "snapshot" |
+	head -n 1 |
+	cut -f 4 -d / |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

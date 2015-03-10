@@ -3,6 +3,14 @@ PKG_SRCS="http://sourceforge.net/projects/strace/files/strace/$PKG_VER/strace-$P
 PKG_DESC="A system call tracer"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://sourceforge.net/projects/strace/files/strace/" |
+	grep "Click to enter" |
+	head -n 1 |
+	awk '{print $4}' |
+	sed s~'"$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"

@@ -3,6 +3,13 @@ PKG_SRCS="http://www.irssi.org/files/irssi-$PKG_VER.tar.bz2"
 PKG_DESC="An IRC client"
 PKG_DEPS="musl ncurses libressl glib"
 
+get_latest() {
+	wget -q -O - "http://www.irssi.org/download" |
+	grep "Latest release version" |
+	cut -f 3 -d \> |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

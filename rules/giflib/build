@@ -3,6 +3,14 @@ PKG_SRCS="http://downloads.sourceforge.net/project/giflib/giflib-$PKG_VER.tar.bz
 PKG_DESC="A library for handling of GIF images"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://sourceforge.net/projects/giflib/files/?source=navbar" |
+	grep "Click to download" |
+	head -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --enable-static \

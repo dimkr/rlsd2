@@ -3,6 +3,14 @@ PKG_SRCS="http://downloads.sourceforge.net/project/fuse/fuse-2.X/$PKG_VER/fuse-$
 PKG_DESC="An interface for user-mode file systems"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://sourceforge.net/projects/fuse/files/fuse-2.X/" |
+	grep "Click to enter" |
+	head -n 1 |
+	awk '{print $4}' |
+	sed s~\"~~
+}
+
 build() {
 	MOUNT_FUSE_PATH="/bin" \
 	./configure --prefix="" \

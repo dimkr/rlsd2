@@ -3,6 +3,13 @@ PKG_SRCS="ftp://ftp.xmlsoft.org/libxml2/libxml2-$PKG_VER.tar.gz"
 PKG_DESC="A XML parsing library"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "ftp://xmlsoft.org/libxml2/" |
+	grep "LATEST_LIBXML2_IS" |
+	cut -f 4 -d _ |
+	cut -f 1 -d \"
+}
+
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/share" \

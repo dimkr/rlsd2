@@ -3,6 +3,13 @@ PKG_SRCS="http://downloads.ghostscript.com/public/ghostscript-$PKG_VER.tar.gz"
 PKG_DESC="A PostScript and PDF interpreter"
 PKG_DEPS="musl zlib libpng libjpeg-turbo"
 
+get_latest() {
+	wget -q -O - "http://www.ghostscript.com/Releases.html" |
+	grep "latest AGPL release" |
+	cut -f 9 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	rm -rf zlib jpegxr
 

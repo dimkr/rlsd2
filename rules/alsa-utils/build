@@ -3,6 +3,13 @@ PKG_SRCS="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$PKG_VER.tar.bz2"
 PKG_DESC="Audio tools"
 PKG_DEPS="musl ncurses alsa-lib"
 
+get_latest() {
+	wget -q -O - "http://www.alsa-project.org/main/index.php/Main_Page_News" |
+	grep -E 'alsa .+ release' |
+	cut -f 3 -d \  |
+	head -n 1
+}
+
 build() {
 	autoconf
 	[ 0 -ne $? ] && return 1

@@ -3,6 +3,15 @@ PKG_SRCS="http://download.savannah.gnu.org/releases/lzip/clzip/clzip-$PKG_VER.ta
 PKG_DESC="A compression tool"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://download.savannah.gnu.org/releases/lzip/clzip/" |
+	grep \.tar\.lz\" |
+	grep -v -E 'pre[0-9]' |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~\.tar.*~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --prefix="" \

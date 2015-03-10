@@ -3,6 +3,12 @@ PKG_SRCS="http://calcurse.org/files/calcurse-$PKG_VER.tar.gz"
 PKG_DESC="A personal organizer"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.calcurse.org/" |
+	grep \(source\) |
+	cut -f 7 -d \ 
+}
+
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/" \

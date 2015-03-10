@@ -5,6 +5,13 @@ PKG_DEPS="musl zlib"
 
 PROGRAMS="dropbear dbclient dropbearkey scp"
 
+get_latest() {
+	wget -q -O - "https://matt.ucc.asn.au/dropbear/dropbear.html" |
+	grep "Latest is" |
+	cut -f 3 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --sbindir="/bin" \

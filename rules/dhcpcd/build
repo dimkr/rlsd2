@@ -3,6 +3,11 @@ PKG_SRCS="http://roy.marples.name/downloads/dhcpcd/dhcpcd-$PKG_VER.tar.bz2 http:
 PKG_DESC="A DHCP client"
 PKG_DEPS="musl"
 
+get_latest() {
+	# we stick with this old version - it's old, but stable and gets the job done
+	echo "$PKG_VER"
+}
+
 build() {
 	cat ../dhcpcd_3.2.3-11.diff.gz | gzip -d | patch -p 1
 	[ 0 -ne $? ] && return 1

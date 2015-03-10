@@ -3,6 +3,14 @@ PKG_SRCS="http://lynx.isc.org/lynx$PKG_VER/lynx$PKG_VER.tar.bz2"
 PKG_DESC="A web browser"
 PKG_DEPS="musl zlib ncurses libressl"
 
+get_latest() {
+	wget -q -O - "http://lynx.isc.org/release/" |
+	grep "\.tar" |
+	head -n 1 |
+	cut -f 2 -d / |
+	cut -c 5-
+}
+
 build() {
 	CFLAGS="-DUSE_OPENSSL_INCL $CFLAGS" \
 	./configure --prefix="" \

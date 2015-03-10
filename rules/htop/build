@@ -3,6 +3,13 @@ PKG_SRCS="http://hisham.hm/htop/releases/$PKG_VER/htop-$PKG_VER.tar.gz"
 PKG_DESC="A process viewer"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://hisham.hm/htop/index.php?page=downloads" |
+	grep "The latest version is" |
+	cut -f 2 -d \> |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

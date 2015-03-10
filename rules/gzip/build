@@ -3,6 +3,14 @@ PKG_SRCS="http://ftp.gnu.org/gnu/gzip/gzip-$PKG_VER.tar.xz"
 PKG_DESC="Compression tools"
 PKG_DEPS="musl diffutils"
 
+get_latest() {
+	wget -q -O - "http://ftp.gnu.org/gnu/gzip/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/"

@@ -3,6 +3,13 @@ PKG_SRCS="http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$PKG_VER.tar.gz"
 PKG_DESC="A terminal handling library"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "https://www.gnu.org/software/ncurses/" |
+	grep "Announcing" |
+	head -n 1 |
+	cut -f 5 -d \ 
+}
+
 build() {
 	# building with "--enable-glob" fails against musl 0.9.12
 	./configure --prefix="" \

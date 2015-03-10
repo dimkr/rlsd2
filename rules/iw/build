@@ -3,6 +3,14 @@ PKG_SRCS="https://www.kernel.org/pub/software/network/iw/iw-$PKG_VER.tar.xz"
 PKG_DESC="A wireless network interface configuration tool"
 PKG_DEPS="musl libnl-tiny"
 
+get_latest() {
+	wget -q -O - "https://www.kernel.org/pub/software/network/iw/" |
+	grep "\.tar" |
+	tail -n 1 |
+	cut -f 3 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	# iw uses kernel-style sections that contain structs, so it breaks when
 	# built with -gc-sections

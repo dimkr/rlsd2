@@ -2,6 +2,14 @@ PKG_VER="3.14.35"
 PKG_SRCS="http://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu/linux-libre-$PKG_VER-gnu.tar.xz"
 PKG_DESC="An operating system kernel"
 
+get_latest() {
+	wget -q -O - "https://www.kernel.org/" |
+	grep "3.14" |
+	head -n 1 |
+	cut -f 3 -d \> |
+	cut -f 1 -d \<
+}
+
 build() {
 	# reset EXTRAVERSION; Linux-libre scripts set it to "-gnu"
 	sed s~'^EXTRAVERSION =.*'~'EXTRAVERSION ='~ -i Makefile

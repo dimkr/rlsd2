@@ -3,6 +3,14 @@ PKG_SRCS="http://www.catb.org/~esr/bs/bs-$PKG_VER.tar.gz"
 PKG_DESC="A Battleships clone"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.catb.org/esr/bs/" |
+	grep "Resource page for " |
+	tail -n 1 |
+	cut -f 5 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	$MAKE CC="$CC" TERMLIB="$LDFLAGS -lncurses"
 }

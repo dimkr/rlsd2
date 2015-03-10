@@ -3,6 +3,14 @@ PKG_SRCS="http://m.seehuhn.de/programs/moon-buggy-$PKG_VER.tar.gz"
 PKG_DESC="A moon-patrol clone"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://www.seehuhn.de/pages/moon-buggy" |
+	grep "stable version" |
+	head -n 1 |
+	cut -f 3 -d \  |
+	sed s~',$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --infodir="/share/info" \

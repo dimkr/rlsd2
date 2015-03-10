@@ -3,6 +3,13 @@ PKG_SRCS="http://www.libarchive.org/downloads/libarchive-$PKG_VER.tar.gz"
 PKG_DESC="An archive handling library"
 PKG_DEPS="musl zlib xz lbzip2"
 
+get_latest() {
+	wget -q -O - "http://www.libarchive.org/" |
+	grep "Stable release:" |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

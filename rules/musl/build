@@ -3,6 +3,13 @@ PKG_SRCS="http://www.musl-libc.org/releases/musl-$PKG_VER.tar.gz"
 PKG_DESC="A C library"
 PKG_DEPS="iana-etc linux-libre-headers"
 
+get_latest() {
+	wget -q -O - "http://www.musl-libc.org/download.html" |
+	grep "Mainline - " |
+	cut -f 3 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	# build separately, musl-gcc with SYSROOT as the prefix
 	./configure --prefix="$SYSROOT" \

@@ -3,6 +3,14 @@ PKG_SRCS="http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.42/glib-$PKG_VER.tar.xz
 PKG_DESC="A utility library"
 PKG_DEPS="musl libffi"
 
+get_latest() {
+	wget -q -O - "https://developer.gnome.org/glib/" |
+	grep "<strong>" |
+	head -n 1 |
+	cut -f 4 -d \> |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --enable-debug="no" \

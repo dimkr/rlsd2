@@ -3,6 +3,13 @@ PKG_SRCS="ftp://sourceware.org/pub/libffi/libffi-$PKG_VER.tar.gz"
 PKG_DESC="A calling conventions support library"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "https://www.sourceware.org/libffi/" |
+	grep "was released" |
+	cut -f 2 -d \- |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

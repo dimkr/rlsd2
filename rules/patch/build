@@ -3,6 +3,16 @@ PKG_SRCS="http://ftp.gnu.org/gnu/patch/patch-$PKG_VER.tar.xz"
 PKG_DESC="A file patching tool"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "ftp://ftp.gnu.org/gnu/patch/" |
+	grep "\.tar" |
+	cut -f 2 -d \> |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~ |
+	sort -V |
+	tail -n 1
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man"

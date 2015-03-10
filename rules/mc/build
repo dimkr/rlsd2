@@ -3,6 +3,13 @@ PKG_SRCS="http://ftp.midnight-commander.org/mc-$PKG_VER.tar.xz"
 PKG_DESC="A dual-pane file manager"
 PKG_DEPS="musl ncurses gpm glib"
 
+get_latest() {
+	wget -q -O - "http://www.midnight-commander.org/" |
+	grep "Current version is:" |
+	cut -f 4 -d \  |
+	sed s~';$'~~
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \

@@ -3,6 +3,14 @@ PKG_SRCS="http://zlib.net/zlib-$PKG_VER.tar.gz"
 PKG_DESC="A compression library"
 PKG_DEPS="musl"
 
+get_latest() {
+	wget -q -O - "http://www.zlib.net/" |
+	grep 'zlib [0-9]' |
+	head -n 1 |
+	cut -f 8 -d \  |
+	cut -f 1 -d \<
+}
+
 build() {
 	./configure --prefix="" \
 	            --static

@@ -3,6 +3,14 @@ PKG_SRCS="http://dev.yorhel.nl/download/ncdu-$PKG_VER.tar.gz"
 PKG_DESC="A disk usage analyzer"
 PKG_DEPS="musl ncurses"
 
+get_latest() {
+	wget -q -O - "http://dev.yorhel.nl/ncdu" |
+	grep "download/ncdu" |
+	head -n 1 |
+	cut -f 2 -d \> |
+	cut -f 1 -d \ 
+}
+
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \
