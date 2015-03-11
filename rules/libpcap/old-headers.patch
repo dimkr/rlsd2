@@ -1,0 +1,13 @@
+diff -rup libpcap-1.7.2-orig/pcap-linux.c libpcap-1.7.2/pcap-linux.c
+--- libpcap-1.7.2-orig/pcap-linux.c	2015-03-11 18:49:39.693272105 +0200
++++ libpcap-1.7.2/pcap-linux.c	2015-03-11 18:50:17.149272995 +0200
+@@ -187,6 +187,9 @@
+ #  endif /* PACKET_AUXDATA */
+ # endif /* PACKET_HOST */
+ 
++# ifndef SKF_AD_VLAN_TAG_PRESENT
++#  define SKF_AD_VLAN_TAG_PRESENT 48
++# endif
+ 
+  /* check for memory mapped access avaibility. We assume every needed
+   * struct is defined if the macro TPACKET_HDRLEN is defined, because it
