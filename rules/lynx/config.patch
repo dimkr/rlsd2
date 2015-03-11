@@ -19,7 +19,7 @@ diff -rup lynx2-8-8-orig/userdefs.h lynx2-8-8/userdefs.h
   * site:
   */
 -#define STARTFILE "http://lynx.isc.org/"
-+#define STARTFILE "file://localhost/doc/rlsd/getting_started.html"
++#define STARTFILE "file://localhost/doc/rlsd/index.html"
  /*
   * As an alternative, you may want to use a local URL.  A good choice for this
   * is the user's home directory:
