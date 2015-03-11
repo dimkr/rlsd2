@@ -16,9 +16,8 @@ build() {
 	LIBS="-lmagic -lz" \
 	./configure --prefix="" \
 		    --mandir="/man" \
-	            --disable-desktop-files \
-	            --with-curses-name="ncurses"
-	[ 0 -ne $?] && return 1
+	            --disable-desktop-files
+	[ 0 -ne $? ] && return 1
 
 	$MAKE
 }
