@@ -12,6 +12,31 @@ get_latest() {
 
 build() {
 	# building with "--enable-glob" fails against musl 0.9.12
+	cp -r . ../ncursesw-$PKG_VER
+	./configure --prefix="" \
+	            --datadir="/share" \
+	            --includedir="/include" \
+	            --mandir="/man" \
+	            --without-cxx \
+	            --without-cxx-binding \
+	            --without-ada \
+	            --without-progs \
+	            --without-tests \
+	            --enable-pc-files \
+	            --without-libtool \
+	            --without-shared \
+	            --with-normal \
+	            --without-debug \
+	            --without-profile \
+	            --with-manpage-format="normal"
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+	[ 0 -ne $? ] && return 1
+
+	# build again, with --enable-widec - some applications require Unicode
+	# support
+	cd ../ncursesw-$PKG_VER
 	./configure --prefix="" \
 	            --datadir="/share" \
 	            --includedir="/include" \
@@ -37,18 +62,11 @@ build() {
 
 package() {
 	$MAKE DESTDIR="$1" install
+	cd ../ncurses-$PKG_VER
+	$MAKE DESTDIR="$1" install
 	mv "$1/usr/lib/pkgconfig" "$1/lib/"
 	rmdir "$1/usr/lib"
 	ln -s libncurses.a "$1/lib/libtinfo.a"
-
-	# create links for backwards-compatibility
-	for i in "$1/lib"/*w.* "$1/lib/pkgconfig"/*w.pc
-	do
-		name="$(basename "$i")"
-		directory="$(dirname "$i")"
-		ln -s "$name" "$directory/$(echo "$name" | sed s~w\.~.~)"
-	done
-	ln -s ncursesw6-config "$1/bin/ncurses6-config"
 
 	# trim the terminfo directory
 	rm -rf "$1/share/terminfo/1" \
