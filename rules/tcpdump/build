@@ -1,4 +1,4 @@
-PKG_VER="4.6.2"
+PKG_VER="4.7.3"
 PKG_SRCS="http://www.tcpdump.org/release/tcpdump-$PKG_VER.tar.gz"
 PKG_DESC="A packet capture and analysis tool"
 PKG_DEPS="musl libressl libpcap"
@@ -16,6 +16,7 @@ build() {
 	            --sbindir="/bin" \
 	            --mandir="/man" \
 	            --enable-ipv6 \
+	            --with-system-libpcap \
 	            --with-crypto
 	[ 0 -ne $? ] && return 1
 
