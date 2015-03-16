@@ -1,4 +1,4 @@
-PKG_VER="1.13.2"
+PKG_VER="1.13.3"
 PKG_SRCS="http://mdocml.bsd.lv/snapshots/mdocml-$PKG_VER.tar.gz"
 PKG_DESC="A man page formatting tool"
 PKG_DEPS="musl less"
