@@ -1,9 +1,9 @@
-diff -rup wpa_supplicant-2.2-orig/src/drivers/driver_nl80211.c wpa_supplicant-2.2/src/drivers/driver_nl80211.c
---- wpa_supplicant-2.2-orig/src/drivers/driver_nl80211.c	2014-08-22 21:38:40.456927876 +0300
-+++ wpa_supplicant-2.2/src/drivers/driver_nl80211.c	2014-08-22 21:39:16.583927229 +0300
-@@ -60,6 +60,12 @@
- #define PACKET_TX_TIMESTAMP	16
- #endif
+diff -rup wpa_supplicant-2.4-orig/src/drivers/driver_nl80211.c wpa_supplicant-2.4/src/drivers/driver_nl80211.c
+--- wpa_supplicant-2.4-orig/src/drivers/driver_nl80211.c	2015-03-16 09:17:47.474988196 +0200
++++ wpa_supplicant-2.4/src/drivers/driver_nl80211.c	2015-03-16 09:28:35.687003601 +0200
+@@ -39,6 +39,13 @@
+ #include "driver_nl80211.h"
+ 
  
 +#ifdef CONFIG_LIBNL_TINY
 +#define nl_handle nl_sock
@@ -11,13 +11,14 @@ diff -rup wpa_supplicant-2.2-orig/src/drivers/driver_nl80211.c wpa_supplicant-2.
 +#define nl_handle_destroy nl_socket_free
 +#endif
 +
- #ifdef ANDROID
- #include "android_drv.h"
- #endif /* ANDROID */
-diff -rup wpa_supplicant-2.2-orig/src/drivers/drivers.mak wpa_supplicant-2.2/src/drivers/drivers.mak
---- wpa_supplicant-2.2-orig/src/drivers/drivers.mak	2014-08-22 21:38:40.456927876 +0300
-+++ wpa_supplicant-2.2/src/drivers/drivers.mak	2014-08-22 21:39:16.583927229 +0300
-@@ -39,6 +39,7 @@ ifdef CONFIG_LIBNL32
++
+ #ifndef CONFIG_LIBNL20
+ /*
+  * libnl 1.1 has a bug, it tries to allocate socket numbers densely
+diff -rup wpa_supplicant-2.4-orig/src/drivers/drivers.mak wpa_supplicant-2.4/src/drivers/drivers.mak
+--- wpa_supplicant-2.4-orig/src/drivers/drivers.mak	2015-03-16 09:17:47.478988196 +0200
++++ wpa_supplicant-2.4/src/drivers/drivers.mak	2015-03-16 09:27:07.283001500 +0200
+@@ -53,6 +53,7 @@ endif
  else
    ifdef CONFIG_LIBNL_TINY
      DRV_LIBS += -lnl-tiny
