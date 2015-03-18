@@ -207,40 +207,6 @@ then
 	cp -vf /usr/share/misc/config.sub .
 fi
 
-# create a replacement for strip that doesn't do anything, to prevent package
-# build systems from removing debugging symbols
-if [ ! -f "$BASE_DIR/strip" ]
-then
-	echo '#!/bin/sh
-
-src=""
-dest=""
-for i in $(seq $#)
-do
-	case "$1" in
-		-o)
-			dest="$2"
-			shift
-			;;
-
-		-*)
-			echo "> Ignoring $1"
-			shift
-			;;
-
-		*)
-			[ "$1" != "$dest" ] && src="$1"
-			shift
-			;;
-	esac
-done
-
-[ -n "$dest" ] && cp -p "$src" "$dest"
-
-exit 0' > "$BASE_DIR/strip"
-	chmod 755 "$BASE_DIR/strip"
-fi
-
 # build the package; replace TMPDIR with the temporary directory path because
 # at least one package (FFmpeg) tries to run stuff from it, while some distros
 # mount it noexec

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+src=""
+dest=""
+for i in $(seq $#)
+do
+	case "$1" in
+		-o)
+			dest="$2"
+			shift
+			;;
+
+		-*)
+			echo "> Ignoring $1"
+			shift
+			;;
+
+		*)
+			[ "$1" != "$dest" ] && src="$1"
+			shift
+			;;
+	esac
+done
+
+[ -n "$dest" ] && cp -p "$src" "$dest"
+
+exit 0
