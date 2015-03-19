@@ -1,4 +1,4 @@
-PKG_VER="2.1.5"
+PKG_VER="2.1.6"
 PKG_SRCS="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$PKG_VER.tar.gz"
 PKG_DESC="An encryption and privacy library"
 PKG_DEPS="musl zlib ca-certificates"
