@@ -12,15 +12,23 @@ run() {
 	         ./share/gdb \
 	         ./share/glib-2.0 \
 	         ./bin/gobject-* \
+	         ./man/man1/gobject-* \
 	         ./bin/gio-* \
+	         ./man/man1/gio-* \
 	         ./bin/glib-* \
-	         ./bin/gdbus-* \
+	         ./man/man1/glib-* \
+	         ./bin/gdbus* \
+	         ./man/man1/gdbus* \
 	         ./bin/gtester-* \
+	         ./man/man1/gtester-* \
 	         ./bin/gapplication \
+	         ./man/man1/gapplication.1 \
 	         ./bin/gsettings \
+	         ./man/man1/gsettings.1 \
 	         ./bin/gresource \
-	         ./bin/gdbus \
+	         ./man/man1/gresource.1 \
 	         ./bin/gtester \
+	         ./man/man1/gtester.1 \
 	         ./lib/locale \
 	         ./lib/*.* \
 	         ./lib/alsa-lib/smixer/* \
