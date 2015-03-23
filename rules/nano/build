@@ -1,5 +1,5 @@
-PKG_VER="2.2.6"
-PKG_SRCS="http://www.nano-editor.org/dist/v2.2/nano-$PKG_VER.tar.gz"
+PKG_VER="2.4.0"
+PKG_SRCS="http://www.nano-editor.org/dist/v2.4/nano-$PKG_VER.tar.gz"
 PKG_DESC="A text editor"
 PKG_DEPS="musl ncurses"
 
@@ -16,6 +16,7 @@ build() {
 	            --datarootdir="/share" \
 	            --mandir="/man" \
 	            --disable-nls \
+	            --disable-libmagic \
 	            --disable-utf8 \
 	            --without-slang
 	[ 0 -ne $? ] && return 1
