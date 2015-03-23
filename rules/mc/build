@@ -1,4 +1,4 @@
-PKG_VER="4.8.13"
+PKG_VER="4.8.14"
 PKG_SRCS="http://ftp.midnight-commander.org/mc-$PKG_VER.tar.xz"
 PKG_DESC="A dual-pane file manager"
 PKG_DEPS="musl ncurses gpm glib"
@@ -13,7 +13,7 @@ get_latest() {
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \
-	            --libexecdir="/lib/mc" \
+	            --libexecdir="/share" \
 	            --disable-nls \
 	            --disable-vfs \
 	            --with-screen="ncurses" \
