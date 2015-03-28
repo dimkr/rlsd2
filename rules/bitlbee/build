@@ -1,0 +1,35 @@
+PKG_VER="3.4"
+PKG_SRCS="http://get.bitlbee.org/src/bitlbee-$PKG_VER.tar.gz"
+PKG_DESC="A tunneler of IM protocols over IRC"
+PKG_DEPS="musl libressl glib"
+
+get_latest() {
+	wget -q -O - "http://www.bitlbee.org/main.php/news.r.html" |
+	grep "Stable:" |
+	cut -f 2 -d \< |
+	cut -f 3 -d \ 
+}
+
+build() {
+	./configure --prefix="" \
+	            --sbindir="/bin" \
+	            --mandir="/man" \
+	            --pidfile="/run/bitlbee.pid" \
+	            --strip=0 \
+	            --pie=0 \
+	            --plugins=0 \
+	            --ssl="openssl"
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install install-etc
+	install -d -D -m 755 "$1/var/lib/bitlbee"
+	install -D -m 644 doc/README "$1/doc/bitlbee/README"
+	install -m 644 doc/CHANGES "$1/doc/bitlbee/CHANGES"
+	install -m 644 doc/AUTHORS "$1/doc/bitlbee/AUTHORS"
+	install -m 644 doc/CREDITS "$1/doc/bitlbee/CREDITS"
+	install -m 644 COPYING "$1/doc/bitlbee/COPYING"
+}
