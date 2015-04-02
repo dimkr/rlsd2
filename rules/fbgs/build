@@ -1,4 +1,4 @@
-PKG_VER="2.09"
+PKG_VER="2.10"
 PKG_SRCS="https://www.kraxel.org/releases/fbida/fbida-$PKG_VER.tar.gz"
 PKG_DESC="A PDF viewer"
 PKG_DEPS="loksh ghostscript fbv"

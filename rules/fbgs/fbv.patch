@@ -1,13 +1,7 @@
-diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
---- fbida-2.09-orig/fbgs	2014-11-07 18:54:57.112978884 +0200
-+++ fbida-2.09/fbgs	2014-11-07 18:55:18.843978495 +0200
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/bin/sh
- 
- #
- # PostScript/pdf viewer for the linux framebuffer console
-@@ -7,22 +7,21 @@
+diff -rupN fbida-2.10-orig/fbgs fbida-2.10/fbgs
+--- fbida-2.10-orig/fbgs	2015-04-01 20:58:22.606566157 +0300
++++ fbida-2.10/fbgs	2015-04-02 20:10:39.476756657 +0300
+@@ -7,22 +7,22 @@
  
  
  # tmp dir
@@ -19,40 +13,41 @@ diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
  # parse options
 -fbiopts=""
 -gsopts=""
++fbvopts=""
 +gsopts="-r100x100"
  passwd=""
--device="tiffpack"
+-device="png16m"
 +device="pnggray"
  opt=1
  bell="off"
- helptext="
+ helptext="\
  This program displays PostScript/pdf files using the linux framebuffer device.
 -It is a simple wrapper script for GhostScript and fbi.
-+It is a simple wrapper script for GhostScript and fbv. 
++It is a simple wrapper script for GhostScript and fbv.
  
 -usage: fbgs [fbgs options] [fbi options] file
-+usage: fbgs [fbgs options] file
++usage: fbgs [fbgs options] [fbv options] file
  
     -b    --bell              emit a beep when the document is ready
     -h    --help              print this help text
-@@ -30,12 +29,11 @@ usage: fbgs [fbgs options] [fbi options]
+@@ -30,12 +30,11 @@ usage: fbgs [fbgs options] [fbi options]
     -fp   --firstpage <arg>   begins on the <arg> page
     -lp	 --lastpage <arg>    stops on the <arg> page
-    -c    --color             pages in color
+    -c    --(no)color         pages in color
 -   -l                        pages rendered with 100 dpi
 -   -xl                       pages rendered with 120 dpi
 -   -xxl                      pages rendered with 150 dpi
-+   -l                       pages rendered with 120 dpi
-+   -xl                      pages rendered with 150 dpi
++   -l                        pages rendered with 120 dpi
++   -xl                       pages rendered with 150 dpi
     -r    --resolution <arg>  choose resolution of <arg> dpi
  
 -Read the fbgs(1) and fbi(1) manpages for more details.
 +Read the fbgs(1) and fbv(1) manpages for more details.
  "
  
- while test "$opt" = "1"; do
-@@ -65,41 +63,16 @@ while test "$opt" = "1"; do
- 			device="png16m"
+ [ $# -ne 0 ] ||  set -- -h
+@@ -70,42 +69,16 @@ while test "$opt" = "1"; do
+ 			device="tiffpack"
  			shift
  			;;
 -		-l)	gsopts="$gsopts -r100x100"
@@ -75,6 +70,7 @@ diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
 -		--autoup | --noautoup | \
 -		--autodown | --noautodown | \
 -		--fitwidth | --nofitwidth | \
+-		--readahead | --noreadahead | \
 -		-v | --verbose | --noverbose | \
 -		-u | --random | --norandom | \
 -		-1 | --once | --noonce)
@@ -95,7 +91,7 @@ diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
  		# others options
  		-*)	echo "unknown option: $1"
  			exit 1
-@@ -115,7 +88,7 @@ echo "### rendering pages, please wait .
+@@ -126,7 +99,7 @@ echo "### rendering pages, please wait .
  echo
  gs	-dSAFER -dNOPAUSE -dBATCH			\
  	-sPDFPassword="$password"			\
@@ -104,7 +100,7 @@ diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
  	$gsopts						\
  	"$1"
  
-@@ -125,7 +98,7 @@ if test "$bell" = "on"; then
+@@ -136,7 +109,7 @@ if test "$bell" = "on"; then
  fi
  
  # sanity check
@@ -113,15 +109,15 @@ diff -rup fbida-2.09-orig/fbgs fbida-2.09/fbgs
  if test "$pages" -eq "0"; then
  	echo
  	echo "Oops: ghostscript wrote no pages?"
-@@ -134,4 +107,4 @@ if test "$pages" -eq "0"; then
+@@ -145,4 +118,4 @@ if test "$pages" -eq "0"; then
  fi
  
  # show pages
 -fbi $fbiopts -P $DIR/ps*.tiff
 +fbv --noinfo $DIR/ps*.png
-diff -rup fbida-2.09-orig/fbgs.man fbida-2.09/fbgs.man
---- fbida-2.09-orig/fbgs.man	2014-11-07 18:54:57.115978884 +0200
-+++ fbida-2.09/fbgs.man	2014-11-07 18:58:28.318975102 +0200
+diff -rupN fbida-2.10-orig/fbgs.man fbida-2.10/fbgs.man
+--- fbida-2.10-orig/fbgs.man	2015-04-01 20:58:22.606566157 +0300
++++ fbida-2.10/fbgs.man	2015-04-01 21:00:03.906568564 +0300
 @@ -7,13 +7,12 @@ fbgs \- Poor man's PostScript/pdf viewer
  \#
  .SH SYNOPSIS
