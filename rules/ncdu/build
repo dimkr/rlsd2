@@ -1,4 +1,4 @@
-PKG_VER="1.10"
+PKG_VER="1.11"
 PKG_SRCS="http://dev.yorhel.nl/download/ncdu-$PKG_VER.tar.gz"
 PKG_DESC="A disk usage analyzer"
 PKG_DEPS="musl ncurses"
