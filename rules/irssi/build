@@ -13,6 +13,7 @@ get_latest() {
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \
+	            --docdir="/doc/irssi" \
 	            --without-bot \
 	            --without-proxy \
 	            --without-modules \

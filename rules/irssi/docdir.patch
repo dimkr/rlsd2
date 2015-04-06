@@ -1,0 +1,12 @@
+diff -rup irssi-0.8.17-orig/docs/Makefile.in irssi-0.8.17/docs/Makefile.in
+--- irssi-0.8.17-orig/docs/Makefile.in	2015-04-06 19:09:36.907777873 +0300
++++ irssi-0.8.17/docs/Makefile.in	2015-04-06 19:12:24.083781846 +0300
+@@ -315,7 +315,7 @@ build_vendor = @build_vendor@
+ builddir = @builddir@
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+-docdir = $(datadir)/doc/irssi
++docdir = @docdir@
+ dvidir = @dvidir@
+ exec_prefix = @exec_prefix@
+ host = @host@
