@@ -1,4 +1,4 @@
-PKG_VER="1.6.16"
+PKG_VER="1.6.17"
 PKG_SRCS="ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-$PKG_VER.tar.xz"
 PKG_DESC="A library for handling PNG images"
 PKG_DEPS="musl"
