@@ -14,6 +14,7 @@ get_latest() {
 build() {
 	./configure --prefix="" \
 	            --datarootdir="/share" \
+	            --docdir="/doc/nano" \
 	            --mandir="/man" \
 	            --disable-nls \
 	            --disable-libmagic \
