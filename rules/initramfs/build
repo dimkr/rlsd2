@@ -1,5 +1,5 @@
 PKG_DESC="The initial file system archive"
-PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs logfence elfence setfont tamsyn-font ed25519 open-ath9k-htc-firmware"
+PKG_BUILD_DEPS="toybox sdaemons loksh lok luufs logfence elfence setfont tamsyn-font termolos ed25519 open-ath9k-htc-firmware"
 PKG_DEPS=""
 
 # files present in the initramfs
@@ -27,6 +27,7 @@ INITRAMFS_FILES="bin/toybox
                  bin/elfence
                  bin/ed25519
                  bin/coredump
+                 bin/termolos
                  share/consolefonts/Tamsyn8x16r.psf
                  lib/firmware/htc_7010.fw
                  lib/firmware/htc_9271.fw"
@@ -77,6 +78,9 @@ export PATH="/bin"
 
 # clear the screen from boot loader or early kernel messages
 clear
+
+# generate a random color scheme
+termolos
 
 # set the console font
 setfont /share/consolefonts/Tamsyn8x16r.psf

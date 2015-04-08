@@ -1,0 +1,11 @@
+PKG_SRCS="https://github.com/dimkr/termolos.git"
+PKG_DESC="A console color scheme generator"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" MAN_DIR="/man" DOC_DIR="/doc" install
+}
