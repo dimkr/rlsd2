@@ -1,0 +1,44 @@
+diff -rup atop-2.1-orig/showgeneric.c atop-2.1/showgeneric.c
+--- atop-2.1-orig/showgeneric.c	2015-04-09 10:37:21.079309908 +0300
++++ atop-2.1/showgeneric.c	2015-04-09 10:40:58.855949295 +0300
+@@ -268,7 +268,6 @@ static const char rcsid[] = "$Id: showge
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <string.h>
+-#include <termio.h>
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <curses.h>
+diff -rup atop-2.1-orig/showlinux.c atop-2.1/showlinux.c
+--- atop-2.1-orig/showlinux.c	2015-04-09 10:37:21.079309908 +0300
++++ atop-2.1/showlinux.c	2015-04-09 10:41:06.415949140 +0300
+@@ -274,7 +274,6 @@ static const char rcsid[] = "$Id: showli
+ #include <string.h>
+ #include <errno.h>
+ #include <fcntl.h>
+-#include <termio.h>
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <curses.h>
+diff -rup atop-2.1-orig/showprocs.c atop-2.1/showprocs.c
+--- atop-2.1-orig/showprocs.c	2015-04-09 10:37:21.079309908 +0300
++++ atop-2.1/showprocs.c	2015-04-09 10:41:10.959949047 +0300
+@@ -94,7 +94,6 @@ static const char rcsid[] = "$Id: showpr
+ #include <string.h>
+ #include <errno.h>
+ #include <fcntl.h>
+-#include <termio.h>
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <curses.h>
+diff -rup atop-2.1-orig/showsys.c atop-2.1/showsys.c
+--- atop-2.1-orig/showsys.c	2015-04-09 10:37:21.079309908 +0300
++++ atop-2.1/showsys.c	2015-04-09 10:41:16.531948932 +0300
+@@ -80,7 +80,6 @@ static const char rcsid[] = "XXXXXX";
+ #include <string.h>
+ #include <errno.h>
+ #include <fcntl.h>
+-#include <termio.h>
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <curses.h>

@@ -1,0 +1,31 @@
+PKG_VER="2.1-1"
+PKG_SRCS="http://www.atoptool.nl/download/atop-$PKG_VER.tar.gz"
+PKG_DESC="A performance monitor"
+PKG_DEPS="musl zlib ncurses"
+
+get_latest() {
+	wget -q -O - "http://www.atoptool.nl/downloadatop.php" |
+	grep -E "atopreleases.+tar\.gz" |
+	head -n 1 |
+	cut -f 2- -d \> |
+	cut -f 2- -d \- |
+	sed s~'\.tar.*'~~
+}
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      BINPATH="/bin" \
+	      SBINPATH="/bin" \
+	      MAN1PATH="/man/man1" \
+	      MAN5PATH="/man/man5" \
+	      MAN8PATH="/man/man8" \
+	      install
+	install -D -m 644 README "$1/doc/atop/README"
+	install -m 644 ChangeLog "$1/doc/atop/ChangeLog"
+	install -m 644 AUTHOR "$1/doc/atop/AUTHOR"
+	install -m 644 COPYING "$1/doc/atop/COPYING"
+}
