@@ -57,6 +57,16 @@ download_src() {
 
 		http://*|https://*|ftp://*)
 			dest="$(echo ${i##*/} | cut -f 1 -d ?)"
+			case "$dest" in
+				*$PKG_VER*)
+					;;
+				*.*)
+					dest="${dest%%.*}-$PKG_VER.${dest#*.}"
+					;;
+				*)
+					dest="$dest-$PKG_VER"
+					;;
+			esac
 
 			[ -f "$dest" ] && return 0
 

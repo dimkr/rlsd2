@@ -6,7 +6,7 @@ build() {
 }
 
 package() {
-	install -D -m 644 index.html "$1/doc/rlsd/index.html"
+	install -D -m 644 index-$PKG_VER.html "$1/doc/rlsd/index.html"
 	install -D -m 644 "$BASE_DIR/README" "$1/doc/rlsd/README"
 	install -m 644 "$BASE_DIR/AUTHORS" "$1/doc/rlsd/AUTHORS"
 	install -m 644 "$BASE_DIR/COPYING" "$1/doc/rlsd/COPYING"
