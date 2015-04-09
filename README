@@ -1,22 +1,18 @@
-      _         _
- _ __| |___  __| |
-| '__| / __|/ _` |
-| |  | \__ \ (_| |
-|_|  |_|___/\__,_|
+       _         _
+  ____| |___  __| |
+ |  __| / __|/ _  |
+ | |  | \__ \ (_| |
+ |_|  |_|___/\__,_|
 
 RLSD, the Retro Linux-libre Software Distribution, is a small, "live" operating
-system with GNU/Linux-libre (http://linux-libre.fsfla.org/) and retro
-applications for the x86 and x86_64 architectures.
-
-This is the development version of RLSD 2.x. It provides a smarter, simpler and
-faster build system designed for native building, without a cross-compiler. In
-addition, it introduces new security features.
+system with GNU/Linux-libre (http://linux-libre.fsfla.org/), for the x86_64
+architecture.
 
 RLSD consists of free software: software that respects the user's freedom. RLSD
 is free to study, modify and share. To read more about free software, see
 http://www.gnu.org/philosophy/free-sw.html.
 
-For more information, see the project homepage (http://rlsd.dimakrasner.com/).
+For more information, see the project homepage (http://rlsd2.dimakrasner.com/).
 
 Building
 ========
@@ -28,7 +24,7 @@ To build RLSD, install the following packages:
   build-essential autoconf automake autotools-dev autoconf-archive unzip flex
   bison git nasm squashfs-tools pkg-config file subversion bc dosfstools yasm
   libarchive-dev libcurl4-gnutls-dev xorriso wget
-  liblwp-useragent-determined-perl advancecomp optipng curl gawk clzip libtool \
+  liblwp-useragent-determined-perl advancecomp optipng curl gawk clzip libtool
   mercurial cmake
 
 Then, switch to the RLSD directory and run:
