@@ -1,3 +1,1 @@
-export PS1='[\u@\w]\$ '
-export HISTFILE="$HOME/.ksh_history"
-alias ll="ls -la"
+export ENV="/etc/kshrc"

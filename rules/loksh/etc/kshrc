@@ -1,0 +1,8 @@
+export PS1='[\u@\w]\$ '
+export HISTFILE="$HOME/.ksh_history"
+
+bind '^[[1~'=beginning-of-line
+bind '^[[4~'=end-of-line
+bind '^[[3~'=delete-char-forward
+
+alias ll="ls -la"
