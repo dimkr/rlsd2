@@ -1,0 +1,23 @@
+PKG_VER="0.4"
+PKG_SRCS="https://bitbucket.org/jwilk/fbcat/downloads/fbcat-$PKG_VER.tar.gz"
+PKG_DESC="A screenshot taking tool"
+PKG_DEPS="musl ffmpeg"
+
+get_latest() {
+	wget -q -O - "https://bitbucket.org/jwilk/fbcat/downloads" |
+	grep "\.tar" |
+	head -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
+build() {
+	$MAKE
+}
+
+package() {
+	install -D -m 755 fbcat "$1/bin/fbcat"
+	install -m 755 fbgrab "$1/bin/fbgrab"
+	install -D -m 644 doc/changelog "$1/doc/fbcat/changelog"
+	install -m 644 COPYING "$1/doc/fbcat/COPYING"
+}
