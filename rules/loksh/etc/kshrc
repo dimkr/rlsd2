@@ -1,4 +1,15 @@
-export PS1='[\u@\w]\$ '
+tty="$(readlink /proc/self/fd/0)"
+case "$tty" in
+	/dev/tty*)
+		tty="|$(basename "$tty")"
+		;;
+	/dev/pts/*)
+		tty="|pts$(basename "$tty")"
+		;;
+	*)
+		tty=""
+esac
+export PS1="[\u$tty@\w]\$ "
 export HISTFILE="$HOME/.ksh_history"
 
 bind '^[[1~'=beginning-of-line
