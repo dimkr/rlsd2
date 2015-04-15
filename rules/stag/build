@@ -8,4 +8,6 @@ build() {
 
 package() {
 	$MAKE DESTDIR="$1" install
+	install -D -m 644 README.md "$1/doc/stag/README.md"
+	install -m 644 LICENSE.txt "$1/doc/stag/LICENSE.txt"
 }
