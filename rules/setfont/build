@@ -34,7 +34,6 @@ package() {
 	install -D -m 644 ../docs/man/man8/setfont.8 "$1/man/man8/setfont.8"
 	install -D -m 644 ../README "$1/doc/setfont/README"
 	install -m 644 ../ChangeLog "$1/doc/setfont/ChangeLog"
-	install -m 644 ../NEWS "$1/doc/setfont/NEWS"
 	install -m 644 ../AUTHORS "$1/doc/setfont/AUTHORS"
 	install -m 644 ../CREDITS "$1/doc/setfont/CREDITS"
 	install -m 644 ../COPYING "$1/doc/setfont/COPYING"
