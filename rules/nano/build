@@ -1,4 +1,4 @@
-PKG_VER="2.4.0"
+PKG_VER="2.4.1"
 PKG_SRCS="http://www.nano-editor.org/dist/v2.4/nano-$PKG_VER.tar.gz"
 PKG_DESC="A text editor"
 PKG_DEPS="musl ncurses"
@@ -29,6 +29,7 @@ package() {
 	$MAKE DESTDIR="$1" install
 	install -D -m 644 README "$1/doc/nano/README"
 	install -m 644 NEWS "$1/doc/nano/NEWS"
+	install -m 644 ChangeLog "$1/doc/nano/ChangeLog"
 	install -m 644 AUTHORS "$1/doc/nano/AUTHORS"
 	install -m 644 THANKS "$1/doc/nano/THANKS"
 	install -m 644 COPYING "$1/doc/nano/COPYING"
