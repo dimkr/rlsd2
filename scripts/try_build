@@ -91,7 +91,6 @@ download_srcs() {
 
 cleanup() {
 	echo "> Cleaning up"
-	cd "$BASE_DIR"
 	[ 0 -eq $UID ] && umount -l "$1"
 	rm -rf "$1"
 }
@@ -172,6 +171,7 @@ do
 	tar -xavf "$i"
 	if [ 0 -ne $? ]
 	then
+		cd "$BASE_DIR"
 		cleanup "$build_dir"
 		exit 1
 	fi
@@ -202,6 +202,7 @@ do
 			patch -p 1 < "$i"
 			if [ 0 -ne $? ]
 			then
+				cd "$BASE_DIR"
 				cleanup "$build_dir"
 				exit 1
 			fi
@@ -226,6 +227,7 @@ export PATH="$BASE_DIR:$ORIG_PATH"
 build
 if [ 0 -ne $? ]
 then
+	cd "$BASE_DIR"
 	cleanup "$build_dir"
 	exit 1
 fi
@@ -276,13 +278,23 @@ do
 	run "$1"
 done
 
+# verify the package is sane
+echo "> Verifying the build output"
+cd "$BASE_DIR"
+"$BASE_DIR/scripts/verify_pkg" "$1" "$install_root"
+if [ 0 -ne $? ]
+then
+	echo "> The output verification failed"
+	cleanup "$build_dir"
+	exit 1
+fi
+
 # copy the processed package to the system root, to replace modified files (e.g
 # stripped executables)
 cp -vrp "$install_root"/* "$SYSROOT/"
 
 # generate an archive containing the processed package
 echo "> Creating $2"
-cd "$BASE_DIR"
 tar -C "$install_root" -c . | lzip --best > "$2"
 
 cleanup "$build_dir"
