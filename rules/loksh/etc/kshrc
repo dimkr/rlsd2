@@ -10,10 +10,12 @@ case "$tty" in
 		tty=""
 esac
 export PS1="[\u$tty@\w]\$ "
+unset tty
 export HISTFILE="$HOME/.ksh_history"
 
-bind '^[[1~'=beginning-of-line
-bind '^[[4~'=end-of-line
-bind '^[[3~'=delete-char-forward
+bind '^[[1~'="beginning-of-line"
+bind '^[[4~'="end-of-line"
+bind '^[[3~'="delete-char-forward"
+bind -m '^L'="clear^J"
 
 alias ll="ls -la"
