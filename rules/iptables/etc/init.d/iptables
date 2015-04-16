@@ -1,0 +1,47 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		echo -n "Starting firewall ..."
+
+		# remove the current configuration
+		iptables -F
+		iptables -X
+
+		# drop all incoming traffic
+		iptables -P INPUT DROP
+
+		# allow all outgoing traffic
+		iptables -P OUTPUT ACCEPT
+
+		# disable NAT
+		iptables -P FORWARD DROP
+
+		# accept all incoming traffic in the loopback interface
+		iptables -A INPUT -i lo -j ACCEPT
+
+		# allow established connections and related ICMP traffic
+		iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+		# drop invalid connections
+		iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
+
+		# accept IPv6 Neighbor Discovery packets
+		iptables -A INPUT -p 41 -j ACCEPT
+
+		# ignore ICMP echo requests
+		echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
+
+		echo " done"
+		;;
+
+	stop)
+		echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_all
+		iptables -F
+		iptables -X
+		for i in INPUT FORWARD OUTPUT
+		do
+			iptables -P $i ACCEPT
+		done
+		;;
+esac

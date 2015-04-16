@@ -1,0 +1,49 @@
+diff -rup iptables-1.4.21-orig/extensions/libxt_TCPOPTSTRIP.c iptables-1.4.21/extensions/libxt_TCPOPTSTRIP.c
+--- iptables-1.4.21-orig/extensions/libxt_TCPOPTSTRIP.c	2013-11-22 13:18:13.000000000 +0200
++++ iptables-1.4.21/extensions/libxt_TCPOPTSTRIP.c	2015-04-16 22:33:26.637412015 +0300
+@@ -9,6 +9,21 @@
+ #include <xtables.h>
+ #include <netinet/tcp.h>
+ #include <linux/netfilter/xt_TCPOPTSTRIP.h>
++#ifndef TCPOPT_MAXSEG
++#	define TCPOPT_MAXSEG 2
++#endif
++#ifndef TCPOPT_WINDOW
++#	define TCPOPT_WINDOW 3
++#endif
++#ifndef TCPOPT_SACK_PERMITTED
++#	define TCPOPT_SACK_PERMITTED 4
++#endif
++#ifndef TCPOPT_SACK
++#	define TCPOPT_SACK 5
++#endif
++#ifndef TCPOPT_TIMESTAMP
++#	define TCPOPT_TIMESTAMP 8
++#endif
+ #ifndef TCPOPT_MD5SIG
+ #	define TCPOPT_MD5SIG 19
+ #endif
+diff -rup iptables-1.4.21-orig/include/libiptc/ipt_kernel_headers.h iptables-1.4.21/include/libiptc/ipt_kernel_headers.h
+--- iptables-1.4.21-orig/include/libiptc/ipt_kernel_headers.h	2013-11-22 13:18:13.000000000 +0200
++++ iptables-1.4.21/include/libiptc/ipt_kernel_headers.h	2015-04-16 22:34:09.569413035 +0300
+@@ -5,7 +5,7 @@
+ 
+ #include <limits.h>
+ 
+-#if defined(__GLIBC__) && __GLIBC__ == 2
++#if 1
+ #include <netinet/ip.h>
+ #include <netinet/in.h>
+ #include <netinet/ip_icmp.h>
+diff -rup iptables-1.4.21-orig/include/linux/netfilter_ipv4/ip_tables.h iptables-1.4.21/include/linux/netfilter_ipv4/ip_tables.h
+--- iptables-1.4.21-orig/include/linux/netfilter_ipv4/ip_tables.h	2013-11-22 13:18:13.000000000 +0200
++++ iptables-1.4.21/include/linux/netfilter_ipv4/ip_tables.h	2015-04-16 22:27:32.305403594 +0300
+@@ -15,7 +15,7 @@
+ #ifndef _IPTABLES_H
+ #define _IPTABLES_H
+ 
+-#include <linux/types.h>
++#include <sys/types.h>
+ 
+ #include <linux/netfilter_ipv4.h>
+ 

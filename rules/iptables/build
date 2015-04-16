@@ -1,0 +1,28 @@
+PKG_VER="1.4.21"
+PKG_SRCS="http://www.netfilter.org/projects/iptables/files/iptables-$PKG_VER.tar.bz2"
+PKG_DESC="Packet filtering tools"
+PKG_DEPS="musl"
+
+get_latest() {
+	wget -q -O - "http://www.netfilter.org/projects/iptables/downloads.html" |
+	grep -E "iptables .+ released" |
+	head -n 1 |
+	awk '{print $4}'
+}
+
+build() {
+	./configure --prefix="" \
+	            --sbindir="/bin" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared \
+	            --disable-devel
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 COPYING "$1/doc/iptables/COPYING"
+}

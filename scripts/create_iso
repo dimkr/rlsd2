@@ -15,6 +15,7 @@ PACKAGES="skeleton
           dhcpcd
           iw
           wpa_supplicant
+          iptables
           gzip
           lbzip2
           xz
