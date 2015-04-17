@@ -25,7 +25,7 @@ To build RLSD, install the following packages:
   bison git nasm squashfs-tools pkg-config file subversion bc dosfstools yasm
   libarchive-dev libcurl4-gnutls-dev xorriso wget
   liblwp-useragent-determined-perl advancecomp optipng curl gawk clzip libtool
-  mercurial cmake
+  mercurial cmake lzip
 
 Then, switch to the RLSD directory and run:
   ./scripts/build_all
