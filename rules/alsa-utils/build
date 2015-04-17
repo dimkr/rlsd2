@@ -23,7 +23,7 @@ build() {
 	            --with-curses="ncurses" \
 	            --with-asound-state-dir="/etc" \
 	            --with-alsactl-pidfile-dir="/run"
-	[ 0 -ne $ ] && return 1
+	[ 0 -ne $? ] && return 1
 
 	$MAKE
 }
