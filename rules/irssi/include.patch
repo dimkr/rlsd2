@@ -1,0 +1,28 @@
+diff -rup irssi-0.8.17-orig/m4/curses.m4 irssi-0.8.17/m4/curses.m4
+--- irssi-0.8.17-orig/m4/curses.m4	2015-04-20 21:07:49.413212471 +0300
++++ irssi-0.8.17/m4/curses.m4	2015-04-20 21:18:27.113191892 +0300
+@@ -205,8 +205,6 @@ dnl
+ AC_DEFUN([AC_NCURSES], [
+     if $search_ncurses
+     then
+-        if test -f $1/$2
+-	then
+ 	    AC_MSG_RESULT(Found ncurses on $1/$2)
+ 
+ 	    CURSES_LIBS="$3"
+@@ -225,13 +223,14 @@ AC_DEFUN([AC_NCURSES], [
+             has_curses=true
+ 	    has_ncurses=true
+ 	    AC_DEFINE(USE_NCURSES)
+-	fi
+     fi
+ ])
+ 
+ AC_DEFUN([AC_SEARCH_NCURSES], [
+     AC_CHECKING("location of ncurses.h file")
+ 
++    AC_NCURSES(/include, ncurses.h, -lncurses,,
++	       [ncurses in /include])
+     AC_NCURSES(/usr/include, ncurses.h, -lncurses,,
+ 	       [ncurses in /usr/include])
+     AC_NCURSES(/usr/include/ncurses, ncurses.h, -lncurses, -I/usr/include/ncurses,
