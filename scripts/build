@@ -10,7 +10,7 @@ do
 	./scripts/try_build "$1" "packages/$1.tar.lz" >> "logs/$1.log" 2>&1
 	[ 0 -ne $? ] && continue
 
-	echo "> Successfuly built $1" >> "logs/$1.log"
+	echo "> Successfully built $1" >> "logs/$1.log"
 	lzip -9 "logs/$1.log"
 	exit 0
 done
