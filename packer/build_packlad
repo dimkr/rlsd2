@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+# fetch RLSD's build system
+git clone git://rlsd2.dimakrasner.com/ rlsd
+
+# build and install Ed25519
+git clone --depth 1 https://github.com/orlp/ed25519.git
+cd ed25519
+patch -p 1 < ../rlsd/rules/ed25519/build.patch
+cd src
+make
+cp -f libed25519.a /lib/
+cp -f ed25519.h /usr/include/
+
+# build and install packlad
+git clone --depth 1 https://github.com/dimkr/packlad.git ../../packlad
+cd ../../packlad
+make genkeys
+make
+make install
+install -m 400 keys/priv_key /etc/packlad/

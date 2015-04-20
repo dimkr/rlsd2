@@ -17,18 +17,16 @@ For more information, see the project homepage (http://rlsd2.dimakrasner.com/).
 Building
 ========
 
-RLSD is built from source. It can be cross-compiled through any Debian
-(http://www.debian.org/) based distribution.
+RLSD is built from source and cross-compiled through Trisquel
+(http://www.trisquel.info/).
 
-To build RLSD, install the following packages:
-  build-essential autoconf automake autotools-dev autoconf-archive unzip flex
-  bison git nasm squashfs-tools pkg-config file subversion bc dosfstools yasm
-  libarchive-dev libcurl4-gnutls-dev xorriso wget
-  liblwp-useragent-determined-perl advancecomp optipng curl gawk clzip libtool
-  mercurial cmake lzip
-
-Then, switch to the RLSD directory and run:
-  ./scripts/build_all
+To build RLSD:
+  - Install QEMU (http://www.qemu.org/) and Packer (https://www.packer.io/)
+  - Set up the build environment in a VM:
+      cd packer/; packer build packer.json
+  - Start the VM
+  - Inside it:
+      cd rlsd; ./scripts/build_all
 
 Credits and Legal Information
 =============================
