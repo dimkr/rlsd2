@@ -1,1 +1,1 @@
-export REPO="http://rlsd2.dimakrasner.com/repo"
+export REPO="http://rlsd2.dimakrasner.com/repo/$(uname -m)"

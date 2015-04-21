@@ -1,0 +1,33 @@
+{
+	"builders":
+	[
+		{
+			"name": "x86_64",
+			"type": "qemu",
+			"iso_url": "http://mirror.fsf.org/trisquel-images/trisquel-netinst_7.0_amd64.iso",
+			"iso_checksum": "b03d6ba5cea83de3c24c9e80e9a95362",
+			"iso_checksum_type": "md5",
+			"ssh_wait_timeout": "30s",
+			"shutdown_command": "shutdown -P now",
+			"disk_size": 20000,
+			"output_directory": "x86_64",
+			"http_directory": "www",
+			"ssh_username": "root",
+			"ssh_password": "root",
+			"ssh_wait_timeout": "90m",
+			"vm_name": "rlsd",
+			"boot_wait": "5s",
+			"boot_command":
+			[
+				"<tab>preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg debian-installer=en_US auto locale=en_US kbd-chooser/method=us hostname={{.Name}} debconf/frontend=noninteractive keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false<enter><wait>"
+			]
+		}
+	],
+	"provisioners":
+	[
+		{
+		  "type": "shell",
+		  "script": "build_packlad"
+		}
+	]
+}

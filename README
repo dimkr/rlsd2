@@ -5,8 +5,8 @@
  |_|  |_|___/\__,_|
 
 RLSD, the Retro Linux-libre Software Distribution, is a small, "live" operating
-system with GNU/Linux-libre (http://linux-libre.fsfla.org/), for the x86_64
-architecture.
+system with GNU/Linux-libre (http://linux-libre.fsfla.org/), for the x86 and
+x86_64 architectures.
 
 RLSD consists of free software: software that respects the user's freedom. RLSD
 is free to study, modify and share. To read more about free software, see
@@ -23,7 +23,9 @@ RLSD is built from source and cross-compiled through Trisquel
 To build RLSD:
   - Install QEMU (http://www.qemu.org/) and Packer (https://www.packer.io/)
   - Set up the build environment in a VM:
-      cd packer/; packer build packer.json
+      cd packer/; packer build packer-x86_64.json
+    or:
+      cd packer/; packer build packer-x86.json
   - Start the VM
   - Inside it:
       cd rlsd; ./scripts/build_all
