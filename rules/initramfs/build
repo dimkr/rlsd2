@@ -243,7 +243,14 @@ mount -t tmpfs -o mode=1777,noexec,nosuid,nodev,size=25% tmp /mnt/union/tmp
 echo " done."
 
 # continue the boot process inside the layered file system
-exec chroot /mnt/union newpid rc' > "$initramfs_root/bin/rc"
+if [ 1 -eq $secure ]
+then
+	flag=""
+else
+	mount /proc /mnt/union/proc
+	flag="-n"
+fi
+exec chroot /mnt/union newpid $flag rc' > "$initramfs_root/bin/rc"
 	chmod 755 "$initramfs_root/bin/rc"
 
 	# generate an initramfs archive
