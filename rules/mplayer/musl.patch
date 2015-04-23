@@ -1,0 +1,12 @@
+diff -rup MPlayer-1.1.1-orig/loader/ldt_keeper.c MPlayer-1.1.1/loader/ldt_keeper.c
+--- MPlayer-1.1.1-orig/loader/ldt_keeper.c	2015-04-23 15:07:09.580805888 +0300
++++ MPlayer-1.1.1/loader/ldt_keeper.c	2015-04-23 15:08:07.736807270 +0300
+@@ -47,7 +47,7 @@
+ #if defined(__GLIBC__) &&  (__GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ == 0))
+ _syscall3( int, modify_ldt, int, func, void *, ptr, unsigned long, bytecount );
+ #else
+-int modify_ldt(int func, void *ptr, unsigned long bytecount);
++#define modify_ldt(func, ptr, bytecount) syscall(__NR_modify_ldt, func, ptr, bytecount)
+ #endif
+ #else
+ #if defined(__NetBSD__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
