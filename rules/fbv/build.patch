@@ -17,7 +17,7 @@ diff -rupN fbv-1.0b-orig/Make.conf fbv-1.0b/Make.conf
 +bindir	= /bin
 +mandir	= /man
 +
-+LIBS	= $(shell $(PKG_CONFIG) --libs libpng) -ljpeg -lgif
++LIBS	+= $(shell $(PKG_CONFIG) --libs libpng) -ljpeg -lgif
 diff -rupN fbv-1.0b-orig/Makefile fbv-1.0b/Makefile
 --- fbv-1.0b-orig/Makefile	2014-11-07 13:50:09.513976567 +0200
 +++ fbv-1.0b/Makefile	2014-11-07 17:56:37.487992505 +0200

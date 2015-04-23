@@ -1,13 +1,14 @@
-diff -rup stag-git31012015-orig/Makefile stag-git31012015/Makefile
---- stag-git31012015-orig/Makefile	2015-01-31 00:03:11.569131214 +0200
-+++ stag-git31012015/Makefile	2015-01-31 00:03:24.805131529 +0200
+diff -rup stag-git15042015-orig/Makefile stag-git15042015/Makefile
+--- stag-git15042015-orig/Makefile	2015-04-23 15:28:28.604836285 +0300
++++ stag-git15042015/Makefile	2015-04-23 15:28:43.368836636 +0300
 @@ -1,25 +1,24 @@
  CC ?= gcc
 -CFLAGS=-Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter
 -# D_BSD_SOURCE for strsep
-+CFLAGS+=-Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -D_BSD_SOURCE
- LIBS=-lncurses -lm -D_DEFAULT_SOURCE
+-LIBS=-lncurses -lm -D_DEFAULT_SOURCE
 -PREFIX ?= /usr/local
++CFLAGS+=-Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -D_BSD_SOURCE
++LIBS+=-lncurses -lm -D_DEFAULT_SOURCE
 +PREFIX ?=
  
  .PHONY: install uninstall clean

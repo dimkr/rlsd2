@@ -13,7 +13,7 @@ get_latest() {
 }
 
 build() {
-	LIBS="-lmagic -lz" \
+	LIBS="-lmagic -lz $LIBS" \
 	./configure --prefix="" \
 		    --mandir="/man" \
 	            --disable-desktop-files

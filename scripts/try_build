@@ -126,6 +126,7 @@ case "$ARCH" in
 esac
 export CFLAGS
 export LDFLAGS
+export LIBS="-lssp_nonshared"
 
 # override pkg-config's directories with those under SYSROOT
 export PKG_CONFIG="$BASE_DIR/pkg-config"
