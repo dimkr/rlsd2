@@ -1,5 +1,5 @@
 PKG_VER="2.4"
-PKG_SRCS="http://hostap.epitest.fi/releases/wpa_supplicant-$PKG_VER.tar.gz"
+PKG_SRCS="http://hostap.epitest.fi/releases/wpa_supplicant-$PKG_VER.tar.gz http://w1.fi/security/2015-1/0001-P2P-Validate-SSID-element-length-before-copying-it-C.patch"
 PKG_DESC="A tool for association with wireless networks"
 PKG_DEPS="musl libressl libnl-tiny"
 
@@ -12,6 +12,9 @@ get_latest() {
 }
 
 build() {
+	patch -p 1 < ../0001-P2P-Validate-SSID-element-length-before-copying-it-C-$PKG_VER.patch
+	[ 0 -ne $? ] && exit 1
+
 	cd wpa_supplicant
 
 	cp defconfig .config
