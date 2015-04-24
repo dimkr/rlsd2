@@ -1,4 +1,4 @@
-PKG_VER="9.15"
+PKG_VER="9.16"
 PKG_SRCS="http://downloads.ghostscript.com/public/ghostscript-$PKG_VER.tar.gz"
 PKG_DESC="A PostScript and PDF interpreter"
 PKG_DEPS="musl zlib libpng libjpeg-turbo"
@@ -11,7 +11,7 @@ get_latest() {
 }
 
 build() {
-	rm -rf zlib jpegxr
+	rm -rf zlib jpegxr tiff
 
 	autoconf
 	[ 0 -ne $? ] && return 1
@@ -20,9 +20,12 @@ build() {
 	            --mandir="/man" \
 	            --disable-fontconfig \
 	            --disable-freetype \
+	            --disable-openjpeg \
 	            --disable-gtk \
 	            --disable-dynamic \
 	            --with-system-libtiff \
+	            --without-jbig2dec \
+	            --with-drivers="BMP,JPEG,PBM,PNG,PS" \
 	            --with-fontpath="/share/fonts/75dpi:/share/fonts/100dpi:/share/fonts/misc:/share/fonts/truetype:/share/fonts/cyrillic"
 	[ 0 -ne $? ] && return 1
 
