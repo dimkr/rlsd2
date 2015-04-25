@@ -1,4 +1,4 @@
-PKG_VER="1.6.1"
+PKG_VER="1.6.2"
 PKG_SRCS="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VER/msmtp-$PKG_VER.tar.xz"
 PKG_DESC="An e-mail sending tool"
 PKG_DEPS="musl libressl"
