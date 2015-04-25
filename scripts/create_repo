@@ -1,9 +1,8 @@
 #!/bin/sh
 
-ARCH="$(uname -m)"
 TODAY="$(date +%d%m%Y)"
 
-for i in rules/*
+for i in rules/elvis
 do
 	PKG_VER="$TODAY"
 	PKG_DEPS=""
@@ -14,5 +13,5 @@ do
 	        /etc/packlad/priv_key \
 	        /etc/packlad/pub_key \
 	        "repo/$package"
-	echo "$name|$PKG_VER|$PKG_DESC|$package|$ARCH|$PKG_DEPS" >> repo/available
+	echo "$name|$PKG_VER|$PKG_DESC|$package|$PKG_DEPS" >> repo/available
 done
