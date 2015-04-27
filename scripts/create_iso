@@ -39,16 +39,16 @@ fi
 
 # create a temporary directory for the extracted ISO image contents
 iso_root="$(mktemp -d)"
-mkdir "$iso_root/boot"
+mkdir "$iso_root/boot" "$iso_root/isolinux"
 
 # put the kernel, the boot loader and its configuration file in the image root,
 # for BIOS boot
 mv "$root_fs/boot/bzImage" "$iso_root/boot/"
 mv "$root_fs/boot/initrd.xz" "$iso_root/boot/"
-mv "$root_fs/boot/isolinux.bin" "$iso_root/"
-mv "$root_fs/boot/isohdpfx.bin" "$iso_root/"
-mv "$root_fs/boot/menu.c32" "$iso_root/"
-mv "$root_fs/boot/isolinux.cfg" "$iso_root/"
+mv "$root_fs/boot/isolinux.bin" "$iso_root/isolinux/"
+mv "$root_fs/boot/isohdpfx.bin" "$iso_root/isolinux/"
+mv "$root_fs/boot/menu.c32" "$iso_root/isolinux/"
+mv "$root_fs/boot/isolinux.cfg" "$iso_root/isolinux/"
 rm -rf "$root_fs/boot"
 
 # generate the root file system image
@@ -71,10 +71,10 @@ xorriso -as mkisofs \
         -full-iso9660-filenames \
         -volid "RLSD_$TODAY" \
         -appid "RLSD $TODAY" \
-        -eltorito-boot isolinux.bin \
-        -eltorito-catalog boot.cat \
+        -eltorito-boot isolinux/isolinux.bin \
+        -eltorito-catalog isolinux/boot.cat \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
-        -isohybrid-mbr "$iso_root/isohdpfx.bin" \
+        -isohybrid-mbr "$iso_root/isolinux/isohdpfx.bin" \
         $uefi_flags \
         -output "images/rlsd-$TODAY.iso" \
         "$iso_root"
