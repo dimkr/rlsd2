@@ -17,7 +17,7 @@ build() {
 	            --disable-shared \
 	            --disable-old-symbols \
 	            --without-debug \
-	            --with-pcm-plugins="" \
+	            --with-pcm-plugins="all" \
 	            --with-ctl-plugins="" \
 	            --with-max-cards=2
 	[ 0 -ne $? ] && return 1
