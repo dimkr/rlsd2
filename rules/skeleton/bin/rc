@@ -6,4 +6,5 @@ do
 	[ -x "$i" ] && "./$i" start
 done
 
+echo
 exec vtman
