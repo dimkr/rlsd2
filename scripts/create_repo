@@ -2,7 +2,7 @@
 
 TODAY="$(date +%d%m%Y)"
 
-for i in rules/elvis
+for i in rules/*
 do
 	PKG_VER="$TODAY"
 	PKG_DEPS=""
