@@ -17,4 +17,4 @@ gzip
 lbzip2
 xz
 libarchive
-vim
+nano

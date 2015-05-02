@@ -17,7 +17,7 @@ gzip
 lbzip2
 xz
 libarchive
-vim
+nano
 
 alsa-utils
 bitlbee
@@ -38,7 +38,6 @@ mc
 mpg123
 mplayer
 mutt
-nano
 ncdu
 ogg122
 screen
@@ -48,5 +47,6 @@ surfraw
 tcpdump
 tty-clock
 vifm
+vim
 wget
 ytree
