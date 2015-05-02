@@ -292,6 +292,15 @@ then
 	exit 1
 fi
 
+# move debugging symbols out of the processed package, to reduce its size
+if [ -d "$install_root/dbg" ]
+then
+	debug_dir="$(mktemp -d -p "$BASE_DIR")"
+	mv "$install_root/dbg" "$debug_dir/"
+	tar -C "$debug_dir/dbg" -c . | lzip --best > "$3"
+	rm -rf "$debug_dir"
+fi
+
 # copy the processed package to the system root, to replace modified files (e.g
 # stripped executables)
 cp -vrp "$install_root"/* "$SYSROOT/"

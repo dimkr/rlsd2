@@ -7,7 +7,9 @@ rm -f "logs/$1.log.lz" "logs/$1.log" 2>/dev/null
 for i in 1 2 3
 do
 	echo "> Building $1 (attempt $i), $(date -R)" >> "logs/$1.log"
-	./scripts/try_build "$1" "packages/$1.tar.lz" >> "logs/$1.log" 2>&1
+	./scripts/try_build "$1" \
+	                    "packages/$1.tar.lz" \
+	                    "debug/$1.tar.lz" >> "logs/$1.log" 2>&1
 	[ 0 -ne $? ] && continue
 
 	echo "> Successfully built $1" >> "logs/$1.log"

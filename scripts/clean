@@ -1,3 +1,10 @@
 #!/bin/sh
 
-rm -rvf images/* sysroot/* logs/* packages/* repo/* *-config Makefile.deps
+rm -rvf images/* \
+        sysroot/* \
+        logs/* \
+        packages/* \
+        debug/* \
+        repo/* \
+        *-config \
+        Makefile.deps
