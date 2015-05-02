@@ -1,6 +1,7 @@
 PKG_VER="0.4.1"
 PKG_SRCS="https://bitbucket.org/jwilk/fbcat/downloads/fbcat-$PKG_VER.tar.gz"
 PKG_DESC="A screenshot taking tool"
+PKG_BUILD_DEPS="musl"
 PKG_DEPS="musl ffmpeg"
 
 get_latest() {
