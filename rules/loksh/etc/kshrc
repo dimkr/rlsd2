@@ -18,4 +18,5 @@ bind '^[[4~'="end-of-line"
 bind '^[[3~'="delete-char-forward"
 bind -m '^L'="clear^J"
 
+alias ls="ls --color=auto"
 alias ll="ls -la"
