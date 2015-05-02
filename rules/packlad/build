@@ -1,5 +1,6 @@
 PKG_SRCS="https://github.com/dimkr/packlad.git"
 PKG_DESC="A package manager"
+PKG_BUILD_DEPS="musl zlib libarchive curl ed25519"
 PKG_DEPS="musl zlib libarchive curl clzip ed25519"
 
 build() {

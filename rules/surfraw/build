@@ -1,7 +1,8 @@
 PKG_VER="2.2.9"
 PKG_SRCS="http://surfraw.alioth.debian.org/dist/surfraw-$PKG_VER.tar.gz"
 PKG_DESC="A search engine frontend"
-PKG_DEPS="musl loksh lok lynx links"
+PKG_BUILD_DEPS=""
+PKG_DEPS="loksh lok lynx links"
 
 get_latest() {
 	wget -q -O - "http://surfraw.alioth.debian.org/" |
