@@ -1,30 +1,10 @@
 #!/bin/sh
 
 TODAY="$(date +%d%m%Y)"
-PACKAGES="skeleton
-          toybox
-          sdaemons
-          loksh
-          packlad
-          mandoc
-          initramfs
-          linux-libre
-          isolinux
-          lok
-          rfkill
-          dhcpcd
-          iw
-          wpa_supplicant
-          iptables
-          gzip
-          lbzip2
-          xz
-          libarchive
-          vim"
 
 # build the root file system
 root_fs="$(mktemp -d -u)"
-./scripts/build_rootfs  "$root_fs" "$PACKAGES"
+./scripts/build_rootfs "$root_fs" "$(cat "$1")"
 if [ ! -f "$root_fs/boot/bzImage" ] ||
    [ ! -f "$root_fs/boot/initrd.xz" ] ||
    [ ! -f "$root_fs/boot/isolinux.bin" ]
@@ -76,7 +56,7 @@ xorriso -as mkisofs \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
         -isohybrid-mbr "$iso_root/isolinux/isohdpfx.bin" \
         $uefi_flags \
-        -output "images/rlsd-$TODAY.iso" \
+        -output "images/rlsd-$TODAY-$(basename "$1").iso" \
         "$iso_root"
 
 # clean up
