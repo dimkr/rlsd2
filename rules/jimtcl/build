@@ -1,0 +1,22 @@
+PKG_SRCS="https://github.com/msteveb/jimtcl.git"
+PKG_DESC="An embeddable Tcl interpreter"
+PKG_DEPS="musl"
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --ipv6 \
+	            --disable-jim-regexp \
+	            --with-ext="aio eventloop array exec file glob package posix regexp stdlib tclcompat"
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	install -D -m 755 jimsh "$1/bin/jimsh"
+	install -D -m 755 libjim.a "$1/lib/libjim.a"
+	install -D -m 644 README "$1/doc/jimtcl/README"
+	install -m 644 AUTHORS "$1/doc/jimtcl/AUTHORS"
+	install -m 644 LICENSE "$1/doc/jimtcl/LICENSE"
+}

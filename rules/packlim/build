@@ -1,7 +1,7 @@
 PKG_SRCS="https://github.com/dimkr/packlim.git"
 PKG_DESC="A package manager"
-PKG_BUILD_DEPS="musl libarchive curl ed25519"
-PKG_DEPS="musl libarchive curl clzip ed25519"
+PKG_BUILD_DEPS="musl libarchive curl ed25519 jimtcl"
+PKG_DEPS="musl libarchive curl clzip ed25519 jimtcl"
 
 build() {
 	$MAKE
