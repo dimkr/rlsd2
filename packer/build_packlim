@@ -1,0 +1,32 @@
+#!/bin/sh -e
+
+# fetch RLSD's build system
+git clone git://rlsd2.dimakrasner.com/ rlsd
+
+# build and install Ed25519
+git clone --depth 1 https://github.com/orlp/ed25519.git
+cd ed25519
+patch -p 1 < ../rlsd/rules/ed25519/build.patch
+patch -p 1 < ../rlsd/rules/ed25519/frontend.patch
+cd src
+make
+cp -f libed25519.a /lib/
+cp -f ed25519.h /usr/include/
+cp -f ed25519 /usr/local/bin/
+
+git clone --depth 1 https://github.com/msteveb/jimtcl.git ../../jimtcl
+cd ../../jimtcl
+./configure
+make libjim.a
+cp -f libjim.a /lib/
+cp -f jim.h /usr/include/
+
+# build and install packlim
+git clone --depth 1 https://github.com/dimkr/packlim.git ../packlim
+cd ../packlim
+make
+make install
+
+# generate a keypair
+mkdir /etc/packlim
+ed25519 -g /etc/packlim/priv_key /etc/packlim/pub_key

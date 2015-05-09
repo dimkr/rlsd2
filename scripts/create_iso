@@ -4,7 +4,7 @@ TODAY="$(date +%d%m%Y)"
 
 # build the root file system
 root_fs="$(mktemp -d -u)"
-./scripts/build_rootfs "$root_fs" "$(cat "$1")"
+./scripts/build_rootfs "$root_fs" "$1"
 if [ ! -f "$root_fs/boot/bzImage" ] ||
    [ ! -f "$root_fs/boot/initrd.xz" ] ||
    [ ! -f "$root_fs/boot/isolinux.bin" ]
@@ -41,8 +41,10 @@ mksquashfs "$root_fs" \
 rm -rf "$root_fs"
 
 # sign the root file system image
-pkgsign /etc/packlad/priv_key \
-        /etc/packlad/pub_key \
+ed25519 -s \
+        "$iso_root/boot/rootfs.sfs" \
+        /etc/packlim/priv_key \
+        /etc/packlim/pub_key \
         "$iso_root/boot/rootfs.sfs" > "$iso_root/boot/rootfs.sig"
 
 # generate an ISO image

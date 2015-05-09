@@ -10,8 +10,8 @@ do
 	name="$(basename "$i")"
 	package="$name-$PKG_VER.pkg"
 	tar2pkg "packages/$name.tar.lz" \
-	        /etc/packlad/priv_key \
-	        /etc/packlad/pub_key \
+	        /etc/packlim/priv_key \
+	        /etc/packlim/pub_key \
 	        "repo/$package"
 	echo "$name|$PKG_VER|$PKG_DESC|$package|$PKG_DEPS" >> repo/available
 done

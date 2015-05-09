@@ -1,17 +1,7 @@
 #!/bin/sh
 
 # install the packages
-mkdir -p "$1/var/packlad/downloaded" "$1/var/packlad/installed"
-install -D -m 400 /etc/packlad/pub_key "$1/etc/packlad/pub_key"
-export REPO="file://$(pwd)/repo"
-packlad -p "$1" -u
-for package in $2
-do
-	packlad -s -i $package -n -p "$1"
-done
-
-# clean up after packlad
-rm -vf "$1/var/packlad/available" "$1/var/packlad/downloaded"/*
+PREFIX="$1" packlim source "$2"
 
 # fix permissions
 chown -R 0:0 "$1"

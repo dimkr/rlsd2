@@ -1,20 +1,9 @@
-skeleton
-toybox
-sdaemons
-loksh
-packlad
-mandoc
-initramfs
-linux-libre
-isolinux
-lok
-rfkill
-dhcpcd
-iw
-wpa_supplicant
-iptables
-gzip
-lbzip2
-xz
-libarchive
-nano
+set repo [packlim.repository "file://[pwd]/repo"]
+set lock [packlim.wait "${pfix}var/packlim/lock"]
+set pkgs [packlim.cond_update $repo $pfix]
+
+foreach pkg {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux lok rfkill dhcpcd iw wpa_supplicant iptables gzip lbzip2 xz libarchive nano} {
+	packlim.install $pkg $pkgs $repo lock "" $pfix
+}
+
+file delete -force "${pfix}var/packlim/available" "${pfix}var/packlim/downloaded"

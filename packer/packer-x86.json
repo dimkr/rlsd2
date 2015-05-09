@@ -27,7 +27,7 @@
 	[
 		{
 		  "type": "shell",
-		  "script": "build_packlad"
+		  "script": "build_packlim"
 		}
 	]
 }
