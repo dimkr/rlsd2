@@ -1,21 +1,21 @@
-diff -rupN ed25519-git08022015-orig/ed25519.c ed25519-git08022015/ed25519.c
---- ed25519-git08022015-orig/ed25519.c	1970-01-01 02:00:00.000000000 +0200
-+++ ed25519-git08022015/ed25519.c	2015-02-08 23:06:10.329070385 +0200
-@@ -0,0 +1,167 @@
+diff -rupN ed25519-git02052015-orig/ed25519.c ed25519-git02052015/ed25519.c
+--- ed25519-git02052015-orig/ed25519.c	1970-01-01 02:00:00.000000000 +0200
++++ ed25519-git02052015/ed25519.c	2015-05-09 17:05:00.897888816 +0300
+@@ -0,0 +1,207 @@
 +#include <stdlib.h>
 +#include <sys/types.h>
 +#include <sys/stat.h>
 +#include <fcntl.h>
 +#include <sys/mman.h>
 +#include <unistd.h>
-+#include <stdbool.h>
 +#include <stdio.h>
 +#include <string.h>
 +
 +#include <ed25519.h>
 +
 +#define USAGE "Usage: %s -c FILE SIG PUB\n" \
-+              "or: %s -s FILE PRIV PUB\n"
++              "or: %s -s FILE PRIV PUB\n" \
++              "or: %s -g PRIV PUB\n"
 +
 +static void *map_file(const char *path, int *fd, size_t *len)
 +{
@@ -138,13 +138,53 @@ diff -rupN ed25519-git08022015-orig/ed25519.c ed25519-git08022015/ed25519.c
 +	return ret;
 +}
 +
++static int write_key(const char *path,
++                     const unsigned char *key,
++                     const size_t len)
++{
++	int fd;
++	int ret = EXIT_FAILURE;
++
++	fd = open(path, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
++	if (-1 == fd)
++		goto end;
++
++	if ((ssize_t) len == write(fd, (void *) key, len))
++		ret = EXIT_SUCCESS;
++
++	(void) close(fd);
++
++end:
++	return ret;
++}
++
++static int generate(char *argv[])
++{
++	unsigned char priv_key[64];
++	unsigned char pub_key[32];
++	unsigned char seed[32];
++
++	if (0 != ed25519_create_seed(seed))
++		return EXIT_FAILURE;
++
++	ed25519_create_keypair(pub_key, priv_key, seed);
++
++	if (EXIT_FAILURE == write_key(argv[2], priv_key, sizeof(priv_key)))
++		return EXIT_FAILURE;
++	if (EXIT_FAILURE == write_key(argv[3], pub_key, sizeof(pub_key)))
++		return EXIT_FAILURE;
++
++	return EXIT_SUCCESS;
++}
++
 +static const struct {
 +	int argc;
 +	const char *flag;
 +	int (*cb)(char **);
 +} modes[] = {
 +	{ 5, "-c", check },
-+	{ 5, "-s", sign }
++	{ 5, "-s", sign },
++	{ 4, "-g", generate }
 +};
 +
 +int main(int argc, char *argv[])
@@ -165,7 +205,7 @@ diff -rupN ed25519-git08022015-orig/ed25519.c ed25519-git08022015/ed25519.c
 +	}
 +
 +usage:
-+	(void) fprintf(stderr, USAGE, argv[0], argv[0]);
++	(void) fprintf(stderr, USAGE, argv[0], argv[0], argv[0]);
 +
 +	return EXIT_FAILURE;
 +}
