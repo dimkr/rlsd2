@@ -14,11 +14,12 @@ http://www.gnu.org/philosophy/free-sw.html.
 
 For more information, see the project homepage (http://rlsd2.dimakrasner.com/).
 
+This is an automated build system that builds RLSD and its entire package
+repository from source, through Trisquel (http://www.trisquel.info/). The
+process of setting up a build environment is automated as well.
+
 Building
 ========
-
-RLSD is built from source and cross-compiled through Trisquel
-(http://www.trisquel.info/).
 
 To build RLSD:
   - Install QEMU (http://www.qemu.org/) and Packer (https://www.packer.io/)
@@ -26,7 +27,10 @@ To build RLSD:
       cd packer/; packer build packer-x86_64.json
     or:
       cd packer/; packer build packer-x86.json
-  - Start the VM
+  - Start the VM:
+      qemu-system-x86_64 -m 4096 -hda x86_64/rlsd.qcow2 -enable-kvm
+    or:
+      qemu-system-i386 -cpu pentium2 -m 4096 -hda x86/rlsd.qcow2 -enable-kvm
   - Inside it:
       cd rlsd; ./scripts/build_all
 
