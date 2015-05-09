@@ -3,27 +3,27 @@
 # fetch RLSD's build system
 git clone git://rlsd2.dimakrasner.com/ rlsd
 
-# build and install Ed25519
+# build Ed25519 and install its frontend
 git clone --depth 1 https://github.com/orlp/ed25519.git
 cd ed25519
 patch -p 1 < ../rlsd/rules/ed25519/build.patch
 patch -p 1 < ../rlsd/rules/ed25519/frontend.patch
 cd src
 make
-cp -f libed25519.a /lib/
-cp -f ed25519.h /usr/include/
+gcc -o ed25519 ../ed25519.c -I. -L. -led25519
 cp -f ed25519 /usr/local/bin/
 
+# build Jim
 git clone --depth 1 https://github.com/msteveb/jimtcl.git ../../jimtcl
 cd ../../jimtcl
-./configure
+./configure --without-ext="load"
 make libjim.a
-cp -f libjim.a /lib/
-cp -f jim.h /usr/include/
 
 # build and install packlim
 git clone --depth 1 https://github.com/dimkr/packlim.git ../packlim
 cd ../packlim
+CFLAGS="-I../../ed25519/src -I../../jimtcl" \
+LDFLAGS="-L../../ed25519/src -L../../jimtcl" \
 make
 make install
 
