@@ -1,0 +1,17 @@
+PKG_SRCS="https://github.com/dimkr/packlim.git"
+PKG_DESC="A package manager"
+PKG_BUILD_DEPS="musl libarchive curl ed25519"
+PKG_DEPS="musl libarchive curl clzip ed25519"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      SBIN_DIR="/bin" \
+	      DOC_DIR="/doc" \
+	      MAN_DIR="/man" \
+	      install
+	install -D -m 644 /etc/packlim/pub_key "$1/etc/packlim/pub_key"
+}
