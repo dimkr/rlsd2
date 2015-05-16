@@ -1,0 +1,12 @@
+diff -rup jimtcl-git15052015-orig/jim.h jimtcl-git15052015/jim.h
+--- jimtcl-git15052015-orig/jim.h	2015-05-15 23:40:34.544214571 +0300
++++ jimtcl-git15052015/jim.h	2015-05-15 23:40:44.980266753 +0300
+@@ -79,8 +79,6 @@ extern "C" {
+  * System configuration
+  * autoconf (configure) will set these
+  * ---------------------------------------------------------------------------*/
+-#include <jim-win32compat.h>
+-
+ #ifndef HAVE_NO_AUTOCONF
+ #include <jim-config.h>
+ #endif
