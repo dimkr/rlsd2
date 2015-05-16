@@ -44,8 +44,7 @@ rm -rf "$root_fs"
 ed25519 -s \
         "$iso_root/boot/rootfs.sfs" \
         /etc/packlim/priv_key \
-        /etc/packlim/pub_key \
-        "$iso_root/boot/rootfs.sfs" > "$iso_root/boot/rootfs.sig"
+        /etc/packlim/pub_key > "$iso_root/boot/rootfs.sig"
 
 # generate an ISO image
 xorriso -as mkisofs \

@@ -8,6 +8,6 @@ run() {
 		type="$(file -b --mime-type "$i")"
 		[ "application/x-executable" != "$type" ] && continue
 		echo "> Digitally-signing $i"
-		pkgsign /etc/packlad/priv_key /etc/packlad/pub_key "$i" >> "$i"
+		ed25519 -s "$i" /etc/packlim/priv_key /etc/packlim/pub_key  >> "$i"
 	done
 }
