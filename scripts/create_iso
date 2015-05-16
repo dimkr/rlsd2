@@ -3,7 +3,7 @@
 TODAY="$(date +%d%m%Y)"
 
 # build the root file system
-root_fs="$(mktemp -d -u)"
+root_fs="$(mktemp -d)"
 ./scripts/build_rootfs "$root_fs" "$1"
 if [ ! -f "$root_fs/boot/bzImage" ] ||
    [ ! -f "$root_fs/boot/initrd.xz" ] ||

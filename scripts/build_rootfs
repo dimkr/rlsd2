@@ -1,7 +1,10 @@
 #!/bin/sh
 
 # install the packages
-PREFIX="$1" packlim source "$2"
+cp -f "$2" "$1/script"
+cp -r repo "$1/"
+PREFIX="$1" packlim source /script
+rm -rf "$1/repo" "$1/script"
 
 # fix permissions
 chown -R 0:0 "$1"

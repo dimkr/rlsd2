@@ -1,9 +1,9 @@
-set repo [packlim.repository "file://[pwd]/repo"]
-set lock [packlim.wait "${pfix}var/packlim/lock"]
-set pkgs [packlim.cond_update $repo $pfix]
+set repo file:///repo
+set curl [curl]
+set available [available $curl $repo]
 
-foreach pkg {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux lok rfkill dhcpcd iw wpa_supplicant iptables gzip lbzip2 xz libarchive nano} {
-	packlim.install $pkg $pkgs $repo lock "" $pfix
+foreach package {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux lok rfkill dhcpcd iw wpa_supplicant iptables gzip lbzip2 xz libarchive nano} {
+	install $curl $repo {*}$available $package locked ""
 }
 
-file delete -force "${pfix}var/packlim/available" "${pfix}var/packlim/downloaded"
+purge
