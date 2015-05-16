@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>RLSD</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="description" content="RLSD">
+		<meta name="keywords" content="RLSD">
+		<meta name="author" content="Dima Krasner">
+		<meta name="robots" content="nofollow">
+		<style>
+			body { font-family: Monospace; background: #000000; color: #A8A8A8; margin: 0 }
+			a, a:visited { color: #A8A8A8; text-decoration: underline }
+			a:hover { text-decoration: none }
+		</style>
+	</head>
+	<body>
+		[boss|tty1@~]# cat index.html
+		<h1>RLSD</h1>
+		<h2>Overview</h2>
+		<p>Welcome! You've reached the home of RLSD, the Retro <a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> Software Distribution.</p>
+		<p>RLSD is an extremely minimalistic, small, lightweight and security-hardened, <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free</a>, text operating system for x86 and x86_64. It's a unique <a href="http://www.gnu.org/" target="_blank">GNU</a>/<a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> distribution that provides a selection of console applications and home-grown security features which might appeal to hackers.</p>
+		<p>In RLSD:</p>
+		<ul>
+			<li>The user always runs as root</li>
+			<li>The root user is called "boss"</li>
+			<li>Everything is linked statically and the kernel is 100% monolithic</li>
+			<li>The file system layout is extremely simple: all executables go to /bin, man pages to /man, etc'</li>
+			<li>Package management is simple and fast, thanks to <a href="https://github.com/dimkr/packlim" target="_blank">packlim</a></li>
+			<li>Packages are small; for example, the C library is <a href="http://www.musl-libc.org/" target="_blank">musl</a> and the shell is <a href="https://github.com/dimkr/loksh" target="_blank">loksh</a></li>
+			<li><a href="https://github.com/dimkr/luufs" target="_blank">luufs</a> prevents malware from tampering with the operating system core</li>
+			<li><a href="https://github.com/dimkr/logfence" target="_blank">logfence</a> prevents modification of logs</li>
+			<li><a href="https://github.com/dimkr/elfence" target="_blank">elfence</a> prevents the execution of untrusted applications</li>
+			<li>A kernel security module ensures executables run only from /bin and blocks malware-like activity (e.g mprotect() with PROT_EXEC)</li>
+			<li>The user is trapped in a container, to protect critical system daemons</li>
+			<li>Critical daemons run in a private mounts namespace, to prevent mount-based attacks</li>
+			<li>The operating system core is a digitally-signed image</li>
+			<li>All security features can be disabled by passing "secure=0" to the kernel, but that requires reboot</li>
+			<li>Copy-paste using the mouse works and handled by <a href="http://www.nico.schottelius.org/software/gpm/" target="_blank">gpm</a></li>
+			<li>The console color scheme is randomly generated at boot time</li>
+		</ul>
+		<h2>Downloads</h2>
+		<ul>
+			<li><a href="/images">ISO images</a>, with support for dd</li>
+			<li><a href="/repo">Binary packages</a>, via the repository</li>
+			<li><a href="/sources">Source code</a> for all packages</li>
+			<li><a href="/logs">Build logs</a> for all packages</li>
+		</ul>
+		<h2>Usage</h2>
+		<ul>
+			<li>Use ifconfig, dhcpcd, iw, wpa_passhprase and wpa_supplicant to set up a network connection</li>
+			<li>Use packlim to install packages</li>
+			<li>Use man to obtain documentation</li>
+		</ul>
+		<h2>Development</h2>
+		<p>Most of RLSD's development is automated, to ease its development; for example, package updates are monitored <a href="/updates.log">here</a> and the entire package repository is built automatically. To build your own version of RLSD or contribute, clone its <a href="git://rlsd2.dimakrasner.com/" target="_blank">code repository</a> and follow the documentation.</p>
+		<p>If you encounter a crash, please send the crashing executable from /bin and the crash dump from /run/crash. Thank you.</p>
+		<h2>Funding</h2>
+		<p><a href="http://dimakrasner.com" target="_blank">Donations</a> are always welcome.</p>
+		<h2>Legal</h2>
+		<p>RLSD is copyright (c) 2013, 2014, 2015 <a href="http://dimakrasner.com" target="_blank">Dima Krasner</a></p>
+		<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+		<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+		<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+		[boss|tty1@~]#
+	</body>
+</html>
