@@ -18,7 +18,8 @@ package() {
 	install -D -m 755 libjim.a "$1/lib/libjim.a"
 	install -D -m 644 jim.h "$1/include/jim.h"
 	install -m 644 jim-config.h "$1/include/jim-config.h"
-	install -D -m 644 README "$1/doc/jimtcl/README"
+	install -D -m 644 jim_tcl.txt "$1/doc/jimtcl/jim_tcl.txt"
+	install -m 644 README "$1/doc/jimtcl/README"
 	install -m 644 AUTHORS "$1/doc/jimtcl/AUTHORS"
 	install -m 644 LICENSE "$1/doc/jimtcl/LICENSE"
 }
