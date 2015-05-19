@@ -1,9 +1,9 @@
 set repo file:///repo
 set curl [curl]
-set available [available $curl $repo]
+set available [packlim::available $curl $repo]
 
 foreach package {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux lok rfkill dhcpcd iw wpa_supplicant iptables gzip lbzip2 xz libarchive nano} {
-	install $curl $repo {*}$available $package locked ""
+	packlim::install $curl $repo {*}$available $package locked ""
 }
 
-purge
+packlim::purge
