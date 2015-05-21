@@ -5,9 +5,9 @@ PKG_DESC="An operating system kernel"
 get_latest() {
 	wget -q -O - "https://www.kernel.org/" |
 	grep "3.14" |
-	head -n 1 |
-	cut -f 3 -d \> |
-	cut -f 1 -d \<
+	tail -n 1 |
+	cut -f 2 -d \- |
+	cut -f 1 -d \"
 }
 
 build() {
