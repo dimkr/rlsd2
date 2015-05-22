@@ -3,7 +3,7 @@ PKG_DESC="A file system that verifies signed ELF binaries"
 PKG_DEPS="musl fuse"
 
 build() {
-	$MAKE PUB_KEY_PATH="/mnt/ro/etc/packlad/pub_key"
+	$MAKE PUB_KEY_PATH="/mnt/ro/etc/packlim/pub_key"
 }
 
 package() {

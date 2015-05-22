@@ -192,12 +192,12 @@ echo -n " done.
 Mounting the root file system ..."
 mount -t squashfs -o loop,ro "$image_path" /mnt/ro
 
-# verify the root file system image signature, using the packlad public key
+# verify the root file system image signature, using the packlim public key
 if [ 1 -eq $secure ]
 then
 	echo -n " done.
 Verifying the root file system signature ..."
-	ed25519 -c "$image_path" "$sig_path" /mnt/ro/etc/packlad/pub_key
+	ed25519 -c "$image_path" "$sig_path" /mnt/ro/etc/packlim/pub_key
 	if [ 0 -ne $? ]
 	then
 		echo " failure."
