@@ -1,6 +1,6 @@
-diff -rup fbcat-0.4-orig/fbgrab fbcat-0.4/fbgrab
---- fbcat-0.4-orig/fbgrab	2015-04-13 23:31:19.187798568 -0300
-+++ fbcat-0.4/fbgrab	2015-04-13 23:57:42.655766073 -0300
+diff -rup fbcat-0.4.1-orig/fbgrab fbcat-0.4.1/fbgrab
+--- fbcat-0.4.1-orig/fbgrab	2015-05-22 12:41:21.257532121 +0300
++++ fbcat-0.4.1/fbgrab	2015-05-02 12:11:16.000000000 +0300
 @@ -1,108 +1,39 @@
  #!/bin/sh
  
@@ -51,7 +51,7 @@ diff -rup fbcat-0.4-orig/fbgrab fbcat-0.4/fbgrab
 -wait_after_switch=0
 -wait_before_switch=0
 -device=${FRAMEBUFFER:-/dev/fb0}
--opts=$(getopt -o 'b:c:C:d:f:h:is:w:?' -- "$@")
+-opts=$(getopt -n fbgrab -o 'b:c:C:d:f:h:is:w:?' -- "$@")
 -interlace=''
 -eval set -- "$opts"
 -while true
