@@ -1,4 +1,4 @@
-PKG_VER="2.9.3"
+PKG_VER="2.9.4"
 PKG_SRCS="http://downloads.sourceforge.net/project/fuse/fuse-2.X/$PKG_VER/fuse-$PKG_VER.tar.gz"
 PKG_DESC="An interface for user-mode file systems"
 PKG_DEPS="musl"
