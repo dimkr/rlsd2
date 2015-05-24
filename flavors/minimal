@@ -2,7 +2,7 @@ set repo file:///repo
 set curl [curl]
 set available [packlim::available $curl $repo]
 
-foreach package {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux lok rfkill dhcpcd iw wpa_supplicant iptables gzip lbzip2 xz libarchive nano} {
+foreach package {skeleton toybox sdaemons loksh packlim mandoc initramfs linux-libre isolinux rfkill dhcpcd iw wpa_supplicant iptables}  {
 	packlim::install $curl $repo {*}$available $package locked ""
 }
 
