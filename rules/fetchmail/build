@@ -1,0 +1,35 @@
+PKG_VER="6.3.26"
+PKG_SRCS="http://sourceforge.net/projects/fetchmail/files/branch_6.3/fetchmail-$PKG_VER.tar.xz"
+PKG_DESC="An e-mail retrieval tool"
+PKG_DEPS="musl libressl"
+
+get_latest() {
+	wget -q -O - "http://sourceforge.net/projects/fetchmail" |
+	grep ".tar.xz" |
+	tail -n 1 |
+	cut -f 2 -d \- |
+	sed s~'\.tar.*'~~
+}
+
+build() {
+	autoconf	
+	[ 0 -ne $? ] && return 1
+
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --disable-nls \
+	            --enable-fallback=no \
+	            --with-ssl="$SYSROOT"
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	install -D -m 755 fetchmail "$1/bin/fetchmail"
+	install -D -m 644 fetchmail.man "$1/man/man1/fetchmail.1"
+	install -D -m 644 README "$1/doc/fetchmail/README"
+	install -m 644 FAQ "$1/doc/fetchmail/FAQ"
+	install -m 644 NEWS "$1/doc/fetchmail/NEWS"
+	install -m 644 COPYING "$1/doc/fetchmail/COPYING"
+}

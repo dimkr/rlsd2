@@ -2,7 +2,7 @@ PKG_VER="1.5.23"
 PKG_SRCS="http://sourceforge.net/projects/mutt/files/mutt/mutt-$PKG_VER.tar.gz"
 PKG_DESC="An e-mail client"
 PKG_BUILD_DEPS="musl ncurses libressl"
-PKG_DEPS="musl ncurses libressl msmtp"
+PKG_DEPS="musl ncurses libressl fetchmail msmtp"
 
 get_latest() {
 	wget -q -O - "http://www.mutt.org/" |
@@ -15,8 +15,6 @@ build() {
 	SENDMAIL="/bin/msmtp" \
 	./configure --prefix="" \
 	            --datarootdir="/" \
-	            --enable-pop \
-	            --enable-imap \
 	            --disable-nls \
 	            --with-ssl
 	[ 0 -ne $? ] && return 1
