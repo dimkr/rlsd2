@@ -6,7 +6,7 @@ PKG_DEPS="musl"
 get_latest() {
 	wget -q -O - "http://download.savannah.gnu.org/releases/lzip/clzip/" |
 	grep \.tar\.lz\" |
-	grep -v -E 'pre[0-9]' |
+	grep -v -E '(pre|rc)[0-9]' |
 	tail -n 1 |
 	cut -f 2 -d \- |
 	sed s~\.tar.*~~
