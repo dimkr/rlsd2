@@ -1,0 +1,12 @@
+PKG_SRCS="https://github.com/litcave/fbff.git"
+PKG_DESC="A media player"
+PKG_DEPS="musl tinyalsa ffmpeg"
+
+build() {
+	$MAKE
+}
+
+package() {
+	install -D -m 755 fbff "$1/bin/fbff"
+	install -D -m 644 README "$1/doc/fbff/README"
+}

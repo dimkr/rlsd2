@@ -1,0 +1,14 @@
+diff -rup fbff-orig/Makefile fbff/Makefile
+--- fbff-orig/Makefile	2015-05-30 12:11:27.635382025 +0300
++++ fbff/Makefile	2015-05-30 12:11:53.211508850 +0300
+@@ -1,8 +1,5 @@
+-FF_PATH = /opt
+-CC = cc
+-CFLAGS = -I$(FF_PATH)/include -Wall -O2
+-LDFLAGS = -L$(FF_PATH)/lib -lavutil -lavformat -lavcodec -lavutil \
+-		-lswscale -lswresample -lz -lm -lpthread -ltinyalsa
++CFLAGS += -pthread $(shell pkg-config --cflags libavutil libavformat libavcodec libswscale libswresample)
++LDFLAGS += -pthread $(shell pkg-config --libs libavutil libavformat libavcodec libswscale libswresample) -ltinyalsa
+ 
+ all: fbff
+ .c.o:
