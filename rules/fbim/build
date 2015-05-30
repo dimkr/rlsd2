@@ -1,0 +1,14 @@
+PKG_SRCS="https://github.com/dimkr/fbim.git"
+PKG_DESC="An image viewer"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc" \
+	      install
+}
