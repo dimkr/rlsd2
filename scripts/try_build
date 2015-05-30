@@ -22,7 +22,7 @@ download_src() {
 			[ -f "$dest" ] && return 0
 
 			echo "> Cloning $2"
-			git clone --depth 1 "$2" "$1-git$TODAY"
+			git clone --recursive --depth 1 "$2" "$1-git$TODAY"
 			ret=$?
 			[ 0 -eq $ret ] && tar -c "$1-git$TODAY" | lzip --best > "$dest"
 			rm -rf "$1-git$TODAY"
