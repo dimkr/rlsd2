@@ -1,4 +1,4 @@
-PKG_VER="2.6.32.66"
+PKG_VER="2.6.32.67"
 PKG_SRCS="http://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu1/linux-libre-$PKG_VER-gnu1.tar.xz"
 PKG_DESC="Kernel API headers"
 
