@@ -16,7 +16,7 @@ build() {
 	            --static
 	[ 0 -ne $? ] && return 1
 
-	$MAKE
+	$MAKE libz.a
 }
 
 package() {
