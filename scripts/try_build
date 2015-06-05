@@ -111,6 +111,7 @@ CFLAGS="-g \
         -ffunction-sections \
         -fdata-sections \
         -fmerge-all-constants \
+        -fpie \
         -fstack-protector \
         --param=ssp-buffer-size=4 \
         -pipe"
