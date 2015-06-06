@@ -7,7 +7,7 @@ get_latest() {
 	wget -q -O - "http://ftp.gnu.org/gnu/bc/" |
 	grep -E 'bc-.+\.tar\.' |
 	tail -n 1 |
-	cut -f 3 -d \> |
+	cut -f 7 -d \> |
 	sed s~'\.tar.*'~~g |
 	cut -f 2- -d \-
 }
