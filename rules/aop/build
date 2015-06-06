@@ -13,7 +13,7 @@ get_latest() {
 }
 
 build() {
-	$CC -o aop aop.c $CFLAGS $LDFLAGS -lncurses
+	$CC -o aop aop.c $CFLAGS $LDFLAGS -lncurses $LIBS
 }
 
 package() {

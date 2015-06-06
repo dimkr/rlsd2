@@ -12,7 +12,7 @@ get_latest() {
 }
 
 build() {
-	$MAKE CC="$CC" TERMLIB="$LDFLAGS -lncurses"
+	$MAKE CC="$CC" TERMLIB="$LDFLAGS -lncurses $LIBS"
 }
 
 package() {

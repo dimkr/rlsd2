@@ -13,7 +13,7 @@ get_latest() {
 }
 
 build() {
-	$MAKE
+	LDFLAGS="$LDFLAGS $LIBS" $MAKE
 }
 
 package() {
