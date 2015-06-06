@@ -1,5 +1,5 @@
 PKG_VER="1.15"
-PKG_SRCS="http://waia.dl.sourceforge.net/project/shed/shed/shed%20$PKG_VER/shed-$PKG_VER.tar.gz"
+PKG_SRCS="http://downloads.sourceforge.net/project/shed/shed/shed%20$PKG_VER/shed-$PKG_VER.tar.gz"
 PKG_DESC="A hex editor"
 PKG_DEPS="musl ncurses"
 
