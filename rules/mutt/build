@@ -1,5 +1,5 @@
 PKG_VER="1.5.23"
-PKG_SRCS="http://sourceforge.net/projects/mutt/files/mutt/mutt-$PKG_VER.tar.gz"
+PKG_SRCS="https://bitbucket.org/mutt/mutt/downloads/mutt-$PKG_VER.tar.gz"
 PKG_DESC="An e-mail client"
 PKG_BUILD_DEPS="musl ncurses libressl"
 PKG_DEPS="musl ncurses libressl fetchmail msmtp"
