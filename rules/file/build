@@ -1,4 +1,4 @@
-PKG_VER="5.22"
+PKG_VER="5.23"
 PKG_SRCS="ftp://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz"
 PKG_DESC="A file type guessing tool"
 PKG_DEPS="musl zlib"
@@ -12,6 +12,9 @@ get_latest() {
 }
 
 build() {
+	aclocal
+	[ 0 -ne $? ] && return 1
+
 	autoconf
 	[ 0 -ne $? ] && return 1
 
