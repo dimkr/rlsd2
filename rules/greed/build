@@ -1,4 +1,4 @@
-PKG_VER="3.11"
+PKG_VER="4.1"
 PKG_SRCS="http://www.catb.org/~esr/greed/greed-$PKG_VER.tar.gz"
 PKG_DESC="A strategy game"
 PKG_DEPS="musl ncurses"
