@@ -1,4 +1,4 @@
-PKG_VER="3.4"
+PKG_VER="3.4.1"
 PKG_SRCS="http://get.bitlbee.org/src/bitlbee-$PKG_VER.tar.gz"
 PKG_DESC="A tunneler of IM protocols over IRC"
 PKG_DEPS="musl libressl glib"
