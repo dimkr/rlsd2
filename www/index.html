@@ -9,69 +9,174 @@
 		<meta name="author" content="Dima Krasner">
 		<meta name="robots" content="nofollow">
 		<style>
-			body { font-family: Monospace; background: #000000; color: #A8A8A8; margin: 0 }
+			body { font-family: Monospace; background: #151515; color: #A8A8A8; margin: 0; padding: 0 }
+			h1 { text-align: center; font-size: 180%; font-weight: normal; color: #BBBBBB; margin: 0 }
+			h2 { font-size: 180%; font-weight: normal; margin: 0.5em; color: #CCCCCC }
+			h3 { font-size: 120%; font-weight: normal; margin-left: 2em; color: #DDDDDD }
 			a, a:visited { color: #A8A8A8; text-decoration: underline }
 			a:hover { text-decoration: none }
+			ul { list-style-type: none; padding-left: 0.5em; margin: 0 }
+			li { padding-left: 0 }
+			li:before { content: "-"; color: #666666; padding-right: 0.5em }
+			span.name { font-weight: bold }
+			span.emphasis { font-style: italic }
+			span.question { font-style: italic; font-weight: bold }
+			#terminal { white-space: pre; width: 100%; text-align: center }
+			#application { background: #030F0E; color: #A8A8A8; display: inline-block; text-align: left; border-top: 0.2em solid #666666; border-bottom: 0.2em solid #888888; box-shadow: 0.1em 0.3em 0.6em 0 rgba(88,88,88,0.5) }
+			span.blackoncyan { background: #00A8A8; color: #030F0E }
+			span.cyanonblack { color: #00A8A8 }
+			span.blackonlblue { background: #677FB7; color: #030F0E }
+			span.lcyanonblack { color: #57FFFF }
+			span.whiteonblack { color: #EFEFEF }
+			span.purpleonblack { color: #677FB7 }
+			span.dblueonblack { color: #0000A8 }
+			span.whiteondblue { background: #0000A8; color: #A8A8A8 }
+			span.cyanondblue { background: #0000A8; color: #00A8A8 }
+			span.greenonblack { color: #38E897 }
+			span.grayonblack { color: #3F504F }
+			span.brownonblack { color: #A78747 }
+			span.blackonwhite { background: #A8A8A8; color: #030F0E }
+			#leftfeatures { width: 35%; float:left; padding-left: 1em }
+			#rightfeatures { width: 60%; float: right }
+			div.feature ul { border-left: 0.05em dotted #666666; padding-left: 1em; }
+			div.feature h3:before { content: "\2588"; padding-right: 1em; color: #CCCCCC }
+			#top { border-left: 0.2em solid #999999; padding-left: 1em; padding-left: 0.5em; padding-right: 0.5em; padding-top: 0.5em; background: #1D1D19}
+			#features { border-top: 0.2em solid #999999; border-right: 0.2em solid #999999; padding-right: 0.5em; padding-bottom: 2em; overflow: hidden; background: #000000; padding-left: 0.5em }
+			#container { overflow: hidden; border-bottom: 0.2em solid #999999; clear: both; background: #000000; padding-bottom: 1em }
+			#leftcolumn { padding-left: 1em; width: 50%; float:left; margin: 1em 0.5em 0.5em 0.5em }
+			#rightcolumn { width: 40%; float: right; padding-left: 1em; border-top: 0.2em solid #999999; border-left: 0.2em solid #999999; border-bottom: 0.2em solid #999999; background: #0F0F13 }
+			#downloads { background: #404047; padding: 0.5em 0.5em 0.5em 1em }
+			#flavors { background: #2A2A2D; padding: 0.5em 0.5em 0.5em 1em; margin-top: 1em }
+			#footer { clear: both; padding-left: 0.5em; margin-right: 0.5em }
 		</style>
 	</head>
 	<body>
-		[boss|tty1@~]# cat index.html
-		<h1>RLSD</h1>
-		<h2>Overview</h2>
-		<p>Welcome! You've reached the home of RLSD, the Retro <a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> Software Distribution.</p>
-		<p>RLSD is an extremely minimalistic, small, lightweight and security-hardened, <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free</a>, text operating system for x86 and x86_64. It's a unique <a href="http://www.gnu.org/" target="_blank">GNU</a>/<a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> distribution that provides a selection of console applications and home-grown security features which might appeal to hackers.</p>
-		<p>In RLSD:</p>
-		<ul>
-			<li>The user always runs as root</li>
-			<li>The root user is called "boss"</li>
-			<li>Everything is linked statically and the kernel is 100% monolithic</li>
-			<li>The file system layout is extremely simple: all executables go to /bin, man pages to /man, etc'</li>
-			<li>Package management is simple and fast, thanks to <a href="https://github.com/dimkr/packlim" target="_blank">packlim</a></li>
-			<li>Packages are small; for example, the C library is <a href="http://www.musl-libc.org/" target="_blank">musl</a> and the shell is <a href="https://github.com/dimkr/loksh" target="_blank">loksh</a></li>
-			<li><a href="https://github.com/dimkr/luufs" target="_blank">luufs</a> prevents malware from tampering with the operating system core</li>
-			<li><a href="https://github.com/dimkr/logfence" target="_blank">logfence</a> prevents modification of logs</li>
-			<li><a href="https://github.com/dimkr/elfence" target="_blank">elfence</a> prevents the execution of untrusted applications</li>
-			<li>A kernel security module ensures executables run only from /bin and blocks malware-like activity (e.g mprotect() with PROT_EXEC)</li>
-			<li>The user is trapped in a container, to protect critical system daemons</li>
-			<li>Critical daemons run in a private mounts namespace, to prevent mount-based attacks</li>
-			<li>The operating system core is a digitally-signed image</li>
-			<li>All security features can be disabled by passing "secure=0" to the kernel, but that requires reboot</li>
-			<li>Copy-paste using the mouse works and handled by <a href="http://www.nico.schottelius.org/software/gpm/" target="_blank">gpm</a></li>
-			<li>The console color scheme is randomly generated at boot time</li>
-		</ul>
-		<h2>Flavors</h2>
-		<p>RLSD is available in four flavors:</p>
-		<ul>
-			<li>minimal: basic network tools and a package manager</li>
-			<li>big: some pre-installed applications</li>
-			<li>huge: all packages in the repository are pre-installed</li>
-			<li>rootfs: a tiny chroot environment</li>
-		</ul>
-		<p>Confused? Try the "huge" flavor and switch to the "minimal" one later, if you want a more customized system.</p>
-		<h2>Downloads</h2>
-		<ul>
-			<li><a href="/images">ISO images</a>, with support for dd</li>
-			<li><a href="/repo">Binary packages</a>, via the repository</li>
-			<li><a href="/sources">Source code</a> for all packages</li>
-			<li><a href="/logs">Build logs</a> for all packages</li>
-			<li><a href="/debug">Debugging symbols</a> for all binaries</li>
-		</ul>
-		<h2>Usage</h2>
-		<ul>
-			<li>Use ifconfig, dhcpcd, iw, wpa_passhprase and wpa_supplicant to set up a network connection</li>
-			<li>Use packlim to install packages</li>
-			<li>Use man to obtain documentation</li>
-		</ul>
-		<h2>Development</h2>
-		<p>Most of RLSD's development is automated, to ease its development; for example, package updates are monitored <a href="/updates.log">here</a> and the entire package repository is built automatically. To build your own version of RLSD or contribute, clone its <a href="git://rlsd2.dimakrasner.com/" target="_blank">code repository</a> and follow the documentation.</p>
-		<p>If you encounter a crash, please send the crashing executable from /bin and the crash dump from /run/crash. Thank you.</p>
-		<h2>Funding</h2>
-		<p><a href="http://dimakrasner.com" target="_blank">Donations</a> are always welcome.</p>
-		<h2>Legal</h2>
-		<p>RLSD is copyright (c) 2013, 2014, 2015 <a href="http://dimakrasner.com" target="_blank">Dima Krasner</a></p>
-		<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-		<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-		<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-		[boss|tty1@~]#
+		<div id="top">
+			<h1>RLSD</h1>
+			<p><span class="emphasis">Welcome!</span> You've reached the home of <span class="name">RLSD</span>, the Retro <a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> Software Distribution.</p>
+			<p><span class="name">RLSD</span> is an <span class="emphasis">extremely</span> minimalistic, small, lightweight and security-hardened, <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free</a>, text operating system for x86 and x86_64. It's a <span class="emphasis">unique</span> <a href="http://www.gnu.org/" target="_blank">GNU</a>/<a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> distribution that provides a selection of console applications and home-grown security features which might appeal to hackers.</p>
+			<div id="terminal">
+<script>
+	var choice = Math.floor(Math.random() * 6).toString();
+	if (0 == choice) {
+		document.write('<div id="application">\n  <span class="cyanonblack">CPU</span> <span class="whiteonblack">[</span>                        <span class="grayonblack">0.0%</span><span class="whiteonblack">]</span>      <span class="cyanonblack">Tasks: </span><span class="lcyanonblack">6</span><span class="cyanonblack">,</span> <span class="lcyanonblack">0</span> <span class="cyanonblack">thr;</span> <span class="brownonblack">1</span> <span class="cyanonblack">running</span>\n  <span class="cyanonblack">Mem</span> <span class="whiteonblack">[</span><span class="purpleonblack">|</span><span class="dblueonblack">|</span><span class="greenonblack">|</span>                 <span class="grayonblack">10/996MB</span><span class="whiteonblack">]</span>      <span class="cyanonblack">Load average:</span> <span class="grayonblack">0.04</span> 0.01 <span class="whiteonblack">0.01</span>\n  <span class="cyanonblack">Swp</span> <span class="whiteonblack">[</span>                       <span class="grayonblack">0/0MB</span><span class="whiteonblack">]</span>      <span class="cyanonblack">Uptime:</span> <span class="lcyanonblack">00:00:52</span>\n\n<span class="blackonlblue">  PID USER     PRI   NI  VIRT   RES   SHR S </span><span class="blackoncyan">CPU% </span><span class="blackonlblue">MEM%   TIME+  Command         </span>\n<span class="blackoncyan">   45 boss      20    0   440   248   172 R  0.0  0.0  0:00.01 htop            </span>\n   20 boss      20    0   388   236   180 S  0.0  0.0  0:00.01 /bin/ksh -l\n   21 boss      20    0   388   216   164 S  0.0  0.0  0:00.00 /bin/ksh -l\n   22 boss      20    0   388   220   164 S  0.0  0.0  0:00.00 /bin/ksh -l\n   23 boss      20    0   388   212   156 S  0.0  0.0  0:00.00 /bin/ksh -l\n   41 boss      20    0   288    52     4 S  0.0  0.0  0:00.00 dhcpcd eth0\n\n\n\n\n\nF1<span class="blackoncyan">Help  </span>F2<span class="blackoncyan">Setup </span>F3<span class="blackoncyan">Search</span>F4<span class="blackoncyan">Filter</span>F5<span class="blackoncyan">Tree  </span>F6<span class="blackoncyan">SortBy</span>F7<span class="blackoncyan">Nice -</span>F8<span class="blackoncyan">Nice +</span>F9<span class="blackoncyan">Kill  </span>F10<span class="blackoncyan">Quit</span>\n</div>');
+	}
+	else if (1 == choice) {
+		document.write('<div id="application"><span class="blackonwhite">ncdu 1.11 ~ Use the arrow keys to navigate, press ? for help                   </span>\n--- / -------------------------------------------------------------------------\n<span class="blackonwhite">   11.6 MiB [##########] /bin                                                  </span>\n    3.0 MiB [##        ] /doc\n    1.2 MiB [          ] /man\n    1.0 MiB [          ] /etc\n  392.0 KiB [          ] /var\n  310.5 KiB [          ] /share\n  228.0 KiB [          ] /run\n  8.0 KiB   [          ] /home\n  0.0 KiB   [          ] /sys\n  0.0 KiB   [          ] /proc\n  0.0 KiB   [          ] /dev\n  0.0 KiB   [          ] /lib\n  0.0 KiB   [          ] /tmp\n  0.0 KiB   [          ] /mnt\n  0.0 KiB   [          ] /srv\n<span class="blackonwhite"> Total disk usage:  17.8 MiB  Apparent size: 120.0 MiB  Items: 17149           </span></div>');
+	} else if (2 == choice) {
+		document.write('<div id="application"><span class="blackonwhite">  GNU nano 2.4.1                 New Buffer                                    </span>\n\n&block;\n\n\n\n\n\n\n\n\n\n\n\n\n\n<span class="blackonwhite">^G</span> Get Help  <span class="blackonwhite">^O</span> Write Out <span class="blackonwhite">^W</span> Where Is  <span class="blackonwhite">^K</span> Cut Text  <span class="blackonwhite">^J</span> Justify   <span class="blackonwhite">^C</span> Cur Pos    \n<span class="blackonwhite">^X</span> Exit      <span class="blackonwhite">^R</span> Read File <span class="blackonwhite">^\\</span> Replace   <span class="blackonwhite">^U</span> Uncut Text<span class="blackonwhite">^T</span> To Spell  <span class="blackonwhite">^_</span> Go To Line</div>');
+	} else if (3 == choice) {
+		document.write('<div id="application"><span class="blackonwhite">/bin/ksh (regular file) (read only)                                  shed 1.15 </span>\noffset    asc hex dec oct bin                                                 \n00000000:     7F  127 177 01111111                                            \n00000001:  E  45  069 105 01000101                                            \n00000002:  L  4C  076 114 01001100                                            \n00000003:  F  46  070 106 01000110                                            \n00000004:     01  001 001 00000001                                            \n00000005:     01  001 001 00000001                                            \n00000006:     01  001 001 00000001                                            \n00000007:     00  000 000 00000000                                            \n00000008:     00  000 000 00000000                                            \n00000009:     00  000 000 00000000                                            \n00000010:     00  000 000 00000000                                            \n00000011:     00  000 000 00000000                                            \n\n<span class="blackonwhite">                                                                0/207932 (dec) </span>\nSPACE|E edit  S|W|F search  J jump to   T dec/hex   D dump     1|2|4 cursor\nX       exit  R|N   repeat  B bin edit  A ext. asc  P preview  `     endian</div>');
+	} else if (4 == choice) {
+		document.write('<div id="application"><span class="whiteondblue"> Irssi v0.8.17 - http://www.irssi.org                                          </span>\n15:32 -!-  ___           _\n15:32 -!- |_ _|_ _ _____(_)\n15:32 -!-  | || \'_(_-<_-< |\n15:32 -!- |___|_| /__/__/_|\n15:32 -!- Irssi v0.8.17 - http://www.irssi.org\n15:32 -!- - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n15:32 -!- Hi there! If this is your first time using Irssi, you\n15:32 -!- might want to go to our website and read the startup\n15:32 -!- documentation to get you going.\n15:32 -!-\n15:32 -!- Our community and staff are available to assist you or\n15:32 -!- to answer any questions you may have.\n15:32 -!-\n15:32 -!- Use the /HELP command to get detailed information about\n15:32 -!- the available commands.\n<span class="whiteondblue"> <span class="cyanondblue">[</span>15:32<span class="cyanondblue">]</span> <span class="cyanondblue">[]</span> <span class="cyanondblue">[</span>1<span class="cyanondblue">]</span>                                                                </span>\n[(status)]</div>');
+	} else {
+		document.write('<div id="application">Welcome to RLSD!\n\nThis is free software written by many authors across the globe and you may\nredistribute it, under certain conditions and limitations; see /usr/share/doc  \nfor details.\n\nThis software comes with ABSOLUTELY NO WARRANTY; use at your own risk.\n\n[boss|tty1@~]$ &block;\n\n\n\n\n\n\n\n\n\n</div>');
+	}
+</script>
+			</div>
+		</div>
+		<div id="features">
+			<h2>Features</h2>
+			<div id="leftfeatures">
+				<div class="feature">
+					<h3>Cool</h3>
+					<ul>
+						<li>The user always runs as <span class="name">root</span></li>
+						<li>The <span class="name">root</span> user is called <span class="name">boss</span></li>
+						<li>Mouse copy-paste, through <a href="http://www.nico.schottelius.org/software/gpm/" target="_blank">gpm</a></li>
+						<li><span class="emphasis">Randomly-generated</span> console color scheme</li>
+						<li>Block cursor</li>
+						<li>Hackable</li>
+					</ul>
+				</div>
+				<div class="feature">
+					<h3>Lightweight</h3>
+					<ul>
+						<li>Tiny memory and disk footprint</li>
+						<li><a href="https://github.com/dimkr/sdaemons" target="_blank">sdaemons</a>, simple system tools</li>
+						<li><a href="https://github.com/dimkr/packlim" target="_blank">packlim</a>, a fast, scriptable package manager</li>
+						<li>Small packages, i.e <a href="http://www.musl-libc.org/" target="_blank">musl</a> and <a href="https://github.com/dimkr/loksh" target="_blank">loksh</a></li>
+						<li>No translations and unneeded files</li>
+					</ul>
+				</div>
+			</div>
+			<div id="rightfeatures">
+				<div class="feature">
+					<h3>Simple</h3>
+					<ul>
+						<li>All executables go to /bin, man pages to /man, etc'</li>
+						<li><span class="emphasis">Everything</span> is linked statically</li>
+						<li>The kernel is <span class="emphasis">100%</span> monolithic</li>
+					</ul>
+				</div>
+				<div class="feature">
+					<h3>Security-hardened</h3>
+					<ul>
+						<li><a href="https://github.com/dimkr/luufs" target="_blank">luufs</a> prevents malware from replacing critical files</li>
+						<li><a href="https://github.com/dimkr/logfence" target="_blank">logfence</a> prevents malware from modifying logs</li>
+						<li><a href="https://github.com/dimkr/elfence" target="_blank">elfence</a> prevents execution of untrusted applications</li>
+						<li>A security module <span class="emphasis">blocks</span> malware-like activity (e.g <span class="name">mprotect()</span> with <span class="name">PROT_EXEC</span>)</li>
+						<li>The user is trapped in a container, to protect critical system daemons</li>
+						<li>The operating system core is a digitally-signed image</li>
+						<li>Security features can be disabled by passing "secure=0" <span class="emphasis">at boot time</span></li>
+						<li>Firewall, enabled by default</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="container">
+			<div id="leftcolumn">
+				<div id="downloads">
+					<h2>Downloads</h2>
+					<ul>
+						<li><a href="/images">ISO images</a>, with support for dd</li>
+						<li><a href="/repo">Binary packages</a>, via the repository</li>
+						<li><a href="/sources">Source code</a> for all packages</li>
+						<li><a href="/logs">Build logs</a> for all packages</li>
+						<li><a href="/debug">Debugging symbols</a> for all binaries</li>
+						<li><a href="/updates.log">Update notifications</a> for all packages</li>
+					</ul>
+				</div>
+				<div id="flavors">
+					<h2>Flavors</h2>
+					<p><span class="name">RLSD</span> is available in <span class="emphasis">four</span> flavors:</p>
+					<ul>
+						<li><span class="name">minimal</span>: basic network tools and a package manager</li>
+						<li><span class="name">big</span>: some pre-installed applications</li>
+						<li><span class="name">huge</span>: all packages in the repository are pre-installed</li>
+						<li><span class="name">rootfs</span>: a tiny chroot environment</li>
+					</ul>
+					<p><span class="question">Confused?</span> Try the <span class="name">huge</span> flavor and switch to the <span class="name">minimal</span> one later, if you want a more customized system.</p>
+				</div>
+			</div>
+			<div id="rightcolumn">
+				<h2>Usage</h2>
+				<ul>
+					<li>Set up a network connection using:
+					<ul>
+						<li><span class="name">ifconfig</span>,</li>
+						<li><span class="name">iw</span>,</li>
+						<li><span class="name">wpa_passphrase</span>,</li>
+						<li><span class="name">wpa_supplicant</span></li>
+						<li>and <span class="name">dhcpcd</span></li>
+					</ul>
+					<li>Use <span class="name">packlim</span> to install packages</li>
+					<li>Use <span class="name">man</span> to obtain documentation</li>
+				</ul>
+				<h2>Development</h2>
+				<p>Most of <span class="name">RLSD</span>'s development is automated: its entire package repository is built automatically. To build your own version of <span class="name">RLSD</span> or contribute, clone its <a href="git://rlsd2.dimakrasner.com/" target="_blank">code repository</a> and follow the documentation (<span class="emphasis">README</span>).</p>
+				<h2>Bugs</h2>
+				<p>If you encounter a crash, please send the crashing executable from /bin and the crash dump from /run/crash. Thank you.</p>
+			</div>
+		</div>
+		<div id="footer">
+			<h2>Funding</h2>
+			<p><a href="http://dimakrasner.com" target="_blank">Donations</a> are always welcome.</p>
+			<h2>Legal</h2>
+			<p><span class="name">RLSD</span> is copyright (c) 2013, 2014, 2015 <a href="http://dimakrasner.com" target="_blank">Dima Krasner</a></p>
+			<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+			<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+			<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+		</div>
 	</body>
 </html>
