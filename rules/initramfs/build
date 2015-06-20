@@ -206,15 +206,21 @@ Verifying the root file system signature ..."
 	fi
 fi
 
-# mount a writable file system
+# mount a writable file system - if "auto" is specified instead of a block
+# device path, use the home partition
 echo -n " done.
 Setting up a writable system ..."
-if [ -n "$home" ]
-then
-	mount "/dev/$home" /mnt/rw
-else
-	mount -t tmpfs save /mnt/rw
-fi
+case "$home" in
+	"")
+		mount -t tmpfs save /mnt/rw
+		;;
+	auto)
+		mount "/dev/$partition" /mnt/rw
+		;;
+	*)
+		mount "/dev/$home" /mnt/rw
+		;;
+esac
 
 # mount a layered file system
 echo -n " done.
