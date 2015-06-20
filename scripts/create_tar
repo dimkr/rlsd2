@@ -1,0 +1,11 @@
+#!/bin/sh
+
+TODAY="$(date +%d%m%Y)"
+
+root_fs="$(mktemp -d)"
+./scripts/build_rootfs "$root_fs" "$1"
+rm -rf "$root_fs/boot"
+
+tar -C "$root_fs" -c . |
+lzip -9 > "images/rlsd-$TODAY-$(basename "$1").tar.lz"
+rm -rf "$root_fs"
