@@ -1,0 +1,11 @@
+diff -rup libnl-tiny-svn20062015-orig/files/libnl-tiny.pc libnl-tiny-svn20062015/files/libnl-tiny.pc
+--- libnl-tiny-svn20062015-orig/files/libnl-tiny.pc	2015-06-20 23:15:39.290256066 +0300
++++ libnl-tiny-svn20062015/files/libnl-tiny.pc	2015-06-20 23:15:45.630287517 +0300
+@@ -1,5 +1,5 @@
+-prefix=/usr
+-exec_prefix=/usr
++prefix=
++exec_prefix=
+ libdir=${exec_prefix}/lib
+ includedir=${prefix}/include/libnl-tiny
+ 

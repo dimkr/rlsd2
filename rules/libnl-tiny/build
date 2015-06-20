@@ -4,7 +4,11 @@ PKG_DEPS="musl"
 
 build() {
 	cd src
-	$MAKE CC="$CC" CFLAGS="$CFLAGS"
+	for i in *.c
+	do
+		$CC $CFLAGS -Iinclude -c -o "$(basename "$i" .c).o" "$i"
+	done
+	ar rcs libnl-tiny.a *.o
 }
 
 package() {
