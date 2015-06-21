@@ -9,10 +9,10 @@
 		<meta name="author" content="Dima Krasner">
 		<meta name="robots" content="nofollow">
 		<style>
-			body { font-family: Monospace; background: #151515; color: #A8A8A8; margin: 0; padding: 0 }
-			h1 { text-align: center; font-size: 180%; font-weight: normal; color: #BBBBBB; margin: 0 }
-			h2 { font-size: 180%; font-weight: normal; margin: 0.5em; color: #CCCCCC }
-			h3 { font-size: 120%; font-weight: normal; margin-left: 2em; color: #DDDDDD }
+			body { font-family: Monospace; background: #1D1D19; color: #A8A8A8; margin: 0; padding: 0 }
+			#logo { white-space: pre; text-align: center; font-size: 120%; font-weight: normal; color: #DDDDDD; margin-bottom: 1em }
+			h2 { font-size: 180%; font-weight: normal; margin: 0 0 0 0.5em; color: #CCCCCC }
+			h3 { font-size: 120%; font-weight: normal; margin: 0.5em 0 0.5em 1em; color: #DDDDDD }
 			a, a:visited { color: #A8A8A8; text-decoration: underline }
 			a:hover { text-decoration: none }
 			ul { list-style-type: none; padding-left: 0.5em; margin: 0 }
@@ -21,8 +21,8 @@
 			span.name { font-weight: bold }
 			span.emphasis { font-style: italic }
 			span.question { font-style: italic; font-weight: bold }
-			#terminal { white-space: pre; width: 100%; text-align: center }
-			#application { background: #030F0E; color: #A8A8A8; display: inline-block; text-align: left; border-top: 0.2em solid #666666; border-bottom: 0.2em solid #888888; box-shadow: 0.1em 0.3em 0.6em 0 rgba(88,88,88,0.5) }
+			#terminal { width: 100%; text-align: center; color: transparent; text-shadow: 0.1em 0.1em 0.1em rgba(99,99,99,0.6); padding-bottom: 0.5em }
+			#application { white-space: pre; background: #030F0E; color: #A8A8A8; display: inline-block; text-align: left; border-top: 0.2em solid #666666; border-bottom: 0.2em solid #888888; box-shadow: 0.1em 0.3em 0.6em 0 rgba(88,88,88,0.5) }
 			span.blackoncyan { background: #00A8A8; color: #030F0E }
 			span.cyanonblack { color: #00A8A8 }
 			span.blackonlblue { background: #677FB7; color: #030F0E }
@@ -36,23 +36,27 @@
 			span.grayonblack { color: #3F504F }
 			span.brownonblack { color: #A78747 }
 			span.blackonwhite { background: #A8A8A8; color: #030F0E }
-			#leftfeatures { width: 35%; float:left; padding-left: 1em }
-			#rightfeatures { width: 60%; float: right }
-			div.feature ul { border-left: 0.05em dotted #666666; padding-left: 1em; }
-			div.feature h3:before { content: "\2588"; padding-right: 1em; color: #CCCCCC }
-			#top { border-left: 0.2em solid #999999; padding-left: 1em; padding-left: 0.5em; padding-right: 0.5em; padding-top: 0.5em; background: #1D1D19}
-			#features { border-top: 0.2em solid #999999; border-right: 0.2em solid #999999; padding-right: 0.5em; padding-bottom: 2em; overflow: hidden; background: #000000; padding-left: 0.5em }
-			#container { overflow: hidden; border-bottom: 0.2em solid #999999; clear: both; background: #000000; padding-bottom: 1em }
-			#leftcolumn { padding-left: 1em; width: 50%; float:left; margin: 1em 0.5em 0.5em 0.5em }
-			#rightcolumn { width: 40%; float: right; padding-left: 1em; border-top: 0.2em solid #999999; border-left: 0.2em solid #999999; border-bottom: 0.2em solid #999999; background: #0F0F13 }
-			#downloads { background: #404047; padding: 0.5em 0.5em 0.5em 1em }
-			#flavors { background: #2A2A2D; padding: 0.5em 0.5em 0.5em 1em; margin-top: 1em }
-			#footer { clear: both; padding-left: 0.5em; margin-right: 0.5em }
+			#top { padding: 0.5em 0.5em 0 0.5em; border-left: 0.2em solid #999999; border-bottom: 0.2em solid #999999 }
+			div.columns { overflow: hidden; padding: 0.5em 0 0.5em 0 }
+			div.leftcolumn { width: 40%; float: left; padding-left: 0.5em }
+			div.rightcolumn { width: 55%; float: right; padding-right: 0.5em }
+			div.cell ul { border-left: 0.05em dotted #666666 }
+			div.cell h3:before { content: "\2588"; padding-right: 0.5em }
+			div.cell p { padding: 0 0.5em 0 0.5em }
+			#features { background: #000000; border-right: 0.2em solid #999999; border-bottom: 0.2em solid #999999 }
+			#downloads { background: #404047; padding: 0.5em; margin-bottom: 0.5em }
+			#usage { background: #2A2A2D; padding: 0.5em }
+			#bottom { background: #171717 }
+			#legal { border-top: 0.1em dashed #333333; padding-top: 0.5em }
 		</style>
 	</head>
 	<body>
 		<div id="top">
-			<h1>RLSD</h1>
+			<div id="logo">       _         _
+  ____| |___  __| |
+ |  __| / __|/ _  |
+ | |  | \__ \ (_| |
+ |_|  |_|___/\__,_|</div>
 			<p><span class="emphasis">Welcome!</span> You've reached the home of <span class="name">RLSD</span>, the Retro <a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> Software Distribution.</p>
 			<p><span class="name">RLSD</span> is an <span class="emphasis">extremely</span> minimalistic, small, lightweight and security-hardened, <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free</a>, text operating system for x86 and x86_64. It's a <span class="emphasis">unique</span> <a href="http://www.gnu.org/" target="_blank">GNU</a>/<a href="http://linux-libre.fsfla.org/" target="_blank">Linux-libre</a> distribution that provides a selection of console applications and home-grown security features which might appeal to hackers.</p>
 			<div id="terminal">
@@ -75,10 +79,10 @@
 </script>
 			</div>
 		</div>
-		<div id="features">
+		<div id="features" class="columns">
 			<h2>Features</h2>
-			<div id="leftfeatures">
-				<div class="feature">
+			<div class="leftcolumn">
+				<div class="cell">
 					<h3>Cool</h3>
 					<ul>
 						<li>The user always runs as <span class="name">root</span></li>
@@ -89,7 +93,7 @@
 						<li>Hackable</li>
 					</ul>
 				</div>
-				<div class="feature">
+				<div class="cell">
 					<h3>Lightweight</h3>
 					<ul>
 						<li>Tiny memory and disk footprint</li>
@@ -100,8 +104,8 @@
 					</ul>
 				</div>
 			</div>
-			<div id="rightfeatures">
-				<div class="feature">
+			<div class="rightcolumn">
+				<div class="cell">
 					<h3>Simple</h3>
 					<ul>
 						<li>All executables go to /bin, man pages to /man, etc'</li>
@@ -109,7 +113,7 @@
 						<li>The kernel is <span class="emphasis">100%</span> monolithic</li>
 					</ul>
 				</div>
-				<div class="feature">
+				<div class="cell">
 					<h3>Security-hardened</h3>
 					<ul>
 						<li><a href="https://github.com/dimkr/luufs" target="_blank">luufs</a> prevents malware from replacing critical files</li>
@@ -124,9 +128,9 @@
 				</div>
 			</div>
 		</div>
-		<div id="container">
-			<div id="leftcolumn">
-				<div id="downloads">
+		<div id="bottom" class="columns">
+			<div class="leftcolumn">
+				<div id="downloads" class="cell">
 					<h2>Downloads</h2>
 					<ul>
 						<li><a href="/images">ISO images</a>, with support for <span class="name">dd</span></li>
@@ -136,9 +140,7 @@
 						<li><a href="/debug">Debugging symbols</a> for all binaries</li>
 						<li><a href="/updates.log">Update notifications</a> for all packages</li>
 					</ul>
-				</div>
-				<div id="flavors">
-					<h2>Flavors</h2>
+					<h3>Flavors</h3>
 					<p><span class="name">RLSD</span> is available in <span class="emphasis">four</span> flavors:</p>
 					<ul>
 						<li><span class="name">minimal</span>: basic network tools and a package manager</li>
@@ -148,36 +150,33 @@
 					</ul>
 					<p><span class="question">Confused?</span> Try the <span class="name">huge</span> flavor and switch to the <span class="name">minimal</span> one later, if you want a more customized system.</p>
 				</div>
-			</div>
-			<div id="rightcolumn">
-				<h2>Usage</h2>
-				<ul>
-					<li>Set up a network connection using:
+				<div id="usage" class="cell">
+					<h2>Usage</h2>
 					<ul>
-						<li><span class="name">ifconfig</span>,</li>
-						<li><span class="name">iw</span>,</li>
-						<li><span class="name">wpa_passphrase</span>,</li>
-						<li><span class="name">wpa_supplicant</span></li>
-						<li>and <span class="name">dhcpcd</span></li>
+						<li>Set up a network connection using <span class="name">ifconfig</span>, <span class="name">iw</span>, <span class="name">wpa_passphrase</span>, <span class="name">wpa_supplicant</span> and <span class="name">dhcpcd</span></li>
+						<li>Use <span class="name">packlim</span> to install packages</li>
+						<li>Use <span class="name">man</span> to obtain documentation</li>
 					</ul>
-					<li>Use <span class="name">packlim</span> to install packages</li>
-					<li>Use <span class="name">man</span> to obtain documentation</li>
-				</ul>
-				<h2>Development</h2>
-				<p>Most of <span class="name">RLSD</span>'s development is automated: its entire package repository is built automatically. To build your own version of <span class="name">RLSD</span> or contribute, clone its <a href="git://rlsd2.dimakrasner.com/" target="_blank">code repository</a> and follow the documentation (<span class="emphasis">README</span>).</p>
-				<h2>Bugs</h2>
-				<p><span class="question">Problem?</span> Please report it; if it's a crash, please include the crashing executable from /bin and the crash dump from /run/crash in your report. <span class="emphasis">Thank you</span>.</p>
+					<h3>Bugs</h3>
+					<p><span class="question">Problem?</span> Please report it; if it's a crash, please include the crashing executable from /bin and the crash dump from /run/crash in your report. <span class="emphasis">Thank you</span>.</p>
+				</div>
 			</div>
-		</div>
-		<div id="footer">
-			<h2>Funding</h2>
-			<p><a href="http://dimakrasner.com" target="_blank">Donations</a> are always welcome.</p>
-			<h2>Legal</h2>
-			<p><span class="name">RLSD</span> is <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free software</a> available under the terms of the <span class="name">MIT</span> license:</p>
-			<p><span class="name">RLSD</span> is copyright (c) 2013, 2014, 2015 <a href="http://dimakrasner.com" target="_blank">Dima Krasner</a></p>
-			<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-			<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-			<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+			<div class="rightcolumn">
+				<div class="cell">
+					<h2>Development</h2>
+					<p>Most of <span class="name">RLSD</span>'s development is automated: its entire package repository is built automatically. To build your own version of <span class="name">RLSD</span> or contribute, clone its <a href="git://rlsd2.dimakrasner.com/" target="_blank">code repository</a> and follow the documentation (<span class="emphasis">README</span>).</p>
+					<h3>Funding</h3>
+					<p><a href="http://dimakrasner.com" target="_blank">Donations</a> are always welcome.</p>
+				</div>
+				<div id="legal" class="cell">
+					<h2>Legal</h2>
+					<p><span class="name">RLSD</span> is <a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank">free software</a> available under the terms of the <span class="name">MIT</span> license:</p>
+					<p><span class="name">RLSD</span> is copyright (c) 2013, 2014, 2015 <a href="http://dimakrasner.com" target="_blank">Dima Krasner</a></p>
+					<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+					<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+					<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
