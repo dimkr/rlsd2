@@ -1,7 +1,7 @@
-diff -rup linux-3.14.37-orig/drivers/tty/vt/vt.c linux-3.14.37/drivers/tty/vt/vt.c
---- linux-3.14.37-orig/drivers/tty/vt/vt.c	2015-04-09 15:11:54.054670713 +0300
-+++ linux-3.14.37/drivers/tty/vt/vt.c	2015-04-09 15:12:08.134670424 +0300
-@@ -162,7 +162,7 @@ module_param(default_utf8, int, S_IRUGO
+diff -rup linux-4.1-orig/drivers/tty/vt/vt.c linux-4.1/drivers/tty/vt/vt.c
+--- linux-4.1-orig/drivers/tty/vt/vt.c	2015-06-22 11:44:46.285177171 +0300
++++ linux-4.1/drivers/tty/vt/vt.c	2015-06-22 11:49:25.538561908 +0300
+@@ -164,7 +164,7 @@ module_param(default_utf8, int, S_IRUGO
  int global_cursor_default = -1;
  module_param(global_cursor_default, int, S_IRUGO | S_IWUSR);
  

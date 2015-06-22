@@ -1,7 +1,7 @@
-diff -rup linux-3.14.32-orig/drivers/base/firmware_class.c linux-3.14.32/drivers/base/firmware_class.c
---- linux-3.14.32-orig/drivers/base/firmware_class.c	2015-02-07 17:49:47.344006184 +0200
-+++ linux-3.14.32/drivers/base/firmware_class.c	2015-02-07 17:50:53.812007764 +0200
-@@ -262,12 +262,13 @@ static void fw_free_buf(struct firmware_
+diff -rup linux-4.1-orig/drivers/base/firmware_class.c linux-4.1/drivers/base/firmware_class.c
+--- linux-4.1-orig/drivers/base/firmware_class.c	2015-06-22 11:44:46.833179889 +0300
++++ linux-4.1/drivers/base/firmware_class.c	2015-06-22 11:51:22.067139743 +0300
+@@ -269,12 +269,13 @@ static void fw_free_buf(struct firmware_
  }
  
  /* direct firmware loading support */
@@ -16,12 +16,12 @@ diff -rup linux-3.14.32-orig/drivers/base/firmware_class.c linux-3.14.32/drivers
  	"/lib/firmware"
  };
  
-@@ -276,8 +277,6 @@ static const char * const fw_path[] = {
+@@ -283,8 +284,6 @@ static const char * const fw_path[] = {
   * from kernel command line because firmware_class is generally built in
   * kernel instead of module.
   */
 -module_param_string(path, fw_path_para, sizeof(fw_path_para), 0644);
 -MODULE_PARM_DESC(path, "customized firmware image search path with a higher priority than default path");
  
- /* Don't inline this: 'struct kstat' is biggish */
- static noinline_for_stack int fw_file_size(struct file *file)
+ static int fw_read_file_contents(struct file *file, struct firmware_buf *fw_buf)
+ {
