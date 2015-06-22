@@ -15,3 +15,8 @@ do
 	        "repo/$package"
 	echo "$name|$PKG_VER|$PKG_DESC|$package|$PKG_DEPS" >> repo/available
 done
+
+ed25519 -s \
+        repo/available \
+        /etc/packlim/priv_key \
+        /etc/packlim/pub_key > repo/available.sig
