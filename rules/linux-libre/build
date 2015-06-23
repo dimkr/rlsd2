@@ -5,9 +5,9 @@ PKG_DESC="An operating system kernel"
 get_latest() {
 	wget -q -O - "https://www.kernel.org/" |
 	grep "4.1" |
-	tail -n 1 |
+	head -n 1 |
 	cut -f 2 -d \- |
-	cut -f 1 -d \"
+	sed s~'\.tar.*'~~
 }
 
 build() {
