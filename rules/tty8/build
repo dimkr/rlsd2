@@ -1,0 +1,15 @@
+PKG_SRCS="https://github.com/dimkr/tty8.git"
+PKG_DESC="A terminal multiplexer"
+PKG_DEPS="musl"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" \
+	      BIN_DIR="/bin" \
+	      MAN_DIR="/man" \
+	      DOC_DIR="/doc/tty8" \
+	      install
+}
