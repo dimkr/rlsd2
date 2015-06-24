@@ -1,18 +1,18 @@
-diff -rup linux-4.1-orig/init/main.c linux-4.1/init/main.c
---- linux-4.1-orig/init/main.c	2015-06-22 11:44:44.321167432 +0300
-+++ linux-4.1/init/main.c	2015-06-22 11:59:42.421620866 +0300
+diff -rup linux-3.14.43-orig/init/main.c linux-3.14.43/init/main.c
+--- linux-3.14.43-orig/init/main.c	2015-05-23 23:51:20.381497732 +0300
++++ linux-3.14.43/init/main.c	2015-05-23 23:51:58.421686363 +0300
 @@ -159,7 +159,7 @@ static int __init set_reset_devices(char
  __setup("reset_devices", set_reset_devices);
  
- static const char *argv_init[MAX_INIT_ARGS+2] = { "init", NULL, };
--const char *envp_init[MAX_INIT_ENVS+2] = { "HOME=/", "TERM=linux", NULL, };
-+const char *envp_init[MAX_INIT_ENVS+2] = { "TERM=linux", NULL, };
+ static const char * argv_init[MAX_INIT_ARGS+2] = { "init", NULL, };
+-const char * envp_init[MAX_INIT_ENVS+2] = { "HOME=/", "TERM=linux", NULL, };
++const char * envp_init[MAX_INIT_ENVS+2] = { "TERM=linux", NULL, };
  static const char *panic_later, *panic_param;
  
  extern const struct obs_kernel_param __setup_start[], __setup_end[];
-@@ -959,10 +959,7 @@ static int __ref kernel_init(void *unuse
- 		panic("Requested init %s failed (error %d).",
- 		      execute_command, ret);
+@@ -872,10 +872,7 @@ static int __ref kernel_init(void *unuse
+ 		pr_err("Failed to execute %s (error %d).  Attempting defaults...\n",
+ 			execute_command, ret);
  	}
 -	if (!try_to_run_init_process("/sbin/init") ||
 -	    !try_to_run_init_process("/etc/init") ||
@@ -22,7 +22,7 @@ diff -rup linux-4.1-orig/init/main.c linux-4.1/init/main.c
  		return 0;
  
  	panic("No working init found.  Try passing init= option to kernel. "
-@@ -1012,7 +1009,7 @@ static noinline void __init kernel_init_
+@@ -925,7 +922,7 @@ static noinline void __init kernel_init_
  	 */
  
  	if (!ramdisk_execute_command)
@@ -31,10 +31,10 @@ diff -rup linux-4.1-orig/init/main.c linux-4.1/init/main.c
  
  	if (sys_access((const char __user *) ramdisk_execute_command, 0) != 0) {
  		ramdisk_execute_command = NULL;
-diff -rup linux-4.1-orig/kernel/kmod.c linux-4.1/kernel/kmod.c
---- linux-4.1-orig/kernel/kmod.c	2015-06-22 11:44:45.085171218 +0300
-+++ linux-4.1/kernel/kmod.c	2015-06-22 11:59:12.745473715 +0300
-@@ -60,11 +60,11 @@ static DECLARE_RWSEM(umhelper_sem);
+diff -rup linux-3.14.43-orig/kernel/kmod.c linux-3.14.43/kernel/kmod.c
+--- linux-3.14.43-orig/kernel/kmod.c	2015-05-23 23:51:20.585498739 +0300
++++ linux-3.14.43/kernel/kmod.c	2015-05-23 23:51:58.421686363 +0300
+@@ -67,11 +67,11 @@ static DECLARE_RWSEM(umhelper_sem);
  /*
  	modprobe_path is set via /proc/sys.
  */
@@ -48,7 +48,7 @@ diff -rup linux-4.1-orig/kernel/kmod.c linux-4.1/kernel/kmod.c
  	kfree(info->argv);
  }
  
-@@ -72,13 +72,11 @@ static int call_modprobe(char *module_na
+@@ -79,13 +79,11 @@ static int call_modprobe(char *module_na
  {
  	struct subprocess_info *info;
  	static char *envp[] = {
@@ -64,7 +64,7 @@ diff -rup linux-4.1-orig/kernel/kmod.c linux-4.1/kernel/kmod.c
  	if (!argv)
  		goto out;
  
-@@ -87,10 +85,8 @@ static int call_modprobe(char *module_na
+@@ -94,10 +92,8 @@ static int call_modprobe(char *module_na
  		goto free_argv;
  
  	argv[0] = modprobe_path;
@@ -77,23 +77,21 @@ diff -rup linux-4.1-orig/kernel/kmod.c linux-4.1/kernel/kmod.c
  
  	info = call_usermodehelper_setup(modprobe_path, argv, envp, GFP_KERNEL,
  					 NULL, free_modprobe_argv, NULL);
-diff -rup linux-4.1-orig/kernel/reboot.c linux-4.1/kernel/reboot.c
---- linux-4.1-orig/kernel/reboot.c	2015-06-22 11:44:45.097171278 +0300
-+++ linux-4.1/kernel/reboot.c	2015-06-22 12:00:28.509849318 +0300
-@@ -386,15 +386,14 @@ void ctrl_alt_del(void)
+diff -rup linux-3.14.43-orig/kernel/reboot.c linux-3.14.43/kernel/reboot.c
+--- linux-3.14.43-orig/kernel/reboot.c	2015-05-23 23:51:20.421497929 +0300
++++ linux-3.14.43/kernel/reboot.c	2015-05-23 23:53:02.382003528 +0300
+@@ -305,14 +305,14 @@ void ctrl_alt_del(void)
  		kill_cad_pid(SIGINT, 1);
  }
  
 -char poweroff_cmd[POWEROFF_CMD_PATH_LEN] = "/sbin/poweroff";
--static const char reboot_cmd[] = "/sbin/reboot";
 +char poweroff_cmd[POWEROFF_CMD_PATH_LEN] = "/bin/poweroff";
-+static const char reboot_cmd[] = "/bin/reboot";
  
- static int run_cmd(const char *cmd)
+ static int __orderly_poweroff(bool force)
  {
  	char **argv;
  	static char *envp[] = {
--		"HOME=/",
+ 		"HOME=/",
 -		"PATH=/sbin:/bin:/usr/sbin:/usr/bin",
 +		"PATH=/bin",
  		NULL

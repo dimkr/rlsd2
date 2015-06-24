@@ -1,7 +1,7 @@
-diff -rupN linux-4.1-orig/security/Kconfig linux-4.1/security/Kconfig
---- linux-4.1-orig/security/Kconfig	2015-06-22 11:44:45.125171416 +0300
-+++ linux-4.1/security/Kconfig	2015-06-22 11:55:42.772432513 +0300
-@@ -123,6 +123,7 @@ source security/smack/Kconfig
+diff -rupN linux-3.14.43-orig/security/Kconfig linux-3.14.43/security/Kconfig
+--- linux-3.14.43-orig/security/Kconfig	2015-05-23 23:51:17.777484817 +0300
++++ linux-3.14.43/security/Kconfig	2015-05-23 23:55:13.754654980 +0300
+@@ -122,6 +122,7 @@ source security/smack/Kconfig
  source security/tomoyo/Kconfig
  source security/apparmor/Kconfig
  source security/yama/Kconfig
@@ -9,7 +9,7 @@ diff -rupN linux-4.1-orig/security/Kconfig linux-4.1/security/Kconfig
  
  source security/integrity/Kconfig
  
-@@ -133,6 +134,7 @@ choice
+@@ -132,6 +133,7 @@ choice
  	default DEFAULT_SECURITY_TOMOYO if SECURITY_TOMOYO
  	default DEFAULT_SECURITY_APPARMOR if SECURITY_APPARMOR
  	default DEFAULT_SECURITY_YAMA if SECURITY_YAMA
@@ -17,7 +17,7 @@ diff -rupN linux-4.1-orig/security/Kconfig linux-4.1/security/Kconfig
  	default DEFAULT_SECURITY_DAC
  
  	help
-@@ -154,6 +156,9 @@ choice
+@@ -153,6 +155,9 @@ choice
  	config DEFAULT_SECURITY_YAMA
  		bool "Yama" if SECURITY_YAMA=y
  
@@ -27,7 +27,7 @@ diff -rupN linux-4.1-orig/security/Kconfig linux-4.1/security/Kconfig
  	config DEFAULT_SECURITY_DAC
  		bool "Unix Discretionary Access Controls"
  
-@@ -166,6 +171,7 @@ config DEFAULT_SECURITY
+@@ -165,6 +170,7 @@ config DEFAULT_SECURITY
  	default "tomoyo" if DEFAULT_SECURITY_TOMOYO
  	default "apparmor" if DEFAULT_SECURITY_APPARMOR
  	default "yama" if DEFAULT_SECURITY_YAMA
@@ -35,9 +35,9 @@ diff -rupN linux-4.1-orig/security/Kconfig linux-4.1/security/Kconfig
  	default "" if DEFAULT_SECURITY_DAC
  
  endmenu
-diff -rupN linux-4.1-orig/security/Makefile linux-4.1/security/Makefile
---- linux-4.1-orig/security/Makefile	2015-06-22 11:44:45.113171360 +0300
-+++ linux-4.1/security/Makefile	2015-06-22 11:56:07.840556818 +0300
+diff -rupN linux-3.14.43-orig/security/Makefile linux-3.14.43/security/Makefile
+--- linux-3.14.43-orig/security/Makefile	2015-05-23 23:51:17.705484457 +0300
++++ linux-3.14.43/security/Makefile	2015-05-23 23:55:13.754654980 +0300
 @@ -8,6 +8,7 @@ subdir-$(CONFIG_SECURITY_SMACK)		+= smac
  subdir-$(CONFIG_SECURITY_TOMOYO)        += tomoyo
  subdir-$(CONFIG_SECURITY_APPARMOR)	+= apparmor
@@ -47,16 +47,16 @@ diff -rupN linux-4.1-orig/security/Makefile linux-4.1/security/Makefile
  # always enable default capabilities
  obj-y					+= commoncap.o
 @@ -22,6 +23,7 @@ obj-$(CONFIG_AUDIT)			+= lsm_audit.o
- obj-$(CONFIG_SECURITY_TOMOYO)		+= tomoyo/
- obj-$(CONFIG_SECURITY_APPARMOR)		+= apparmor/
- obj-$(CONFIG_SECURITY_YAMA)		+= yama/
-+obj-$(CONFIG_SECURITY_RLSD)		+= rlsd/
+ obj-$(CONFIG_SECURITY_TOMOYO)		+= tomoyo/built-in.o
+ obj-$(CONFIG_SECURITY_APPARMOR)		+= apparmor/built-in.o
+ obj-$(CONFIG_SECURITY_YAMA)		+= yama/built-in.o
++obj-$(CONFIG_SECURITY_RLSD)		+= rlsd/built-in.o
  obj-$(CONFIG_CGROUP_DEVICE)		+= device_cgroup.o
  
  # Object integrity file lists
-diff -rupN linux-4.1-orig/security/rlsd/Kconfig linux-4.1/security/rlsd/Kconfig
---- linux-4.1-orig/security/rlsd/Kconfig	1970-01-01 02:00:00.000000000 +0200
-+++ linux-4.1/security/rlsd/Kconfig	2015-06-22 11:55:42.772432513 +0300
+diff -rupN linux-3.14.43-orig/security/rlsd/Kconfig linux-3.14.43/security/rlsd/Kconfig
+--- linux-3.14.43-orig/security/rlsd/Kconfig	1970-01-01 02:00:00.000000000 +0200
++++ linux-3.14.43/security/rlsd/Kconfig	2015-05-23 23:55:13.754654980 +0300
 @@ -0,0 +1,10 @@
 +config SECURITY_RLSD
 +	bool "RLSD support"
@@ -68,16 +68,16 @@ diff -rupN linux-4.1-orig/security/rlsd/Kconfig linux-4.1/security/rlsd/Kconfig
 +	  This selects the RLSD security module.
 +
 +	  If you are unsure how to answer this question, answer N.
-diff -rupN linux-4.1-orig/security/rlsd/Makefile linux-4.1/security/rlsd/Makefile
---- linux-4.1-orig/security/rlsd/Makefile	1970-01-01 02:00:00.000000000 +0200
-+++ linux-4.1/security/rlsd/Makefile	2015-06-22 11:55:42.772432513 +0300
+diff -rupN linux-3.14.43-orig/security/rlsd/Makefile linux-3.14.43/security/rlsd/Makefile
+--- linux-3.14.43-orig/security/rlsd/Makefile	1970-01-01 02:00:00.000000000 +0200
++++ linux-3.14.43/security/rlsd/Makefile	2015-05-23 23:55:13.754654980 +0300
 @@ -0,0 +1,3 @@
 +obj-$(CONFIG_SECURITY_RLSD) := rlsd.o
 +
 +rlsd-y := rlsd_lsm.o
-diff -rupN linux-4.1-orig/security/rlsd/rlsd_lsm.c linux-4.1/security/rlsd/rlsd_lsm.c
---- linux-4.1-orig/security/rlsd/rlsd_lsm.c	1970-01-01 02:00:00.000000000 +0200
-+++ linux-4.1/security/rlsd/rlsd_lsm.c	2015-06-22 11:55:42.772432513 +0300
+diff -rupN linux-3.14.43-orig/security/rlsd/rlsd_lsm.c linux-3.14.43/security/rlsd/rlsd_lsm.c
+--- linux-3.14.43-orig/security/rlsd/rlsd_lsm.c	1970-01-01 02:00:00.000000000 +0200
++++ linux-3.14.43/security/rlsd/rlsd_lsm.c	2015-05-24 00:03:56.169245511 +0300
 @@ -0,0 +1,323 @@
 +/*
 + * RLSD Linux Security Module
@@ -115,7 +115,7 @@ diff -rupN linux-4.1-orig/security/rlsd/rlsd_lsm.c linux-4.1/security/rlsd/rlsd_
 +	unsigned long enabled;
 +	int error;
 +	if (str) {
-+		error = kstrtoul(str, 0, &enabled);
++		error = strict_strtoul(str, 0, &enabled);
 +		if (!error)
 +			rlsd_enabled = enabled ? 1 : 0;
 +	}

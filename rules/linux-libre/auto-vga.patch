@@ -1,7 +1,7 @@
-diff -rup linux-4.1-orig/arch/x86/boot/video.c linux-4.1/arch/x86/boot/video.c
---- linux-4.1-orig/arch/x86/boot/video.c	2015-06-22 11:44:50.185196508 +0300
-+++ linux-4.1/arch/x86/boot/video.c	2015-06-22 11:45:11.037299910 +0300
-@@ -314,6 +314,39 @@ static void restore_screen(void)
+diff -rup linux-3.14.19-orig/arch/x86/boot/video.c linux-3.14.19/arch/x86/boot/video.c
+--- linux-3.14.19-orig/arch/x86/boot/video.c	2014-09-21 20:11:20.662964171 +0300
++++ linux-3.14.19/arch/x86/boot/video.c	2014-09-22 19:22:39.520944994 +0300
+@@ -312,6 +312,39 @@ static void restore_screen(void)
  	store_cursor_position();
  }
  
@@ -41,7 +41,7 @@ diff -rup linux-4.1-orig/arch/x86/boot/video.c linux-4.1/arch/x86/boot/video.c
  void set_video(void)
  {
  	u16 mode = boot_params.hdr.vid_mode;
-@@ -324,6 +357,9 @@ void set_video(void)
+@@ -322,6 +355,9 @@ void set_video(void)
  	save_screen();
  	probe_cards(0);
  
