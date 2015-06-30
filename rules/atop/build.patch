@@ -1,37 +1,18 @@
-diff -rup atop-2.1-orig/Makefile atop-2.1/Makefile
---- atop-2.1-orig/Makefile	2015-04-09 10:37:21.079309908 +0300
-+++ atop-2.1/Makefile	2015-04-09 10:40:09.615950305 +0300
-@@ -17,7 +17,7 @@ ROTPATH  = /etc/logrotate.d
- PMPATH1  = /usr/lib/pm-utils/sleep.d
- PMPATH2  = /usr/lib64/pm-utils/sleep.d
- 
--CFLAGS  += -O2 -I. -Wall 	 # -DHTTPSTATS
-+CFLAGS  += -I. -Wall 	 # -DHTTPSTATS
- OBJMOD0  = version.o
- OBJMOD1  = various.o  deviate.o   procdbase.o
- OBJMOD2  = acctproc.o photoproc.o photosyst.o  rawlog.o ifprop.o parseable.o
-@@ -57,20 +57,7 @@ install:	atop atopacctd
- 			then mkdir -p $(DESTDIR)$(MAN5PATH); fi
- 		if [ ! -d $(DESTDIR)$(MAN8PATH) ]; 	\
- 			then mkdir -p $(DESTDIR)$(MAN8PATH); fi
--		if [ ! -d $(DESTDIR)$(INIPATH) ]; 	\
--			then mkdir -p $(DESTDIR)$(INIPATH); fi
--		if [ ! -d $(DESTDIR)$(CRNPATH) ]; 	\
--			then mkdir -p $(DESTDIR)$(CRNPATH); fi
--		if [ ! -d $(DESTDIR)$(ROTPATH) ]; 	\
--			then mkdir -p $(DESTDIR)$(ROTPATH); fi
--		if [ -d $(DESTDIR)$(PMPATH1) ]; 	\
--			then cp 45atoppm $(DESTDIR)$(PMPATH1); 	\
--			chmod 0711 $(DESTDIR)$(PMPATH1)/45atoppm; fi
--		if [ -d $(DESTDIR)$(PMPATH2) ]; 	\
--			then cp 45atoppm $(DESTDIR)$(PMPATH2); 	\
--			chmod 0711 $(DESTDIR)$(PMPATH2)/45atoppm; fi
- 		#
--		if [ -z "$(DESTDIR)" -a -f /sbin/chkconfig ]; then /sbin/chkconfig --del atop 2> /dev/null; fi
+diff -rup atop-2.2-3-orig/Makefile atop-2.2-3/Makefile
+--- atop-2.2-3-orig/Makefile	2015-06-30 18:19:18.181320319 +0300
++++ atop-2.2-3/Makefile	2015-06-30 18:22:06.366154302 +0300
+@@ -132,10 +132,6 @@ genericinstall:	atop atopacctd
+ 		then	mkdir -p $(DESTDIR)$(MAN5PATH);	fi
+ 		if [ ! -d $(DESTDIR)$(MAN8PATH) ]; 		\
+ 		then	mkdir -p $(DESTDIR)$(MAN8PATH);	fi
+-		if [ ! -d $(DESTDIR)$(CRNPATH) ]; 		\
+-		then	mkdir -p $(DESTDIR)$(CRNPATH);	fi
+-		if [ ! -d $(DESTDIR)$(ROTPATH) ]; 		\
+-		then	mkdir -p $(DESTDIR)$(ROTPATH);	fi
  		#
  		cp atop   		$(DESTDIR)$(BINPATH)/atop
  		chown root		$(DESTDIR)$(BINPATH)/atop
-@@ -79,26 +66,10 @@ install:	atop atopacctd
+@@ -144,18 +140,10 @@ genericinstall:	atop atopacctd
  		cp atopacctd  		$(DESTDIR)$(SBINPATH)/atopacctd
  		chown root		$(DESTDIR)$(SBINPATH)/atopacctd
  		chmod 0700 		$(DESTDIR)$(SBINPATH)/atopacctd
@@ -43,18 +24,10 @@ diff -rup atop-2.1-orig/Makefile atop-2.1/Makefile
  		cp man/atopsar.1 	$(DESTDIR)$(MAN1PATH)
  		cp man/atoprc.5  	$(DESTDIR)$(MAN5PATH)
  		cp man/atopacctd.8  	$(DESTDIR)$(MAN8PATH)
--		cp atopacct.init     	$(DESTDIR)$(INIPATH)/atopacct
--		cp atop.init     	$(DESTDIR)$(INIPATH)/atop
--		cp atop.cron     	$(DESTDIR)$(CRNPATH)/atop
 -		cp psaccs_atop   	$(DESTDIR)$(ROTPATH)/psaccs_atop
 -		cp psaccu_atop  	$(DESTDIR)$(ROTPATH)/psaccu_atop
 -		touch          	  	$(DESTDIR)$(LOGPATH)/dummy_before
 -		touch            	$(DESTDIR)$(LOGPATH)/dummy_after
--		if [ -z "$(DESTDIR)" -a -f /sbin/chkconfig ]; then /sbin/chkconfig --add atop; fi
--		if [ -z "$(DESTDIR)" -a -f /sbin/chkconfig ]; then /sbin/chkconfig --add atopacct; fi
--		if [ -z "$(DESTDIR)" -a -f /usr/sbin/update-rc.d ]; then update-rc.d atop defaults; fi
--		if [ -z "$(DESTDIR)" -a -f /usr/sbin/update-rc.d ]; then update-rc.d atopacct defaults; fi
--		if [ -z "$(DESTDIR)" -a -f /sbin/service ]; then /sbin/service atopacct start; fi
  
- distr: rm -f *.o atop
- 		tar czvf /tmp/atop.tar.gz *
+ ##########################################################################
+ 

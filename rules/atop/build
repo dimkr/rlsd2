@@ -1,4 +1,4 @@
-PKG_VER="2.1-1"
+PKG_VER="2.2-3"
 PKG_SRCS="http://www.atoptool.nl/download/atop-$PKG_VER.tar.gz"
 PKG_DESC="A performance monitor"
 PKG_DEPS="musl zlib ncurses"
@@ -23,7 +23,7 @@ package() {
 	      MAN1PATH="/man/man1" \
 	      MAN5PATH="/man/man5" \
 	      MAN8PATH="/man/man8" \
-	      install
+	      genericinstall
 	install -D -m 644 README "$1/doc/atop/README"
 	install -m 644 ChangeLog "$1/doc/atop/ChangeLog"
 	install -m 644 AUTHOR "$1/doc/atop/AUTHOR"
