@@ -1,4 +1,4 @@
-PKG_VER="1.7.3"
+PKG_VER="1.7.4"
 PKG_SRCS="http://www.tcpdump.org/release/libpcap-$PKG_VER.tar.gz"
 PKG_DESC="A packet capture library"
 PKG_DEPS="musl"
