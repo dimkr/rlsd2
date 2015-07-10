@@ -1,4 +1,4 @@
-PKG_VER="5.23"
+PKG_VER="5.24"
 PKG_SRCS="ftp://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz"
 PKG_DESC="A file type guessing tool"
 PKG_DEPS="musl zlib"
