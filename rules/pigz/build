@@ -1,0 +1,25 @@
+PKG_VER="2.3.3"
+PKG_SRCS="http://zlib.net/pigz/pigz-$PKG_VER.tar.gz"
+PKG_DESC="Compression tools"
+PKG_DEPS="musl"
+
+get_latest() {
+	wget -q -O - "http://zlib.net/pigz" |
+	grep "source code version" |
+	cut -f 6 -d \ 
+}
+
+build() {
+	$MAKE
+}
+
+package() {
+	install -D -m 755 pigz "$1/bin/pigz"
+	ln -s pigz "$1/bin/gzip"
+	install -m 755 unpigz "$1/bin/unpigz"
+	ln -s unpigz "$1/bin/gunzip"
+	install -D -m 644 README "$1/doc/pigz/README"
+	install -m 644 zopfli/README "$1/doc/pigz/README.zopfli"
+	install -m 644 zopfli/CONTRIBUTORS "$1/doc/pigz/CONTRIBUTORS.zopfli"
+	install -m 644 zopfli/COPYING "$1/doc/pigz/COPYING.zopfli"
+}
