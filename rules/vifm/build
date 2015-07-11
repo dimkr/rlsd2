@@ -1,4 +1,4 @@
-PKG_VER="0.7.8"
+PKG_VER="0.8"
 PKG_SRCS="http://prdownloads.sourceforge.net/vifm/vifm-$PKG_VER.tar.bz2"
 PKG_DESC="A two-pane file manager"
 PKG_DEPS="musl ncurses file"
@@ -16,6 +16,7 @@ build() {
 	LIBS="-lmagic -lz $LIBS" \
 	./configure --prefix="" \
 		    --mandir="/man" \
+		    --docdir="/doc/vifm" \
 	            --disable-desktop-files
 	[ 0 -ne $? ] && return 1
 

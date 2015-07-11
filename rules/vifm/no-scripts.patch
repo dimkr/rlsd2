@@ -1,0 +1,37 @@
+diff -rup vifm-0.8-orig/src/Makefile.in vifm-0.8/src/Makefile.in
+--- vifm-0.8-orig/src/Makefile.in	2015-07-11 11:05:04.557977851 +0300
++++ vifm-0.8/src/Makefile.in	2015-07-11 11:15:26.069059821 +0300
+@@ -53,7 +53,7 @@ PRE_UNINSTALL = :
+ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+-bin_PROGRAMS = vifm$(EXEEXT) vifmrc-converter$(EXEEXT)
++bin_PROGRAMS = vifm$(EXEEXT)
+ subdir = src
+ DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+@@ -172,8 +172,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUD
+ 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+ CCLD = $(CC)
+ LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+-SOURCES = $(vifm_SOURCES) $(vifmrc_converter_SOURCES)
+-DIST_SOURCES = $(vifm_SOURCES) $(vifmrc_converter_SOURCES)
++SOURCES = $(vifm_SOURCES)
++DIST_SOURCES = $(vifm_SOURCES)
+ am__can_run_installinfo = \
+   case $$AM_UPDATE_INFO_DIR in \
+     n|no|NO) false;; \
+@@ -335,11 +335,9 @@ pkgdata_DATA = ../data/vifmrc \
+ 							 ../data/vifmrc-osx \
+ 							 ../data/vifm-help.txt
+ 
+-bin_SCRIPTS = vifm-pause vifm-convert-dircolors
++bin_SCRIPTS = vifm-pause
+ man_MANS = ../data/vifm.1 \
+-					 ../data/vifm-pause.1 \
+-					 ../data/vifmrc-converter.1 \
+-					 ../data/vifm-convert-dircolors.1
++					 ../data/vifm-pause.1
+ 
+ MOSTLYCLEANFILES = compile_info.c \
+ 									 ../data/vifm-help.txt \
