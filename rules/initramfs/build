@@ -226,7 +226,7 @@ esac
 echo -n " done.
 Setting up a layered file system ..."
 
-luufs -o suid,dev,allow_other,default_permissions /mnt/ro /mnt/rw /mnt/union
+luufs /mnt/ro /mnt/rw /mnt/union
 [ 1 -eq $secure ] && elfence /mnt/union/bin
 
 mount /sys /mnt/union/sys
