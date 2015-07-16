@@ -1,4 +1,4 @@
-PKG_VER="1.6"
+PKG_VER="1.7"
 PKG_SRCS="http://download.savannah.gnu.org/releases/lzip/clzip/clzip-$PKG_VER.tar.gz"
 PKG_DESC="A compression tool"
 PKG_DEPS="musl"
