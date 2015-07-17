@@ -1,4 +1,4 @@
-PKG_VER="2.9"
+PKG_VER="2.10"
 PKG_SRCS="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
 PKG_DESC="A web browser"
 PKG_DEPS="musl zlib xz libressl libpng libjpeg-turbo gpm"
@@ -13,6 +13,7 @@ get_latest() {
 build() {
 	./configure --prefix="" \
 	            --mandir="/man" \
+	            --enable-debuglevel=0 \
 	            --enable-graphics \
 	            --without-libtiff
 	[ 0 -ne $? ] && return 1
