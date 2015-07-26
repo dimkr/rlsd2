@@ -1,4 +1,4 @@
-PKG_VER="0.6"
+PKG_VER="0.6.1"
 PKG_SRCS="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VER.tar.gz"
 PKG_DESC="A network monitor"
 PKG_DEPS="musl ncurses"
