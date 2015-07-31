@@ -1,9 +1,9 @@
 PKG_SRCS="https://github.com/dimkr/sdaemons.git"
 PKG_DESC="Core system daemons"
-PKG_DEPS="musl"
+PKG_DEPS="musl libwaive"
 
 build() {
-	$MAKE
+	$MAKE HAVE_WAIVE=1
 }
 
 package() {

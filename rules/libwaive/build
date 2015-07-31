@@ -1,0 +1,11 @@
+PKG_SRCS="https://github.com/dimkr/libwaive.git"
+PKG_DESC="A sandboxing library"
+PKG_DEPS="musl libseccomp"
+
+build() {
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" DOC_DIR="/doc" MAN_DIR="/man" install
+}

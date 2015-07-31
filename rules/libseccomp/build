@@ -1,0 +1,29 @@
+PKG_VER="2.2.3"
+PKG_SRCS="https://github.com/seccomp/libseccomp/releases/download/v$PKG_VER/libseccomp-$PKG_VER.tar.gz"
+PKG_DESC="A system call filtering library"
+PKG_DEPS="musl"
+
+get_latest() {
+	wget -q -O - "https://github.com/seccomp/libseccomp/releases" |
+	grep "Version " |
+	head -n 1 |
+	cut -f 2 -d \ 
+}
+
+build() {
+	./configure --prefix="" \
+	            --mandir="/man" \
+	            --enable-static \
+	            --disable-shared
+	[ 0 -ne $? ] && return 1
+
+	$MAKE
+}
+
+package() {
+	$MAKE DESTDIR="$1" install
+	install -D -m 644 README "$1/doc/libseccomp/README"
+	install -m 644 CHANGELOG "$1/doc/libseccomp/CHANGELOG"
+	install -m 644 CREDITS "$1/doc/libseccomp/CREDITS"
+	install -m 644 LICENSE "$1/doc/libseccomp/LICENSE"
+}
