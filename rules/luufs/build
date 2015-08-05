@@ -1,9 +1,9 @@
 PKG_SRCS="https://github.com/dimkr/luufs.git"
 PKG_DESC="A union file system"
-PKG_DEPS="musl zlib fuse"
+PKG_DEPS="musl zlib fuse libwaive"
 
 build() {
-	$MAKE
+	$MAKE HAVE_WAIVE=1
 }
 
 package() {
