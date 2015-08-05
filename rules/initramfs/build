@@ -246,7 +246,7 @@ mount /mnt/union/run/shm /mnt/union/dev/shm
 
 mount -t tmpfs -o mode=1777,noexec,nosuid,nodev,size=25% tmp /mnt/union/tmp
 
-mount /mnt/rw /mnt/union/var/rw
+luufs /mnt/rw /mnt/union/var/rw
 
 echo " done."
 
