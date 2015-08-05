@@ -1,6 +1,6 @@
 set repo file:///repo
 set curl [curl]
-set available [packlim::available $curl $repo]
+set available [packlim::available $curl $repo ""]
 set packages [dict keys [lindex $available 0]]
 
 foreach package $packages {
