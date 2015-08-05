@@ -32,7 +32,7 @@ case "$1" in
 		# ignore ICMP echo requests
 		echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
 
-		echo " done"
+		echo " done."
 		;;
 
 	stop)
