@@ -21,6 +21,8 @@ INITRAMFS_FILES="bin/toybox
                  bin/cat
                  bin/poweroff
                  bin/reboot
+                 bin/blkid
+                 bin/cut
                  bin/setfont
                  bin/luufs
                  bin/logfence
@@ -141,9 +143,9 @@ Starting logging services ..."
 [ 1 -eq $secure ] && logfence /var/log
 daemon syslog
 
-# find the home partition
+# find the boot partition
 echo -n " done.
-Searching for the home partition ..."
+Searching for the boot partition ..."
 cd /sys/class/block
 is_found=0
 for i in 1 2 3 4 5 6 7 8 9 10
@@ -171,6 +173,24 @@ then
 	echo " failure."
 	exit
 fi
+
+# if the home partition was specified by UUID, find the device name
+case "$home" in
+	*-*-*-*-*)
+		echo -n " done.
+Searching for the home partition ..."
+
+		home="$(blkid | grep "UUID=\"$home\"" | cut -f 1 -d :)"
+		if [ -z "$home" ]
+		then
+			echo " failure."
+			exit
+		fi
+		;;
+	*)
+		home="/dev/$home"
+		;;
+esac
 
 # copy the root file system image to RAM
 if [ 0 -eq $copy ]
@@ -218,7 +238,7 @@ case "$home" in
 		mount "/dev/$partition" /mnt/rw
 		;;
 	*)
-		mount "/dev/$home" /mnt/rw
+		mount "$home" /mnt/rw
 		;;
 esac
 
