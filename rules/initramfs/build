@@ -187,6 +187,10 @@ Searching for the home partition ..."
 			exit
 		fi
 		;;
+
+	auto)
+		;;
+
 	*)
 		home="/dev/$home"
 		;;
