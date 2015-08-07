@@ -7,5 +7,5 @@ root_fs="$(mktemp -d)"
 rm -rf "$root_fs/boot"
 
 tar -C "$root_fs" -c . |
-lzip -9 > "images/rlsd-$TODAY-$(basename "$1").tar.lz"
+lzip -9 > "images/chroot/rlsd-$TODAY-$(basename "$1").tar.lz"
 rm -rf "$root_fs"

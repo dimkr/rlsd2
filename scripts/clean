@@ -1,6 +1,8 @@
-#!/bin/sh
+bin/sh
 
-rm -rvf images/* \
+rm -rvf images/iso/* \
+        images/vm/* \
+        images/chroot/* \
         sysroot/* \
         logs/* \
         packages/* \

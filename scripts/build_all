@@ -9,4 +9,8 @@ make -j 1
 ./scripts/create_iso flavors/minimal
 ./scripts/create_iso flavors/big
 ./scripts/create_iso flavors/huge
+for i in images/iso/*.iso
+do
+	./scripts/create_vm "$i" 4
+done
 ./scripts/create_tar flavors/rootfs

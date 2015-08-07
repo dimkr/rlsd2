@@ -57,7 +57,7 @@ xorriso -as mkisofs \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
         -isohybrid-mbr "$iso_root/isolinux/isohdpfx.bin" \
         $uefi_flags \
-        -output "images/rlsd-$TODAY-$(basename "$1").iso" \
+        -output "images/iso/rlsd-$TODAY-$(basename "$1").iso" \
         "$iso_root"
 
 # clean up

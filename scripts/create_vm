@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# create an image
+raw_im="$(mktemp -u)"
+dd if=/dev/zero of="$raw_im" bs=1G count=$2
+
+# create a DOS partition table with one primary partition
+echo "o
+n
+
+
+
+
+w
+" | fdisk "$raw_im"
+
+# make the partition bootable
+echo "a
+1
+w
+" | fdisk "$raw_im"
+
+# get the partition offset
+offset=$((512 * $(fdisk -l "$raw_im" | tail -n 1 | awk '{print $3}')))
+
+# create a file system on the partition
+part_dev="$(losetup --show -f -o $offset "$raw_im")"
+mkfs.ext4 "$part_dev"
+
+# mount the ISO image
+iso_mnt="$(mktemp -d)"
+mount -t iso9660 -o loop,ro "$1" "$iso_mnt"
+
+# mount the partition
+part_mnt="$(mktemp -d)"
+mount -t ext4 "$part_dev" "$part_mnt"
+
+# mount the entire image
+image_dev="$(losetup --show -f "$raw_im")"
+
+# install extlinux
+extlinux -i "$part_mnt"
+cat /usr/lib/extlinux/mbr.bin > "$image_dev"
+
+# copy the ISO image contents to the partition
+cp -a "$iso_mnt/boot" "$part_mnt/"
+echo "DEFAULT rlsd
+PROMPT 0
+TIMEOUT 0
+
+LABEL rlsd
+KERNEL /boot/bzImage
+INITRD /boot/initrd.xz
+APPEND home=auto" > "$part_mnt/syslinux.cfg"
+
+# clean up
+losetup -d "$image_dev"
+
+umount "$part_mnt"
+rmdir "$part_mnt"
+losetup -d "$part_dev"
+
+umount "$iso_mnt"
+rmdir "$iso_mnt"
+
+# convert the raw image
+conv_im="$(mktemp -u)"
+for format in qcow2 vdi
+do
+	qemu-img convert -f raw -O $format "$raw_im" "$conv_im"
+	cat "$conv_im" | lzip -9 > "images/vm/$(basename "$1" .iso)-$2G.$format.lz"
+done
+rm -f "$conv_im" "$raw_im"
