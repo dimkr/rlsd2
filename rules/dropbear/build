@@ -1,4 +1,4 @@
-PKG_VER="2015.67"
+PKG_VER="2015.68"
 PKG_SRCS="https://matt.ucc.asn.au/dropbear/releases/dropbear-$PKG_VER.tar.bz2"
 PKG_DESC="A SSH server and client"
 PKG_DEPS="musl zlib"

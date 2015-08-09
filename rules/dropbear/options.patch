@@ -1,6 +1,6 @@
-diff -rup dropbear-2014.66-orig/dropbear.8 dropbear-2014.66/dropbear.8
---- dropbear-2014.66-orig/dropbear.8	2014-10-24 18:02:26.731979124 +0300
-+++ dropbear-2014.66/dropbear.8	2014-10-24 18:03:23.912978100 +0300
+diff -rup dropbear-2015.68-orig/dropbear.8 dropbear-2015.68/dropbear.8
+--- dropbear-2015.68-orig/dropbear.8	2015-08-09 22:54:18.668272862 +0300
++++ dropbear-2015.68/dropbear.8	2015-08-09 22:54:26.552311992 +0300
 @@ -72,7 +72,7 @@ In program mode the \-F option is implie
  .TP
  .B \-P \fIpidfile
@@ -10,10 +10,10 @@ diff -rup dropbear-2014.66-orig/dropbear.8 dropbear-2014.66/dropbear.8
  .TP
  .B \-a
  Allow remote hosts to connect to forwarded ports.
-diff -rup dropbear-2014.66-orig/options.h dropbear-2014.66/options.h
---- dropbear-2014.66-orig/options.h	2014-10-24 18:02:26.731979124 +0300
-+++ dropbear-2014.66/options.h	2014-10-24 18:03:04.184978453 +0300
-@@ -258,13 +258,13 @@ much traffic. */
+diff -rup dropbear-2015.68-orig/options.h dropbear-2015.68/options.h
+--- dropbear-2015.68-orig/options.h	2015-08-09 22:54:18.628272655 +0300
++++ dropbear-2015.68/options.h	2015-08-09 22:54:37.120364351 +0300
+@@ -276,13 +276,13 @@ Homedir is prepended unless path begins
  /* The default file to store the daemon's process ID, for shutdown
     scripts etc. This can be overridden with the -P flag */
  #ifndef DROPBEAR_PIDFILE
@@ -29,16 +29,16 @@ diff -rup dropbear-2014.66-orig/options.h dropbear-2014.66/options.h
  #endif
  
  /* if you want to enable running an sftp server (such as the one included with
-@@ -276,7 +276,7 @@ much traffic. */
+@@ -294,7 +294,7 @@ Homedir is prepended unless path begins
  
  /* This is used by the scp binary when used as a client binary. If you're
   * not using the Dropbear client, you'll need to change it */
--#define _PATH_SSH_PROGRAM "/usr/bin/dbclient"
-+#define _PATH_SSH_PROGRAM "/bin/dbclient"
+-#define DROPBEAR_PATH_SSH_PROGRAM "/usr/bin/dbclient"
++#define DROPBEAR_PATH_SSH_PROGRAM "/bin/dbclient"
  
  /* Whether to log commands executed by a client. This only logs the 
   * (single) command sent to the server, not what a user did in a 
-@@ -318,7 +318,7 @@ be overridden at runtime with -I. 0 disa
+@@ -336,7 +336,7 @@ be overridden at runtime with -I. 0 disa
  #define DEFAULT_IDLE_TIMEOUT 0
  
  /* The default path. This will often get replaced by the shell */
@@ -47,11 +47,11 @@ diff -rup dropbear-2014.66-orig/options.h dropbear-2014.66/options.h
  
  /* Some other defines (that mostly should be left alone) are defined
   * in sysoptions.h */
-diff -rup dropbear-2014.66-orig/sysoptions.h dropbear-2014.66/sysoptions.h
---- dropbear-2014.66-orig/sysoptions.h	2014-10-24 18:02:26.716979124 +0300
-+++ dropbear-2014.66/sysoptions.h	2014-10-24 18:02:32.640979018 +0300
+diff -rup dropbear-2015.68-orig/sysoptions.h dropbear-2015.68/sysoptions.h
+--- dropbear-2015.68-orig/sysoptions.h	2015-08-09 22:54:18.664272838 +0300
++++ dropbear-2015.68/sysoptions.h	2015-08-09 22:54:26.552311992 +0300
 @@ -7,7 +7,7 @@
- #define DROPBEAR_VERSION "2014.66"
+ #define DROPBEAR_VERSION "2015.68"
  #endif
  
 -#define LOCAL_IDENT "SSH-2.0-dropbear_" DROPBEAR_VERSION
