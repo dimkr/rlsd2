@@ -1,4 +1,4 @@
-PKG_VER="5.9"
+PKG_VER="6.0"
 PKG_SRCS="http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$PKG_VER.tar.gz"
 PKG_DESC="A terminal handling library"
 PKG_DEPS="musl"
@@ -17,17 +17,20 @@ build() {
 	            --datadir="/share" \
 	            --includedir="/include" \
 	            --mandir="/man" \
+	            --with-abi-version=5 \
 	            --without-cxx \
 	            --without-cxx-binding \
 	            --without-ada \
 	            --without-progs \
 	            --without-tests \
+	            --with-pkg-config-libdir="/lib/pkgconfig" \
 	            --enable-pc-files \
 	            --without-libtool \
 	            --without-shared \
 	            --with-normal \
 	            --without-debug \
 	            --without-profile \
+	            --without-dlsym \
 	            --with-manpage-format="normal"
 	[ 0 -ne $? ] && return 1
 
@@ -46,12 +49,14 @@ build() {
 	            --without-ada \
 	            --without-progs \
 	            --without-tests \
+	            --with-pkg-config-libdir="/lib/pkgconfig" \
 	            --enable-pc-files \
 	            --without-libtool \
 	            --without-shared \
 	            --with-normal \
 	            --without-debug \
 	            --without-profile \
+	            --without-dlsym \
 	            --enable-widec \
 	            --enable-ext-colors \
 	            --with-manpage-format="normal"
