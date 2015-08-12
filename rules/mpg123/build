@@ -1,4 +1,4 @@
-PKG_VER="1.22.3"
+PKG_VER="1.22.4"
 PKG_SRCS="http://downloads.sourceforge.net/project/mpg123/mpg123/$PKG_VER/mpg123-$PKG_VER.tar.bz2"
 PKG_DESC="A MP3 player"
 PKG_DEPS="musl tinyalsa"
