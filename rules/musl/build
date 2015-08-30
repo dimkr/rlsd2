@@ -1,4 +1,4 @@
-PKG_VER="1.1.10"
+PKG_VER="1.1.11"
 PKG_SRCS="http://www.musl-libc.org/releases/musl-$PKG_VER.tar.gz"
 PKG_DESC="A C library"
 PKG_DEPS="iana-etc linux-libre-headers"
