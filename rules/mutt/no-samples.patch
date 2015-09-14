@@ -1,21 +1,12 @@
-diff -rup mutt-1.5.23-orig/Makefile.in mutt-1.5.23/Makefile.in
---- mutt-1.5.23-orig/Makefile.in	2015-02-01 22:48:57.764532275 +0200
-+++ mutt-1.5.23/Makefile.in	2015-02-01 22:49:59.444531009 +0200
-@@ -259,7 +259,7 @@ am__define_uniq_tagged_files = \
- ETAGS = etags
- CTAGS = ctags
- CSCOPE = cscope
--DIST_SUBDIRS = m4 po intl doc contrib imap
-+DIST_SUBDIRS = m4 po intl doc imap
- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
- distdir = $(PACKAGE)-$(VERSION)
- top_distdir = $(distdir)
-@@ -451,7 +451,7 @@ top_srcdir = @top_srcdir@
- AUTOMAKE_OPTIONS = 1.6 foreign
- @BUILD_IMAP_TRUE@IMAP_SUBDIR = imap
- @BUILD_IMAP_TRUE@IMAP_INCLUDES = -I$(top_srcdir)/imap
+diff -rup mutt-1.5.24-orig/Makefile.am mutt-1.5.24/Makefile.am
+--- mutt-1.5.24-orig/Makefile.am	2015-09-14 12:59:07.105781413 +0300
++++ mutt-1.5.24/Makefile.am	2015-09-14 12:59:38.085934778 +0300
+@@ -10,7 +10,7 @@ IMAP_SUBDIR = imap
+ IMAP_INCLUDES = -I$(top_srcdir)/imap
+ endif
+ 
 -SUBDIRS = m4 po intl doc contrib $(IMAP_SUBDIR)
 +SUBDIRS = m4 po intl doc $(IMAP_SUBDIR)
- bin_SCRIPTS = muttbug flea @SMIMEAUX_TARGET@
- @BUILD_HCACHE_TRUE@HCVERSION = hcversion.h
- BUILT_SOURCES = keymap_defs.h patchlist.c reldate.h conststrings.c $(HCVERSION)
+ 
+ bin_SCRIPTS = muttbug flea $(SMIMEAUX_TARGET)
+ 
