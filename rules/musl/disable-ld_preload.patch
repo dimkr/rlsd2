@@ -1,12 +1,11 @@
-diff -rup musl-1.1.6-orig/src/ldso/dynlink.c musl-1.1.6/src/ldso/dynlink.c
---- musl-1.1.6-orig/src/ldso/dynlink.c	2015-01-24 15:01:49.097631656 +0200
-+++ musl-1.1.6/src/ldso/dynlink.c	2015-01-24 15:01:54.629631788 +0200
-@@ -1114,8 +1114,6 @@ void *__dynlink(int argc, char **argv)
- 	for (i=argc+1; argv[i]; i++)
- 		if (!memcmp(argv[i], "LD_LIBRARY_PATH=", 16))
- 			env_path = argv[i]+16;
--		else if (!memcmp(argv[i], "LD_PRELOAD=", 11))
--			env_preload = argv[i]+11;
- 	auxv = (void *)(argv+i+1);
+diff -rup musl-1.1.11-orig/src/ldso/dynlink.c musl-1.1.11/src/ldso/dynlink.c
+--- musl-1.1.11-orig/src/ldso/dynlink.c	2015-09-14 12:47:59.590471389 +0300
++++ musl-1.1.11/src/ldso/dynlink.c	2015-09-14 12:50:20.591170636 +0300
+@@ -1251,7 +1251,6 @@ _Noreturn void __dls3(size_t *sp)
+ 	/* Only trust user/env if kernel says we're not suid/sgid */
+ 	if (!libc.secure) {
+ 		env_path = getenv("LD_LIBRARY_PATH");
+-		env_preload = getenv("LD_PRELOAD");
+ 	}
  
- 	decode_vec(auxv, aux, AUX_CNT);
+ 	/* If the main program was already loaded by the kernel,
