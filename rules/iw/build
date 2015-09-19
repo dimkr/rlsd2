@@ -1,4 +1,4 @@
-PKG_VER="4.1"
+PKG_VER="4.3"
 PKG_SRCS="https://www.kernel.org/pub/software/network/iw/iw-$PKG_VER.tar.xz"
 PKG_DESC="A wireless network interface configuration tool"
 PKG_DEPS="musl libnl-tiny"
