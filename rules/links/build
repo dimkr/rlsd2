@@ -1,4 +1,4 @@
-PKG_VER="2.11"
+PKG_VER="2.12"
 PKG_SRCS="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
 PKG_DESC="A web browser"
 PKG_DEPS="musl zlib xz libressl libpng libjpeg-turbo gpm"
