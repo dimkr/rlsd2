@@ -1,4 +1,4 @@
-PKG_VER="1.4.1"
+PKG_VER="1.4.2"
 PKG_SRCS="http://sourceforge.net/projects/libjpeg-turbo/files/$PKG_VER/libjpeg-turbo-$PKG_VER.tar.gz"
 PKG_DESC="A library for handling JPEG images"
 PKG_DEPS="musl"
