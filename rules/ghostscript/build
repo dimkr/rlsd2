@@ -1,4 +1,4 @@
-PKG_VER="9.16"
+PKG_VER="9.18"
 PKG_SRCS="http://downloads.ghostscript.com/public/ghostscript-$PKG_VER.tar.gz"
 PKG_DESC="A PostScript and PDF interpreter"
 PKG_DEPS="musl zlib libpng libjpeg-turbo"
