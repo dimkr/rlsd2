@@ -1,4 +1,4 @@
-PKG_VER="5.2.1"
+PKG_VER="5.2.2"
 PKG_SRCS="http://tukaani.org/xz/xz-$PKG_VER.tar.xz"
 PKG_DESC="Compression tools"
 PKG_DEPS="musl"
