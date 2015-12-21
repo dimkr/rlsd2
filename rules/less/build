@@ -1,4 +1,4 @@
-PKG_VER="458"
+PKG_VER="481"
 PKG_SRCS="http://www.greenwoodsoftware.com/less/less-$PKG_VER.tar.gz"
 PKG_DESC="A file viewer"
 PKG_DEPS="musl ncurses"
