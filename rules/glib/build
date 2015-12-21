@@ -1,4 +1,4 @@
-PKG_VER="2.46.0"
+PKG_VER="2.46.2"
 PKG_SRCS="http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.46/glib-$PKG_VER.tar.xz"
 PKG_DESC="A utility library"
 PKG_DEPS="musl libffi"
