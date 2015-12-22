@@ -1,10 +1,9 @@
-set repo file:///repo
-set curl [curl]
-set available [packlim::available $curl $repo ""]
-set packages [dict keys [lindex $available 0]]
+set repo [env REPO]
+set available [packlim::available $repo ""]
+set packages [dict keys $available]
 
 foreach package $packages {
-	packlim::install $curl $repo {*}$available $package locked ""
+	packlim::fetch $repo $package $available locked ""
 	packlim::lock $package
 }
 

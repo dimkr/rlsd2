@@ -1,9 +1,8 @@
-set repo file:///repo
-set curl [curl]
-set available [packlim::available $curl $repo ""]
+set repo [env REPO]
+set available [packlim::available $repo ""]
 
 foreach package {skeleton toybox sdaemons loksh packlim mandoc}  {
-	packlim::install $curl $repo {*}$available $package locked ""
+	packlim::fetch $repo $package $available locked ""
 }
 
 packlim::purge
